@@ -1,0 +1,12 @@
+@baseUrl=http://localhost:5000/authors
+
+### RITORNA LA LISTA DEGLI AUTORI
+GET {{baseUrl}}
+### RITORNA IL SINGOLO AUTORE
+GET {{baseUrl}}/123
+### CREA UN NUOVO AUTORE
+POST {{baseUrl}}
+### MODIFICA UN AUTORE CON ID ASSOCIATO
+PUT {{baseUrl}}/123
+### CANCELLA UN AUTORE CON ID ASSOCIATO
+DELETE {{baseUrl}}/123
