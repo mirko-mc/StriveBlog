@@ -18,5 +18,33 @@ export const PostAutor = async () => {
     }),
   });
   const data = await res.json();
-  return console.log(data);
+  return data;
+};
+
+export const PutAuthor = async (id) => {
+  const res = await fetch(FetchUrl + `/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
+    body: JSON.stringify({
+      avatar:
+        "https://njhalloffame.org/wp-content/uploads/2021/04/generic-avatar-300x300.png",
+    }),
+  });
+  if (!res.ok) console.log(res);
+  const data = await res.json();
+  return data;
+};
+
+export const DelAuthor = async (id) => {
+  const res = await fetch(FetchUrl + `/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "DELETE",
+  });
+  if (!res.ok) console.log(res);
+  const data = await res.json();
+  return data;
 };

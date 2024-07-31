@@ -1,17 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import NavBar from "./components/navbar/BlogNavbar";
 import Footer from "./components/footer/Footer";
 import Home from "./views/home/Home";
 import Blog from "./views/blog/Blog";
 import NewBlogPost from "./views/new/New";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { GetAuthors, PostAutor } from "./data/fetch";
 
 function App() {
-  useEffect(() => {
-    GetAuthors().then((data) => console.log(data));
-    PostAutor();
-  }, []);
   return (
     <Router>
       <NavBar />
