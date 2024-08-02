@@ -1,6 +1,9 @@
 import { model, Schema } from "mongoose";
-
-const authorSchema = new Schema(
+/** new Schema({},{}) vuole 2 oggetti:
+ *  1. schema (struttura dei dati)
+ *  2. collection (nome della collection in mongo)
+ */
+const authors = new Schema(
   {
     name: {
       type: String,
@@ -13,6 +16,7 @@ const authorSchema = new Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     birthDate: {
       type: Date,
@@ -21,6 +25,8 @@ const authorSchema = new Schema(
       type: String,
     },
   },
+  /** naming convention: la collection plurale */
   { collection: "authors" }
 );
-export default model("Author", authorSchema);
+/** naming convention: il model singolare */
+export default model("Author", authors);

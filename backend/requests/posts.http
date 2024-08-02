@@ -1,0 +1,27 @@
+@baseUrl=http://localhost:5000/blogPosts
+
+### RITORNA LA LISTA DEI POSTSBLOG
+GET {{baseUrl}}
+### RITORNA IL SINGOLO POSTBLOG
+GET {{baseUrl}}/66acfa5421bf7d364dd20d24
+### CREA UN NUOVO POSTBLOG
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "category":"Categoria 1",
+    "title":"titolo",
+    "cover": "https://picsum.photos/1000/300",
+    "readTime":500,
+    "author":"asdf@asdf.asdf",
+    "content": "testo del post"
+}
+### MODIFICA UN POSTBLOG CON ID ASSOCIATO
+PUT {{baseUrl}}/66acfa5421bf7d364dd20d24
+Content-Type: application/json
+
+{
+  "author":"Mario Rossi"
+}
+### CANCELLA UN POSTBLOG CON ID ASSOCIATO
+DELETE {{baseUrl}}/66acfad121bf7d364dd20d31

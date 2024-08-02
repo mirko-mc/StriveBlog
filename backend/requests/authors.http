@@ -1,7 +1,7 @@
 @baseUrl=http://localhost:5000/authors
 
 ### RITORNA LA LISTA DEGLI AUTORI
-GET {{baseUrl}}
+GET {{baseUrl}}?page=4
 ### RITORNA IL SINGOLO AUTORE
 GET {{baseUrl}}/66a93681fe704129bec62ea5
 ### CREA UN NUOVO AUTORE
@@ -16,7 +16,7 @@ Content-Type: application/json
   "avatar": "https://picsum.photos/300/300"
 }
 ### MODIFICA UN AUTORE CON ID ASSOCIATO
-PUT {{baseUrl}}/66a93681fe704129bec62ea5
+PUT {{baseUrl}}/66a9375e17676e9499087246
 Content-Type: application/json
 
 {

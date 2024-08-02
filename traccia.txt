@@ -1,4 +1,4 @@
-m5w1d1 - IL NOSTRO PRIMO API
+m6w1d1 - IL NOSTRO PRIMO API
   STRIVE BLOG
   - Sei responsabile della creazione di una serie di WebAPI per l'applicazione Strive Blog
   - (Ti abbiamo fornito un frontend in React per semplificare il lavoro) => non servirà a meno che non eseguirai gli esercizi EXTRA (facoltativi)
@@ -27,3 +27,37 @@ m5w1d1 - IL NOSTRO PRIMO API
     - Puoi usare cors col seguente comando 'server.use(cors())'
     - Impareremo cos'è CORS prossimamente ;)
 
+m6w1d4 - IL NOSTRO PRIMO API
+  STRIVE BLOG - CAPITOLO 2
+  - Se non lo hai fatto, implementa le funzionalità di PUT e DELETE per gli autori
+  - Sviluppa le operazioni CRUD per i blog post (struttura nelle slide successive)
+  - Aggiungi funzionalità di paginazione sia per gli autori che per i blog posts
+  NOTA: ricorda di installare il pacchetto 'cors' con 'npm i cors', e di usarlo con 'server.use(cors())' se vuoi collegare il backend al frontend
+
+  STRIVE BLOG - STRUTTURA BLOG POST
+  {
+  _id         // generato dal server,
+  category    // categoria del post,
+  title       // titolo del post,
+  cover       // link dell'immagine,
+  readTime: {
+      value   // numero,
+      unit    // unità di misura
+  },
+  author      // email dell'autore del post,
+  content:    // HTML dell'articolo
+  }
+
+  STRIVE BLOG - ROTTE
+  - GET /blogPosts => ritorna una lista di blog post
+  - GET /blogPosts/123 => ritorna un singolo blog post
+  - POST /blogPosts => crea un nuovo blog post
+  - PUT /blogPosts/123 => modifica il blog post con l'id associato
+  - DELETE /blogPosts/123 => cancella il blog post con l'id associato
+
+  STRIVE BLOG - EXTRA (facoltativi, per ora)
+  - Fare la POST di un articolo dal form di aggiunta articolo
+  - Fare la fetch degli articoli presenti nel database e visualizzarli nella homepage
+  - GET /authors/:id/blogPosts/ => ricevi tutti i blog post di uno specifico autore dal corrispondente ID
+  - GET /blogPosts?title=whatever => filtra i blog post e ricevi l'unico che corrisponda alla condizione di ricerca (es: titolo contiene "whatever")
+  - Aggiungi la funzionalità di ricerca dei post nel frontend
