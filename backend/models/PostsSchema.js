@@ -20,7 +20,7 @@ const posts = new Schema(
       // unità di misura
       unit: String,
     },
-    // email dell'autore del post,
+    // id dell'autore del post,
     author: String,
     // HTML dell'articolo
     content: String,

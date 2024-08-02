@@ -1,22 +1,22 @@
 @baseUrl=http://localhost:5000/authors
 
 ### RITORNA LA LISTA DEGLI AUTORI
-GET {{baseUrl}}?page=4
+GET {{baseUrl}}
 ### RITORNA IL SINGOLO AUTORE
-GET {{baseUrl}}/66a93681fe704129bec62ea5
+GET {{baseUrl}}/66a938123c314f505d26f791
 ### CREA UN NUOVO AUTORE
 POST {{baseUrl}}
 Content-Type: application/json
 
 {
-  "name": "example",
-  "surname": "example",
-  "birthDate": "01/01/2000",
-  "email": "example@example.com",
+  "name": "Giuseppe",
+  "surname": "Esposito",
+  "birthDate": "10/10/2010",
+  "email": "giuseppre@esposito.com",
   "avatar": "https://picsum.photos/300/300"
 }
 ### MODIFICA UN AUTORE CON ID ASSOCIATO
-PUT {{baseUrl}}/66a9375e17676e9499087246
+PUT {{baseUrl}}/66aa721423ea2989207e7eb5
 Content-Type: application/json
 
 {
@@ -25,3 +25,8 @@ Content-Type: application/json
 }
 ### CANCELLA UN AUTORE CON ID ASSOCIATO
 DELETE {{baseUrl}}/66a939713c314f505d26f793
+
+### RITORNA I POSTSBLOG DI UN AUTORE
+GET {{baseUrl}}/66ad2855f9e65c7c2bc990cd/blogPosts
+### RITORNA I POSTSBLOG DI UN AUTORE
+GET {{baseUrl}}/66ad2c47cdac3f5495b31304/blogPosts

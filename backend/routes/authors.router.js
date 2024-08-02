@@ -1,5 +1,6 @@
 import express from "express";
 import AuthorSchema from "../models/AutorsSchema.js";
+import PostsSchema from "../models/PostsSchema.js";
 
 const ROUTER = express.Router();
 /** GET /authors => ritorna la lista degli autori */
@@ -61,7 +62,9 @@ ROUTER.post("/", async (req, res) => {
 });
 /** PUT /authors/123 => modifica l'autore con l'id associato */
 ROUTER.put("/:id", async (req, res) => {
-  const AUTHOR = await AuthorSchema.findByIdAndUpdate(req.params.id, req.body);
+  const AUTHOR = await AuthorSchema.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
   await AUTHOR.save();
   res.send(AUTHOR);
 });
@@ -69,6 +72,27 @@ ROUTER.put("/:id", async (req, res) => {
 ROUTER.delete("/:id", async (req, res) => {
   await AuthorSchema.findByIdAndDelete(req.params.id);
   res.send(`cancellato l'autore con l'id ${req.params.id}`);
+});
+/** GET /authors/:id/blogPosts/ => ricevi tutti i blog post di uno specifico autore dal corrispondente ID */
+ROUTER.get("/:id/blogPosts/", async (req, res) => {
+  const PAGE = req.query.page || 1;
+  const PERPAGE = req.query.perPage || 5;
+  try {
+    const POSTBLOG = await PostsSchema.find({ author: req.params.id })
+      .sort({ name: 1 })
+      .skip((PAGE - 1) * PERPAGE)
+      .limit(PERPAGE);
+    const totalResults = await PostsSchema.countDocuments();
+    const totalPages = Math.ceil(totalResults / PERPAGE);
+    res.send({
+      data: POSTBLOG,
+      totalResults,
+      totalPages,
+      page: PAGE,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 export default ROUTER;

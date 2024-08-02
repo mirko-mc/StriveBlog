@@ -8,18 +8,31 @@ const ROUTER = express.Router();
 ROUTER.get("/", async (req, res) => {
   const PAGE = req.query.page || 1;
   const PERPAGE = req.query.perPage || 5;
-  const POSTSBLOG = await PostsSchema.find()
-    .sort({ name: 1 })
-    .skip((PAGE - 1) * PERPAGE)
-    .limit(PERPAGE);
-  const totalResults = await PostsSchema.countDocuments();
-  const totalPages = Math.ceil(totalResults / PERPAGE);
-  res.send({
-    data: POSTSBLOG,
-    totalResults,
-    totalPages,
-    page: PAGE,
-  });
+  /** GET /blogPosts?title=whatever => filtra i blog post e ricevi l'unico che corrisponda alla condizione di ricerca (es: titolo contiene "whatever") */
+  const TITLE = req.query.title;
+  try {
+    if (TITLE) {
+      const POSTBLOG = await PostsSchema.findOne({
+        title: { $regex: TITLE, $options: "i" },
+      });
+      res.send(POSTBLOG);
+    } else {
+      const POSTSBLOG = await PostsSchema.find()
+        .sort({ name: 1 })
+        .skip((PAGE - 1) * PERPAGE)
+        .limit(PERPAGE);
+      const totalResults = await PostsSchema.countDocuments();
+      const totalPages = Math.ceil(totalResults / PERPAGE);
+      res.send({
+        data: POSTSBLOG,
+        totalResults,
+        totalPages,
+        page: PAGE,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
 });
 /** GET /blogPosts/123 => ritorna un singolo blog post */
 ROUTER.get("/:id", async (req, res) => {
@@ -44,7 +57,8 @@ ROUTER.put("/:id", async (req, res) => {
   try {
     const POSTBLOG = await PostsSchema.findByIdAndUpdate(
       req.params.id,
-      req.body
+      req.body,
+      { new: true }
     );
     await POSTBLOG.save();
     res.send(POSTBLOG);
@@ -64,8 +78,6 @@ ROUTER.delete("/:id", async (req, res) => {
 /** STRIVE BLOG - EXTRA (facoltativi, per ora) */
 /** Fare la POST di un articolo dal form di aggiunta articolo */
 /** Fare la fetch degli articoli presenti nel database e visualizzarli nella homepage */
-/** GET /authors/:id/blogPosts/ => ricevi tutti i blog post di uno specifico autore dal corrispondente ID */
-/** GET /blogPosts?title=whatever => filtra i blog post e ricevi l'unico che corrisponda alla condizione di ricerca (es: titolo contiene "whatever") */
 /** Aggiungi la funzionalità di ricerca dei post nel frontend */
 
 export default ROUTER;
