@@ -21,9 +21,15 @@ const posts = new Schema(
       unit: String,
     },
     // id dell'autore del post,
-    author: String,
+    author: {
+      type: String,
+      unique: true,
+    },
     // HTML dell'articolo
-    content: String,
+    content: {
+      type: String,
+      required: true,
+    },
   },
   { collection: "posts" }
 );

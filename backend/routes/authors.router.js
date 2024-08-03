@@ -1,5 +1,5 @@
 import express from "express";
-import AuthorSchema from "../models/AutorsSchema.js";
+import AuthorsSchema from "../models/AutorsSchema.js";
 import PostsSchema from "../models/PostsSchema.js";
 
 const ROUTER = express.Router();
@@ -8,7 +8,7 @@ ROUTER.get("/", async (req, res) => {
   /** recuperiamo il numero di pagina e il numero di post per pagina */
   const page = req.query.page || 1;
   const perPage = req.query.perPage || 5;
-  const AUTHORS = await AuthorSchema.find()
+  const AllAuthors = await AuthorsSchema.find()
     /** li ordiniamo per crescente di nome e poi cognome decrescente */
     .sort({ name: 1, surname: -1 })
     /** saltiamo le pagine per restituire la pagina richiesta dall'utente */
@@ -17,75 +17,80 @@ ROUTER.get("/", async (req, res) => {
     .limit(perPage);
 
   /** calcoliamo il numero totale di risultati */
-  const totalResults = await AuthorSchema.countDocuments();
+  const totalResults = await AuthorsSchema.countDocuments();
   /** calcoliamo il numero totale di pagine */
   const totalPages = Math.ceil(totalResults / perPage);
-  /** all'uitente inviamo un oggetto contenente:
+  /** all'utente inviamo un oggetto contenente:
    *  - la lista degli autori
    *  - il numero totale di risultati
    *  - il numero totale di pagine
    *  - la pagina richiesta
    */
   res.send({
-    data: AUTHORS,
+    data: AllAuthors,
     totalResults,
     totalPages,
     page,
   });
-}) -
-  /** GET /authors/123 => ritorna il singolo autore */
-  ROUTER.get("/:id", async (req, res) => {
-    const AUTHOR = await AuthorSchema.findById(req.params.id);
-    res.send(AUTHOR);
-  });
+});
+
+/** GET /authors/123 => ritorna il singolo autore */
+ROUTER.get("/:id", async (req, res) => {
+  const SingleAuthor = await AuthorsSchema.findById(req.params.id);
+  res.send(SingleAuthor);
+});
+
 /** POST /authors => crea un nuovo autore */
 ROUTER.post("/", async (req, res) => {
   /** crea nuova istanza del modello autore con i dati definiti nelle tonde (li prende dal body)*/
-  const AUTHOR = new AuthorSchema(req.body);
+  const NewAuthor = new AuthorsSchema(req.body);
 
   /** procedura estesa per campi statici */
-  // const AUTHOR = new Authors({
+  // const PostNewAuthor = new AuthorsSchema({
   //   name: req.body.name,
   //   surname: req.body.surname,
   //   email: req.body.email,
   // });
   /**  aggiunge valore di default se l'utente non ha valorizzato un campo */
-  // const AUTHOR = new Authors({
+  // const PostNewAuthor = new AuthorsSchema({
   //   ...req.body,
   //   avatar: "test",
   // });
 
   /** salva i dati nel db prendendoli dall'istanza del modello */
-  await AUTHOR.save();
+  await NewAuthor.save();
   /** invia i dati salvati all'utente */
-  res.send(AUTHOR);
+  res.send(NewAuthor);
 });
+
 /** PUT /authors/123 => modifica l'autore con l'id associato */
 ROUTER.put("/:id", async (req, res) => {
-  const AUTHOR = await AuthorSchema.findByIdAndUpdate(req.params.id, req.body, {
+  const EditAuthor = await AuthorsSchema.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
-  await AUTHOR.save();
-  res.send(AUTHOR);
+  await EditAuthor.save();
+  res.send(EditAuthor);
 });
+
 /** DELETE /authors/123 => cancella l'autore con l'id associato */
 ROUTER.delete("/:id", async (req, res) => {
-  await AuthorSchema.findByIdAndDelete(req.params.id);
-  res.send(`cancellato l'autore con l'id ${req.params.id}`);
+  const DelAuthor = await AuthorsSchema.findByIdAndDelete(req.params.id);
+  res.send(`cancellato ${DelAuthor.name} ${DelAuthor.surname}`);
 });
+
 /** GET /authors/:id/blogPosts/ => ricevi tutti i blog post di uno specifico autore dal corrispondente ID */
 ROUTER.get("/:id/blogPosts/", async (req, res) => {
   const PAGE = req.query.page || 1;
   const PERPAGE = req.query.perPage || 5;
   try {
-    const POSTBLOG = await PostsSchema.find({ author: req.params.id })
+    const AuthorPostsBlog = await PostsSchema.find({ author: req.params.id })
       .sort({ name: 1 })
       .skip((PAGE - 1) * PERPAGE)
       .limit(PERPAGE);
     const totalResults = await PostsSchema.countDocuments();
     const totalPages = Math.ceil(totalResults / PERPAGE);
     res.send({
-      data: POSTBLOG,
+      data: AuthorPostsBlog,
       totalResults,
       totalPages,
       page: PAGE,

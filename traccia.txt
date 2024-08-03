@@ -14,14 +14,14 @@ m6w1d1 - IL NOSTRO PRIMO API
   avatar            //stringa
 
   STRIVE BLOG - ROTTE
-  - GET /authors => ritorna la lista degli autori
-  - GET /authors/123 => ritorna il singolo autore
-  - POST /authors => crea un nuovo autore
+  OK - GET /authors => ritorna la lista degli autori
+  OK - GET /authors/123 => ritorna il singolo autore
+  OK - POST /authors => crea un nuovo autore
 
   STRIVE BLOG - EXTRA (facoltativi, per ora)
-  - PUT /authors/123 => modifica l'autore con l'id associato
-  - DELETE /authors/123 => cancella l'autore con l'id associato
-  - Connessione del backend al frontend
+  OK - PUT /authors/123 => modifica l'autore con l'id associato
+  OK - DELETE /authors/123 => cancella l'autore con l'id associato
+  OK - Connessione del backend al frontend
     - Nota: Se vuoi connettere il backend e frontend oggi dovrai installare il pacchetto 'cors' con il comando 'npm i cors'
     - Dovrai quindi importarlo con un import statement
     - Puoi usare cors col seguente comando 'server.use(cors())'
@@ -29,9 +29,9 @@ m6w1d1 - IL NOSTRO PRIMO API
 
 m6w1d4 - IL NOSTRO PRIMO API
   STRIVE BLOG - CAPITOLO 2
-  - Se non lo hai fatto, implementa le funzionalità di PUT e DELETE per gli autori
-  - Sviluppa le operazioni CRUD per i blog post (struttura nelle slide successive)
-  - Aggiungi funzionalità di paginazione sia per gli autori che per i blog posts
+  OK - Se non lo hai fatto, implementa le funzionalità di PUT e DELETE per gli autori
+  OK - Sviluppa le operazioni CRUD per i blog post (struttura nelle slide successive)
+  OK - Aggiungi funzionalità di paginazione sia per gli autori che per i blog posts
   NOTA: ricorda di installare il pacchetto 'cors' con 'npm i cors', e di usarlo con 'server.use(cors())' se vuoi collegare il backend al frontend
 
   STRIVE BLOG - STRUTTURA BLOG POST
@@ -49,15 +49,15 @@ m6w1d4 - IL NOSTRO PRIMO API
   }
 
   STRIVE BLOG - ROTTE
-  - GET /blogPosts => ritorna una lista di blog post
-  - GET /blogPosts/123 => ritorna un singolo blog post
-  - POST /blogPosts => crea un nuovo blog post
-  - PUT /blogPosts/123 => modifica il blog post con l'id associato
-  - DELETE /blogPosts/123 => cancella il blog post con l'id associato
+  OK - GET /blogPosts => ritorna una lista di blog post
+  OK - GET /blogPosts/123 => ritorna un singolo blog post
+  OK - POST /blogPosts => crea un nuovo blog post
+  OK - PUT /blogPosts/123 => modifica il blog post con l'id associato
+  OK - DELETE /blogPosts/123 => cancella il blog post con l'id associato
 
   STRIVE BLOG - EXTRA (facoltativi, per ora)
   - Fare la POST di un articolo dal form di aggiunta articolo
   - Fare la fetch degli articoli presenti nel database e visualizzarli nella homepage
-  - GET /authors/:id/blogPosts/ => ricevi tutti i blog post di uno specifico autore dal corrispondente ID
-  - GET /blogPosts?title=whatever => filtra i blog post e ricevi l'unico che corrisponda alla condizione di ricerca (es: titolo contiene "whatever")
+  OK - GET /authors/:id/blogPosts/ => ricevi tutti i blog post di uno specifico autore dal corrispondente ID
+  OK - GET /blogPosts?title=whatever => filtra i blog post e ricevi l'unico che corrisponda alla condizione di ricerca (es: titolo contiene "whatever")
   - Aggiungi la funzionalità di ricerca dei post nel frontend

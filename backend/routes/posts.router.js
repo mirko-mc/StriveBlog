@@ -12,19 +12,19 @@ ROUTER.get("/", async (req, res) => {
   const TITLE = req.query.title;
   try {
     if (TITLE) {
-      const POSTBLOG = await PostsSchema.findOne({
+      const BlogPostsQueryTitle = await PostsSchema.findOne({
         title: { $regex: TITLE, $options: "i" },
       });
-      res.send(POSTBLOG);
+      res.send(BlogPostsQueryTitle);
     } else {
-      const POSTSBLOG = await PostsSchema.find()
+      const AllBlogPosts = await PostsSchema.find()
         .sort({ name: 1 })
         .skip((PAGE - 1) * PERPAGE)
         .limit(PERPAGE);
       const totalResults = await PostsSchema.countDocuments();
       const totalPages = Math.ceil(totalResults / PERPAGE);
       res.send({
-        data: POSTSBLOG,
+        data: AllBlogPosts,
         totalResults,
         totalPages,
         page: PAGE,
@@ -34,17 +34,19 @@ ROUTER.get("/", async (req, res) => {
     console.log(err);
   }
 });
+
 /** GET /blogPosts/123 => ritorna un singolo blog post */
 ROUTER.get("/:id", async (req, res) => {
-  const POSTBLOG = await PostsSchema.findById(req.params.id);
-  res.send(POSTBLOG);
+  const SingleBlogPost = await PostsSchema.findById(req.params.id);
+  res.send(SingleBlogPost);
 });
+
 /** POST /blogPosts => crea un nuovo blog post */
 ROUTER.post("/", async (req, res) => {
-  const POSTBLOG = new PostsSchema(req.body);
+  const NewBlogPost = new PostsSchema(req.body);
   try {
-    await POSTBLOG.save();
-    res.status(201).send(POSTBLOG);
+    await NewBlogPost.save();
+    res.status(201).send(NewBlogPost);
   } catch (err) {
     console.log(err);
     res.status(400).send({
@@ -52,16 +54,17 @@ ROUTER.post("/", async (req, res) => {
     });
   }
 });
+
 /** PUT /blogPosts/123 => modifica il blog post con l'id associato */
 ROUTER.put("/:id", async (req, res) => {
   try {
-    const POSTBLOG = await PostsSchema.findByIdAndUpdate(
+    const EditBlogPost = await PostsSchema.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
     );
-    await POSTBLOG.save();
-    res.send(POSTBLOG);
+    await EditBlogPost.save();
+    res.send(EditBlogPost);
   } catch (err) {
     console.log(err);
     res.status(400).send({
@@ -69,13 +72,13 @@ ROUTER.put("/:id", async (req, res) => {
     });
   }
 });
+
 /** DELETE /blogPosts/123 => cancella il blog post con l'id associato */
 ROUTER.delete("/:id", async (req, res) => {
-  await PostsSchema.findByIdAndDelete(req.params.id);
-  res.send(`cancellato il postblog con l'id ${req.params.id}`);
+  const DelBlogPost = await PostsSchema.findByIdAndDelete(req.params.id);
+  res.send(`cancellato il postblog ${DelBlogPost.title}`);
 });
 
-/** STRIVE BLOG - EXTRA (facoltativi, per ora) */
 /** Fare la POST di un articolo dal form di aggiunta articolo */
 /** Fare la fetch degli articoli presenti nel database e visualizzarli nella homepage */
 /** Aggiungi la funzionalità di ricerca dei post nel frontend */
