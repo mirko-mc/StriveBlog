@@ -6,12 +6,21 @@ import { GetAllBlogPosts } from "../../data/fetch";
 
 const Home = (props) => {
   const [AllBlogPosts, setAllBlogPosts] = useState(null);
+  const { searchBlogPost } = props;
+  console.log(searchBlogPost);
+  console.log(!searchBlogPost);
+
   const HandleGetAllBlogPosts = async () => {
     // return await GetAllBlogPosts().then((data) => setAllBlogPosts(data));
     return setAllBlogPosts(await GetAllBlogPosts());
   };
   useEffect(() => {
     !AllBlogPosts && HandleGetAllBlogPosts();
+    console.log(AllBlogPosts.data);
+    // agginugere for of o for each per effettuare la ricerca
+    // !searchBlogPost &&
+    //   AllBlogPosts.data.title.includes(searchBlogPost) &&
+    //   console.log(AllBlogPosts.data.title);
   }, [AllBlogPosts]);
   return (
     <Container fluid="sm">

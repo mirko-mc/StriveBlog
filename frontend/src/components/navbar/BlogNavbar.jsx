@@ -1,17 +1,31 @@
 import React from "react";
-import { Button, Container, Navbar } from "react-bootstrap";
+import { Button, Container, Form, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import "./styles.css";
-const NavBar = props => {
+const NavBar = (props) => {
+  const { setSearchBlogPost } = props;
   return (
     <Navbar expand="lg" className="blog-navbar" fixed="top">
       <Container className="justify-content-between">
         <Navbar.Brand as={Link} to="/">
           <img className="blog-navbar-brand" alt="logo" src={logo} />
         </Navbar.Brand>
+        
+        <Form>
+          <Form.Control
+            type="text"
+            placeholder="Cerca l'articolo..."
+            onChange={(e) => setSearchBlogPost(e.target.value)}
+          />
+        </Form>
 
-        <Button as={Link} to="/new" className="blog-navbar-add-button bg-dark" size="lg">
+        <Button
+          as={Link}
+          to="/new"
+          className="blog-navbar-add-button bg-dark"
+          size="lg"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
