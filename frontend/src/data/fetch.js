@@ -6,12 +6,12 @@ export const GetAllAuthors = async () => {
   try {
     const res = await fetch(FetchAuthorsUrl);
     const data = await res.json();
-    console.log(res);
-    console.log(data);
+    console.log("RES GetAllAuthors\n", res);
+    console.log("DATA GetAllAuthors\n", data);
     if (!res.ok) throw new Error(res);
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("ERR GetAllAuthors\n", err);
   }
 };
 
@@ -20,11 +20,11 @@ export const GetSingleAuthor = async (id) => {
   try {
     const res = await fetch(`${FetchAuthorsUrl}/${id}`);
     const data = await res.json();
-    console.log(res);
-    console.log(data);
+    console.log("RES GetSingleAuthor\n", res);
+    console.log("DATA GetSingleAuthor\n", data);
     if (!res.ok) throw new Error(res);
   } catch (err) {
-    console.log(err);
+    console.log("ERR GetSingleAuthor\n", err);
   }
 };
 
@@ -39,12 +39,12 @@ export const PostNewAutor = async (formValue) => {
       body: JSON.stringify(formValue),
     });
     const data = await res.json();
-    console.log(res);
-    console.log(data);
+    console.log("RES PostNewAutor\n", res);
+    console.log("DATA PostNewAutor\n", data);
     if (!res.ok) throw new Error(res);
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("ERR PostNewAutor\n", err);
   }
 };
 
@@ -59,12 +59,12 @@ export const PutEditAuthor = async (id, formValue) => {
       body: JSON.stringify(formValue),
     });
     const data = await res.json();
-    console.log(res);
-    console.log(data);
+    console.log("RES PutEditAuthor\n", res);
+    console.log("DATA PutEditAuthor\n", data);
     if (!res.ok) throw new Error(res);
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("ERR PutEditAuthor\n", err);
   }
 };
 
@@ -78,12 +78,12 @@ export const DeleteAuthor = async (id) => {
       method: "DELETE",
     });
     const data = await res.json();
-    console.log(res);
-    console.log(data);
+    console.log("RES DeleteAuthor\n", res);
+    console.log("DATA DeleteAuthor\n", data);
     if (!res.ok) throw new Error(res);
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("ERR DeleteAuthor\n", err);
   }
 };
 
@@ -94,12 +94,12 @@ export const GetAllBlogPosts = async () => {
   try {
     const res = await fetch(FetchBlogPostsUrl);
     const data = await res.json();
-    console.log(res);
-    console.log(data);
+    console.log("RES GetAllBlogPosts\n", res);
+    console.log("DATA GetAllBlogPosts\n", data);
     if (!res.ok) throw new Error(res);
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("ERR GetAllBlogPosts\n", err);
   }
 };
 
@@ -108,12 +108,12 @@ export const GetSingleBlogPost = async (id) => {
   try {
     const res = await fetch(`${FetchBlogPostsUrl}/${id}`);
     const data = await res.json();
-    console.log(res);
-    console.log(data);
+    console.log("RES GetSingleBlogPost\n", res);
+    console.log("DATA GetSingleBlogPost\n", data);
     if (!res.ok) throw new Error(res);
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("ERR GetSingleBlogPost\n", err);
   }
 };
 
@@ -122,12 +122,12 @@ export const GetAuthorBlogPosts = async (id) => {
   try {
     const res = await fetch(`${FetchAuthorsUrl}/${id}/blogPosts`);
     const data = await res.json();
-    console.log(res);
-    console.log(data);
+    console.log("RES GetAuthorBlogPosts\n", res);
+    console.log("DATA GetAuthorBlogPosts\n", data);
     if (!res.ok) throw new Error(res);
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("ERR GetAuthorBlogPosts\n", err);
   }
 };
 
@@ -136,12 +136,12 @@ export const GetBlogPostsQueryTitle = async (title) => {
   try {
     const res = await fetch(`${FetchBlogPostsUrl}?title=${title}`);
     const data = await res.json();
-    console.log(res);
-    console.log(data);
+    console.log("RES GetBlogPostsQueryTitle\n", res);
+    console.log("DATA GetBlogPostsQueryTitle\n", data);
     if (!res.ok) throw new Error(res);
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("ERR GetBlogPostsQueryTitle\n", err);
   }
 };
 
@@ -156,12 +156,12 @@ export const PostNewBlogPost = async (formValue) => {
       body: JSON.stringify(formValue),
     });
     const data = await res.json();
-    console.log(res);
-    console.log(data);
+    console.log("RES PostNewBlogPost\n", res);
+    console.log("DATA PostNewBlogPost\n", data);
     if (!res.ok) throw new Error(res);
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("ERR PostNewBlogPost\n", err);
   }
 };
 
@@ -176,12 +176,12 @@ export const PutEditBlogPost = async (id, formValue) => {
       body: JSON.stringify(formValue),
     });
     const data = await res.json();
-    console.log(res);
-    console.log(data);
+    console.log("RES PutEditBlogPost\n", res);
+    console.log("DATA PutEditBlogPost\n", data);
     if (!res.ok) throw new Error(res);
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("ERR PutEditBlogPost\n", err);
   }
 };
 
@@ -190,11 +190,11 @@ export const DeleteBlogPost = async (id) => {
   try {
     const res = await fetch(`${FetchBlogPostsUrl}/${id}`);
     const data = await res.json();
-    console.log(res);
-    console.log(data);
+    console.log("RES DeleteBlogPost\n", res);
+    console.log("DATA DeleteBlogPost\n", data);
     if (!res.ok) throw new Error(res);
     return data;
   } catch (err) {
-    console.log(err);
+    console.log("ERR DeleteBlogPost\n", err);
   }
 };

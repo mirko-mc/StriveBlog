@@ -3,10 +3,11 @@ import { Col, Row } from "react-bootstrap";
 import posts from "../../../data/posts.json";
 import BlogItem from "../blog-item/BlogItem";
 
-const BlogList = props => {
+const BlogList = (props) => {
+  const { AllBlogPosts } = props;
   return (
     <Row>
-      {posts.map((post, i) => (
+      {AllBlogPosts.map((blogPost, i) => (
         <Col
           key={`item-${i}`}
           md={4}
@@ -14,7 +15,7 @@ const BlogList = props => {
             marginBottom: 50,
           }}
         >
-          <BlogItem key={post.title} {...post} />
+          <BlogItem key={blogPost.title} {...blogPost} />
         </Col>
       ))}
     </Row>
