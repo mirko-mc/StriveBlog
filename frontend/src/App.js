@@ -7,7 +7,7 @@ import NewBlogPost from "./views/new/New";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
-  const [searchBlogPost, setSearchBlogPost] = useState("");
+  const [SearchBlogPost, setSearchBlogPost] = useState("");
   return (
     <Router>
       <NavBar setSearchBlogPost={setSearchBlogPost} />
@@ -15,7 +15,7 @@ function App() {
         <Route
           path="/"
           exact
-          element={<Home searchBlogPost={searchBlogPost} />}
+          element={<Home SearchBlogPost={SearchBlogPost} />}
         />
         <Route path="/blog/:id" element={<Blog />} />
         <Route path="/new" element={<NewBlogPost />} />

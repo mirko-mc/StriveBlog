@@ -4,10 +4,10 @@ import posts from "../../../data/posts.json";
 import BlogItem from "../blog-item/BlogItem";
 
 const BlogList = (props) => {
-  const { AllBlogPosts } = props;
+  const { BlogPostsToRender } = props;
   return (
     <Row>
-      {AllBlogPosts.map((blogPost, i) => (
+      {BlogPostsToRender.map((blogPost, i) => (
         <Col
           key={`item-${i}`}
           md={4}
