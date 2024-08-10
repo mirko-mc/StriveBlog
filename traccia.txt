@@ -56,7 +56,7 @@ m6w1d4 - IL NOSTRO PRIMO API
   OK - DELETE /blogPosts/123 => cancella il blog post con l'id associato
 
   STRIVE BLOG - EXTRA (facoltativi, per ora)
-  - Fare la POST di un articolo dal form di aggiunta articolo
+  OK - Fare la POST di un articolo dal form di aggiunta articolo
   OK - Fare la fetch degli articoli presenti nel database e visualizzarli nella homepage
   OK - GET /authors/:id/blogPosts/ => ricevi tutti i blog post di uno specifico autore dal corrispondente ID
   OK - GET /blogPosts?title=whatever => filtra i blog post e ricevi l'unico che corrisponda alla condizione di ricerca (es: titolo contiene "whatever")

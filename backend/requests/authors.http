@@ -2,8 +2,10 @@
 
 ### RITORNA LA LISTA DEGLI AUTORI
 GET {{baseUrl}}
+###
+GET {{baseUrl}}?page=1&perPage=5
 ### RITORNA IL SINGOLO AUTORE
-GET {{baseUrl}}/66a938123c314f505d26f791
+GET {{baseUrl}}/66a938123c314f505d26f795
 ### CREA UN NUOVO AUTORE
 POST {{baseUrl}}
 Content-Type: application/json
@@ -12,7 +14,7 @@ Content-Type: application/json
   "name": "Giuseppe",
   "surname": "Esposito",
   "birthDate": "10/10/2010",
-  "email": "giuseppre@esposito.com",
+  "email": "andrea@sota.com",
   "avatar": "https://picsum.photos/300/300"
 }
 ### MODIFICA UN AUTORE CON ID ASSOCIATO

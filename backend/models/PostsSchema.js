@@ -11,10 +11,12 @@ const posts = new Schema(
     title: {
       type: String,
       required: true,
-      unique: true,
     },
     // link dell'immagine,
-    cover: String,
+    cover: {
+      type: String,
+      default: "https://picsum.photos/1000/300",
+    },
     readTime: {
       // numero,
       value: Number,
@@ -24,7 +26,7 @@ const posts = new Schema(
     // id dell'autore del post,
     author: {
       type: String,
-      unique: true,
+      // required: true,
     },
     // HTML dell'articolo
     content: {

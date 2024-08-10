@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Button, Container, Row } from "react-bootstrap";
 import BlogList from "../../components/blog/blog-list/BlogList";
 import "./styles.css";
-import { GetAllBlogPosts } from "../../data/fetch";
+import {
+  setRandomAuthors,
+  GetAllBlogPosts,
+  setRandomBlogPosts,
+} from "../../data/fetch";
 
 const Home = (props) => {
   const [AllBlogPosts, setAllBlogPosts] = useState({});
@@ -17,7 +21,7 @@ const Home = (props) => {
   };
 
   useEffect(() => {
-    /** UTILIZZO UNA FUNZIONE ASYNC PER POPOLARE LO STATO COSI' DA NON TRIGGERARE LO USEFFECT PRIMA CHE LA FETCH SIA COMPLETATA */
+    /** UTILIZZO DELLE FUNZIONI ASYNC PER POPOLARE LO STATO COSI' DA NON TRIGGERARE LO USEFFECT PRIMA CHE LA FETCH SIA COMPLETATA */
     !AllBlogPosts?.data && HandleGetAllBlogPosts();
     // console.log("USE EFFECT => !AllBlogPosts?.data\n", !AllBlogPosts?.data);
     /** SE SIA ALLTHEBLOGPOSTS CHE SEARCHBLOGPOST SONO VALORIZZATI VUOL DIRE CHE L'UTENTE VUOLE EFFETTUARE UNA RICERCA... */
@@ -40,6 +44,10 @@ const Home = (props) => {
   return (
     <Container fluid="sm">
       <h1 className="blog-main-title mb-3">Benvenuto sullo Strive Blog!</h1>
+      <Row className="justify-content-evenly">
+        <Button onClick={setRandomAuthors}>Genera 20 autori casuali</Button>
+        <Button onClick={setRandomBlogPosts}>Genera 20 post casuali</Button>
+      </Row>
       {BlogPostsToRender && <BlogList BlogPostsToRender={BlogPostsToRender} />}
     </Container>
   );

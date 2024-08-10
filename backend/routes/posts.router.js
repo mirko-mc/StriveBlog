@@ -6,11 +6,13 @@ const ROUTER = express.Router();
 /** STRIVE BLOG - ROTTE */
 /** GET /blogPosts => ritorna una lista di blog post */
 ROUTER.get("/", async (req, res) => {
-  const PAGE = req.query.page || 1;
-  const PERPAGE = req.query.perPage || 5;
-  /** GET /blogPosts?title=whatever => filtra i blog post e ricevi l'unico che corrisponda alla condizione di ricerca (es: titolo contiene "whatever") */
-  const TITLE = req.query.title;
   try {
+    const totalResults = await PostsSchema.countDocuments();
+    const PAGE = req.query.page || 1;
+    const PERPAGE = req.query.perPage || totalResults;
+    const totalPages = Math.ceil(totalResults / PERPAGE);
+    /** GET /blogPosts?title=whatever => filtra i blog post e ricevi l'unico che corrisponda alla condizione di ricerca (es: titolo contiene "whatever") */
+    const TITLE = req.query.title;
     if (TITLE) {
       const BlogPostsQueryTitle = await PostsSchema.findOne({
         title: { $regex: TITLE, $options: "i" },
@@ -18,11 +20,9 @@ ROUTER.get("/", async (req, res) => {
       res.send(BlogPostsQueryTitle);
     } else {
       const AllBlogPosts = await PostsSchema.find()
-        .sort({ name: 1 })
+        // .sort({ name: 1 })
         .skip((PAGE - 1) * PERPAGE)
         .limit(PERPAGE);
-      const totalResults = await PostsSchema.countDocuments();
-      const totalPages = Math.ceil(totalResults / PERPAGE);
       res.send({
         data: AllBlogPosts,
         totalResults,
@@ -32,26 +32,37 @@ ROUTER.get("/", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
+    res.status(500).send(err);
   }
 });
 
 /** GET /blogPosts/123 => ritorna un singolo blog post */
 ROUTER.get("/:id", async (req, res) => {
-  const SingleBlogPost = await PostsSchema.findById(req.params.id);
-  res.send(SingleBlogPost);
+  try {
+    const SingleBlogPost = await PostsSchema.findById(req.params.id);
+    !SingleBlogPost
+      ? res.status(404).send({ code: 404, message: "Post not found" })
+      : res.send(SingleBlogPost);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 });
 
 /** POST /blogPosts => crea un nuovo blog post */
 ROUTER.post("/", async (req, res) => {
-  const NewBlogPost = new PostsSchema(req.body);
   try {
+    !req.body.category &&
+      res.status(400).send({ message: "Category is required" });
+    !req.body.title && res.status(400).send({ message: "Title is required" });
+    !req.body.content &&
+      res.status(400).send({ message: "Content is required" });
+    const NewBlogPost = new PostsSchema(req.body);
     await NewBlogPost.save();
     res.status(201).send(NewBlogPost);
   } catch (err) {
     console.log(err);
-    res.status(400).send({
-      message: "qualcosa è andato storto, controlla i dati e riprova",
-    });
+    res.status(400).send(err);
   }
 });
 
@@ -63,24 +74,24 @@ ROUTER.put("/:id", async (req, res) => {
       req.body,
       { new: true }
     );
+    //??? è necessario salvare?
     await EditBlogPost.save();
     res.send(EditBlogPost);
   } catch (err) {
     console.log(err);
-    res.status(400).send({
-      message: "qualcosa è andato storto, controlla i dati e riprova",
-    });
+    res.status(500).send(err);
   }
 });
 
 /** DELETE /blogPosts/123 => cancella il blog post con l'id associato */
 ROUTER.delete("/:id", async (req, res) => {
-  const DelBlogPost = await PostsSchema.findByIdAndDelete(req.params.id);
-  res.send(`cancellato il postblog ${DelBlogPost.title}`);
+  try {
+    await PostsSchema.findByIdAndDelete(req.params.id);
+    res.send({ message: "BlogPost deleted" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 });
-
-/** Fare la POST di un articolo dal form di aggiunta articolo */
-/** Fare la fetch degli articoli presenti nel database e visualizzarli nella homepage */
-/** Aggiungi la funzionalità di ricerca dei post nel frontend */
 
 export default ROUTER;

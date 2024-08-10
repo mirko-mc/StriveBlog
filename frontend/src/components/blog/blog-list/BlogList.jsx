@@ -7,15 +7,15 @@ const BlogList = (props) => {
   const { BlogPostsToRender } = props;
   return (
     <Row>
-      {BlogPostsToRender.map((blogPost, i) => (
+      {BlogPostsToRender.map((blogPost) => (
         <Col
-          key={`item-${i}`}
+          key={blogPost._id}
           md={4}
           style={{
             marginBottom: 50,
           }}
         >
-          <BlogItem key={blogPost.title} {...blogPost} />
+          <BlogItem key={blogPost._id} {...blogPost} />
         </Col>
       ))}
     </Row>

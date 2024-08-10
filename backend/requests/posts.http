@@ -1,9 +1,11 @@
 @baseUrl=http://localhost:5000/blogPosts
 
 ### RITORNA LA LISTA DEI POSTSBLOG
-GET {{baseUrl}}?page=1
+GET {{baseUrl}}
+###
+GET {{baseUrl}}?page=5&perPage=5
 ### RITORNA IL SINGOLO POSTBLOG
-GET {{baseUrl}}/66acfa5421bf7d364dd20d24
+GET {{baseUrl}}/66acfa5421bf7d364dd20d25
 
 ### RITORNA IL PRIMO RISULTATO NELLA RICERCA DEL TITOLO
 GET {{baseUrl}}?title=dUe
