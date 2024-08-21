@@ -25,7 +25,7 @@ m6w1d1 - IL NOSTRO PRIMO API
     - Nota: Se vuoi connettere il backend e frontend oggi dovrai installare il pacchetto 'cors' con il comando 'npm i cors'
     - Dovrai quindi importarlo con un import statement
     - Puoi usare cors col seguente comando 'server.use(cors())'
-    - Impareremo cos'è CORS prossimamente ;)
+    - Impareremo cos'è CORS prossimamente ;
 
 m6w1d4 - IL NOSTRO PRIMO API
   STRIVE BLOG - CAPITOLO 2

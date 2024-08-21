@@ -10,12 +10,15 @@ ROUTER.get("/", async (req, res) => {
     /** calcoliamo il numero totale di risultati */
     const totalResults = await AuthorsSchema.countDocuments();
     const page = req.query.page || 1;
-    const perPage = req.query.perPage || totalResults;
+    let perPage = req.query.perPage || totalResults;
+    perPage = perPage > 5 ? 5 : perPage;
     /** calcoliamo il numero totale di pagine */
     const totalPages = Math.ceil(totalResults / perPage);
     const AllAuthors = await AuthorsSchema.find()
+      // db.getCollection('users').find({}).collation({locale: "en"}).sort({name:1})
+      .collation({ locale: "it" })
       /** li ordiniamo per crescente di nome e poi cognome decrescente */
-      // .sort({ name: 1, surname: -1 })
+      .sort({ name: 1, surname: 1 })
       /** saltiamo le pagine per restituire la pagina richiesta dall'utente */
       .skip((page - 1) * perPage)
       /** limitiamo il numero di post per pagina */
@@ -56,14 +59,23 @@ ROUTER.get("/:id", async (req, res) => {
 ROUTER.post("/", async (req, res) => {
   try {
     if (await AuthorsSchema.exists({ email: req.body.email }))
-      res.status(400).send({ message: "Email already exists" });
-    !req.body.name && res.status(400).send({ message: "Name is required" });
-    !req.body.surname &&
-      res.status(400).send({ message: "Surname is required" });
-    !req.body.email && res.status(400).send({ message: "Email is required" });
+      throw new Error("Email already exists");
+    // return res.status(400).send({ message: "Email already exists" });
+
+    if (!req.body.name) throw new Error("Name is required");
+    // return res.status(400).send({ message: "Name is required" });
+
+    if (!req.body.surname) throw new Error("Surname is required");
+    // res.status(400).send({ message: "Surname is required" });
+
+    if (!req.body.email) throw new Error("Email is required");
+    // && res.status(400).send({ message: "Email is required" });
     /** crea nuova istanza del modello autore con i dati definiti nelle tonde (li prende dal body)*/
     const NewAuthor = new AuthorsSchema(req.body);
-
+    /** ci assicuriamo che l'utente abbia inserito un avatar altrimenti ne impostiamo uno di default */
+    NewAuthor.avatar = NewAuthor.avatar
+      ? NewAuthor.avatar
+      : "https://njhalloffame.org/wp-content/uploads/2021/04/generic-avatar-300x300.png";
     /** procedura estesa per campi statici */
     // const PostNewAuthor = new AuthorsSchema({
     //   name: req.body.name,
@@ -82,7 +94,7 @@ ROUTER.post("/", async (req, res) => {
     res.status(201).send(NewAuthor);
   } catch (err) {
     console.log(err);
-    res.status(400).send(err);
+    res.status(400).send({ message: err.message });
   }
 });
 

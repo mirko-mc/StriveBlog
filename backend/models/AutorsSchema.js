@@ -23,6 +23,8 @@ const authors = new Schema(
     },
     avatar: {
       type: String,
+      default:
+        "https://njhalloffame.org/wp-content/uploads/2021/04/generic-avatar-300x300.png",
     },
   },
   /** naming convention: la collection plurale */

@@ -11,11 +11,11 @@ POST {{baseUrl}}
 Content-Type: application/json
 
 {
-  "name": "Giuseppe",
-  "surname": "Esposito",
-  "birthDate": "10/10/2010",
-  "email": "andrea@sota.com",
-  "avatar": "https://picsum.photos/300/300"
+  "name": "Andrea",
+  "surname": "Campetiello",
+  "birthDate": "1999-12-08T00:00:00.000Z",
+  "email": "andrea@campetiello.com",
+  "avatar": "https://njhalloffame.org/wp-content/uploads/2021/04/generic-avatar-300x300.png"
 }
 ### MODIFICA UN AUTORE CON ID ASSOCIATO
 PUT {{baseUrl}}/66aa721423ea2989207e7eb5

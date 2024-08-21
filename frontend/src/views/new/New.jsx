@@ -77,7 +77,7 @@ const NewBlogPost = (props) => {
             style={{
               marginLeft: "1em",
             }}
-            onClick={() => handleSubmit()}
+            onClick={() => PostNewBlogPost(formValue)}
           >
             Invia
           </Button>

@@ -4,11 +4,13 @@ import AuthorsRouter from "./routes/authors.router.js";
 import mongoose from "mongoose";
 import "dotenv/config";
 import PostsRouter from "./routes/posts.router.js";
+import morgan from "morgan";
 
 /** dichiaro la porta da usare */
 const PORT = process.env.PORT || 5000;
 /** dichiaro il server */
 const SERVER = express();
+SERVER.use(morgan("dev"))
 /** dichiaro l'utilizzo di cors e json */
 SERVER.use(cors());
 SERVER.use(express.json());

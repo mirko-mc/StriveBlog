@@ -13,23 +13,25 @@ ROUTER.get("/", async (req, res) => {
     const totalPages = Math.ceil(totalResults / PERPAGE);
     /** GET /blogPosts?title=whatever => filtra i blog post e ricevi l'unico che corrisponda alla condizione di ricerca (es: titolo contiene "whatever") */
     const TITLE = req.query.title;
-    if (TITLE) {
-      const BlogPostsQueryTitle = await PostsSchema.findOne({
-        title: { $regex: TITLE, $options: "i" },
-      });
-      res.send(BlogPostsQueryTitle);
-    } else {
-      const AllBlogPosts = await PostsSchema.find()
-        // .sort({ name: 1 })
-        .skip((PAGE - 1) * PERPAGE)
-        .limit(PERPAGE);
-      res.send({
-        data: AllBlogPosts,
-        totalResults,
-        totalPages,
-        page: PAGE,
-      });
-    }
+    // if (TITLE) {
+    //   const BlogPostsQueryTitle = await PostsSchema.findOne({
+    //     title: { $regex: TITLE, $options: "i" },
+    //   });
+    //   res.send(BlogPostsQueryTitle);
+    // } else {
+    const AllBlogPosts = await PostsSchema.find(
+      TITLE ? { title: { $regex: TITLE, $options: "i" } } : {}
+    )
+      // .sort({ name: 1 })
+      .skip((PAGE - 1) * PERPAGE)
+      .limit(PERPAGE);
+    res.send({
+      data: AllBlogPosts,
+      totalResults,
+      totalPages,
+      page: PAGE,
+    });
+    // }
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
