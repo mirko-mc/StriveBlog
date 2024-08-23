@@ -61,3 +61,13 @@ m6w1d4 - IL NOSTRO PRIMO API
   OK - GET /authors/:id/blogPosts/ => ricevi tutti i blog post di uno specifico autore dal corrispondente ID
   OK - GET /blogPosts?title=whatever => filtra i blog post e ricevi l'unico che corrisponda alla condizione di ricerca (es: titolo contiene "whatever")
   OK - Aggiungi la funzionalità di ricerca dei post nel frontend
+
+  m6w2d4 - IL NOSTRO PRIMO API
+    UPLOAD DI IMMAGINI
+    - Il backend dovrebbe includere queste nuove routes:
+      - PATCH /authors/:authorId/avatar, carica un'immagine per l'autore specificato e salva l'URL creata da Cloudinary nel database.
+      - PATCH /blogPosts/:blogPostId/cover, carica un'immagine per il post specificato dall'id. Salva l'URL creato da Cloudinary nel post corrispondente.
+      - EXTRA (facoltativi!): Invia un email all'autore quando pubblica un nuovo blog post e quando un nuovo autore si registra sulla piattaforma.
+      - Assicurati di inserire l'API key e l'API secret di Cloudinary sul tuo .env
+      - Assicurati di importare "dotenv/config" per inizializzare dotenv (non è necessario installarlo)
+      - Assicurati di avere la key di sendgrid nel tuo .env sotto la voce SENDGRID_API_KEY

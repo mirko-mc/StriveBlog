@@ -60,8 +60,8 @@ ROUTER.post("/", async (req, res) => {
     !req.body.content &&
       res.status(400).send({ message: "Content is required" });
     const NewBlogPost = new PostsSchema(req.body);
-    await NewBlogPost.save();
-    res.status(201).send(NewBlogPost);
+    const CreatedBlogPost = await NewBlogPost.save();
+    res.status(201).send(CreatedBlogPost);
   } catch (err) {
     console.log(err);
     res.status(400).send(err);
