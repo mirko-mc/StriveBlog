@@ -1,11 +1,13 @@
 import express from "express";
 import PostsSchema from "../models/PostsSchema.js";
+import uploadCloudinary from "../middlewares/uploads.js";
+import { ChangeCover } from "../controllers/blogPost.controller.js";
 
-const ROUTER = express.Router();
+const Router = express.Router();
 
 /** STRIVE BLOG - ROTTE */
 /** GET /blogPosts => ritorna una lista di blog post */
-ROUTER.get("/", async (req, res) => {
+Router.get("/", async (req, res) => {
   try {
     const totalResults = await PostsSchema.countDocuments();
     const PAGE = req.query.page || 1;
@@ -39,7 +41,7 @@ ROUTER.get("/", async (req, res) => {
 });
 
 /** GET /blogPosts/123 => ritorna un singolo blog post */
-ROUTER.get("/:id", async (req, res) => {
+Router.get("/:id", async (req, res) => {
   try {
     const SingleBlogPost = await PostsSchema.findById(req.params.id);
     !SingleBlogPost
@@ -52,7 +54,7 @@ ROUTER.get("/:id", async (req, res) => {
 });
 
 /** POST /blogPosts => crea un nuovo blog post */
-ROUTER.post("/", async (req, res) => {
+Router.post("/", async (req, res) => {
   try {
     !req.body.category &&
       res.status(400).send({ message: "Category is required" });
@@ -69,7 +71,7 @@ ROUTER.post("/", async (req, res) => {
 });
 
 /** PUT /blogPosts/123 => modifica il blog post con l'id associato */
-ROUTER.put("/:id", async (req, res) => {
+Router.put("/:id", async (req, res) => {
   try {
     const EditBlogPost = await PostsSchema.findByIdAndUpdate(
       req.params.id,
@@ -86,7 +88,7 @@ ROUTER.put("/:id", async (req, res) => {
 });
 
 /** DELETE /blogPosts/123 => cancella il blog post con l'id associato */
-ROUTER.delete("/:id", async (req, res) => {
+Router.delete("/:id", async (req, res) => {
   try {
     await PostsSchema.findByIdAndDelete(req.params.id);
     res.send({ message: "BlogPost deleted" });
@@ -96,4 +98,7 @@ ROUTER.delete("/:id", async (req, res) => {
   }
 });
 
-export default ROUTER;
+/** PATCH /blogPosts/:blogPostId/cover, carica un'immagine per il post specificato dall'id. Salva l'URL creato da Cloudinary nel post corrispondente. */
+Router.patch("/:id/cover", uploadCloudinary.single("cover"), ChangeCover);
+
+export default Router;
