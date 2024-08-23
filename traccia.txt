@@ -67,7 +67,7 @@ m6w1d4 - IL NOSTRO PRIMO API
     - Il backend dovrebbe includere queste nuove routes:
       OK - PATCH /authors/:authorId/avatar, carica un'immagine per l'autore specificato e salva l'URL creata da Cloudinary nel database.
       OK - PATCH /blogPosts/:blogPostId/cover, carica un'immagine per il post specificato dall'id. Salva l'URL creato da Cloudinary nel post corrispondente.
-      - EXTRA (facoltativi!): Invia un email all'autore quando pubblica un nuovo blog post e quando un nuovo autore si registra sulla piattaforma.
-      - Assicurati di inserire l'API key e l'API secret di Cloudinary sul tuo .env
-      - Assicurati di importare "dotenv/config" per inizializzare dotenv (non è necessario installarlo)
-      - Assicurati di avere la key di sendgrid nel tuo .env sotto la voce SENDGRID_API_KEY
+      OK - EXTRA (facoltativi!): Invia un email all'autore quando pubblica un nuovo blog post e quando un nuovo autore si registra sulla piattaforma.
+      OK - Assicurati di inserire l'API key e l'API secret di Cloudinary sul tuo .env
+      OK - Assicurati di importare "dotenv/config" per inizializzare dotenv (non è necessario installarlo)
+      OK - Assicurati di avere la key di sendgrid nel tuo .env sotto la voce SENDGRID_API_KEY
