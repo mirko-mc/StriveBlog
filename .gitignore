@@ -116,6 +116,7 @@ dist
 /build
 
 # misc
+/backend/uploads/
 traccia.txt
 .DS_Store
 .env.local

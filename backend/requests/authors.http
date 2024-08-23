@@ -12,13 +12,13 @@ Content-Type: application/json
 
 {
   "name": "Andrea",
-  "surname": "Campetiello",
+  "surname": "Scannapieco",
   "birthDate": "1999-12-08T00:00:00.000Z",
-  "email": "andrea@campetiello.com",
+  "email": "andrea@scannapieco.com",
   "avatar": "https://njhalloffame.org/wp-content/uploads/2021/04/generic-avatar-300x300.png"
 }
 ### MODIFICA UN AUTORE CON ID ASSOCIATO
-PUT {{baseUrl}}/66aa721423ea2989207e7eb5
+PUT {{baseUrl}}/66b358af641a8fcbbdabaf57
 Content-Type: application/json
 
 {

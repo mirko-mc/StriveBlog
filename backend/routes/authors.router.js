@@ -1,6 +1,8 @@
 import express from "express";
 import AuthorsSchema from "../models/AutorsSchema.js";
 import PostsSchema from "../models/PostsSchema.js";
+import uploadCloudinary from "../middlewares/uploads.js";
+import { ChangeAvatar } from "../controllers/author.controller.js";
 
 const Router = express.Router();
 /** GET /authors => ritorna la lista degli autori */
@@ -111,8 +113,6 @@ Router.put("/:id", async (req, res) => {
       req.body,
       { new: true }
     );
-    //??? è necessario salvare?
-    await EditAuthor.save();
     res.send(EditAuthor);
   } catch (err) {
     console.log(err);
@@ -155,11 +155,6 @@ Router.get("/:id/blogPosts/", async (req, res) => {
 });
 
 /** PATCH /authors/:authorId/avatar, carica un'immagine per l'autore specificato e salva l'URL creata da Cloudinary nel database. */
-Router.patch("/authors/:authorId/avatar", (req, res) => {
-  /**
-   * prendere l'immagine dell'utente e caricarla su Cloudinary
-   * prendere il path dell'immagine e salvarlo nel database alla voce avatar
-   */
-});
+Router.patch("/:id/avatar", uploadCloudinary.single("avatar"), ChangeAvatar);
 
 export default Router;
