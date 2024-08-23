@@ -2,9 +2,9 @@ import express from "express";
 import AuthorsSchema from "../models/AutorsSchema.js";
 import PostsSchema from "../models/PostsSchema.js";
 
-const ROUTER = express.Router();
+const Router = express.Router();
 /** GET /authors => ritorna la lista degli autori */
-ROUTER.get("/", async (req, res) => {
+Router.get("/", async (req, res) => {
   try {
     /** recuperiamo il numero di pagina e il numero di post per pagina */
     /** calcoliamo il numero totale di risultati */
@@ -43,7 +43,7 @@ ROUTER.get("/", async (req, res) => {
 });
 
 /** GET /authors/123 => ritorna il singolo autore */
-ROUTER.get("/:id", async (req, res) => {
+Router.get("/:id", async (req, res) => {
   try {
     const SingleAuthor = await AuthorsSchema.findById(req.params.id);
     !SingleAuthor
@@ -56,7 +56,7 @@ ROUTER.get("/:id", async (req, res) => {
 });
 
 /** POST /authors => crea un nuovo autore */
-ROUTER.post("/", async (req, res) => {
+Router.post("/", async (req, res) => {
   try {
     if (await AuthorsSchema.exists({ email: req.body.email }))
       throw new Error("Email already exists");
@@ -99,13 +99,13 @@ ROUTER.post("/", async (req, res) => {
 });
 
 /** PUT /authors/123 => modifica l'autore con l'id associato */
-ROUTER.put("/:id", async (req, res) => {
+Router.put("/:id", async (req, res) => {
   try {
     if (
       req.body.email &&
       (await AuthorsSchema.exists({ email: req.body.email }))
     )
-      res.status(400).send({ message: "Email already exists" });
+      throw new Error("Email already exists");
     const EditAuthor = await AuthorsSchema.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -116,12 +116,12 @@ ROUTER.put("/:id", async (req, res) => {
     res.send(EditAuthor);
   } catch (err) {
     console.log(err);
-    res.status(500).send(err);
+    res.status(400).send({ message: err.message });
   }
 });
 
 /** DELETE /authors/123 => cancella l'autore con l'id associato */
-ROUTER.delete("/:id", async (req, res) => {
+Router.delete("/:id", async (req, res) => {
   try {
     await AuthorsSchema.findByIdAndDelete(req.params.id);
     res.send({ message: "Author deleted" });
@@ -132,7 +132,7 @@ ROUTER.delete("/:id", async (req, res) => {
 });
 
 /** GET /authors/:id/blogPosts/ => ricevi tutti i blog post di uno specifico autore dal corrispondente ID */
-ROUTER.get("/:id/blogPosts/", async (req, res) => {
+Router.get("/:id/blogPosts/", async (req, res) => {
   try {
     const totalResults = await PostsSchema.countDocuments();
     const PAGE = req.query.page || 1;
@@ -154,4 +154,12 @@ ROUTER.get("/:id/blogPosts/", async (req, res) => {
   }
 });
 
-export default ROUTER;
+/** PATCH /authors/:authorId/avatar, carica un'immagine per l'autore specificato e salva l'URL creata da Cloudinary nel database. */
+Router.patch("/authors/:authorId/avatar", (req, res) => {
+  /**
+   * prendere l'immagine dell'utente e caricarla su Cloudinary
+   * prendere il path dell'immagine e salvarlo nel database alla voce avatar
+   */
+});
+
+export default Router;
