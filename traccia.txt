@@ -71,3 +71,12 @@ m6w1d4 - IL NOSTRO PRIMO API
       OK - Assicurati di inserire l'API key e l'API secret di Cloudinary sul tuo .env
       OK - Assicurati di importare "dotenv/config" per inizializzare dotenv (non è necessario installarlo)
       OK - Assicurati di avere la key di sendgrid nel tuo .env sotto la voce SENDGRID_API_KEY
+
+  m6w2d4 - IL NOSTRO PRIMO API
+    Aggiungiamo al nostro backend la possibilità di aggiungere commenti agli articoli. Il modo migliore per unire i commenti ai post in questo caso e l'embedding.
+    - Implementa i seguenti endpoints:
+      - GET /blogPosts/:id/comments => ritorna tutti commenti di uno specifico post
+      - GET /blogPosts/:id/comments/:commentId => ritorna un commento specifico di un post specifico
+      - POST /blogPosts/:id => aggiungi un nuovo commento ad un post specifico
+      - PUT /blogPosts/:id/comment/:commentId => cambia un commento di un post specifico
+      - DELETE /blogPosts/:id/comment/:commentId => elimina un commento specifico da un post specifico.

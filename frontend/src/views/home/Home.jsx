@@ -15,7 +15,7 @@ const Home = (props) => {
 
   const HandleGetAllBlogPosts = async () => {
     /** ESEGUO LA FETCH PER RECUPERARE TUTTI I BLOGPOSTS E LI INSERISCO NELLO STATO */
-    // le due righe successive eseguono la medesima cosa. quale modo è più corretto?
+    //??? le due righe successive eseguono la medesima cosa. quale modo è più corretto?
     // return await GetAllBlogPosts().then((data) => setAllBlogPosts(data));
     return setAllBlogPosts(await GetAllBlogPosts());
   };

@@ -10,7 +10,7 @@ export const GetAuthors = async (req, res) => {
     const totalResults = await AuthorsSchema.countDocuments();
     const page = req.query.page || 1;
     let perPage = req.query.perPage || totalResults;
-    perPage = perPage > 5 ? 5 : perPage;
+    perPage = perPage > 6 ? 6 : perPage;
     /** calcoliamo il numero totale di pagine */
     const totalPages = Math.ceil(totalResults / perPage);
     const AllAuthors = await AuthorsSchema.find()

@@ -5,7 +5,7 @@ export const GetBlogPosts = async (req, res) => {
   try {
     const totalResults = await PostsSchema.countDocuments();
     const PAGE = req.query.page || 1;
-    const PERPAGE = req.query.perPage || totalResults;
+    const PERPAGE = req.query.perPage || 6;
     const totalPages = Math.ceil(totalResults / PERPAGE);
     /** GET /blogPosts?title=whatever => filtra i blog post e ricevi l'unico che corrisponda alla condizione di ricerca (es: titolo contiene "whatever") */
     const TITLE = req.query.title;

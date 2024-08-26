@@ -262,12 +262,21 @@ export const GetAuthorBlogPosts = async (id) => {
 /** /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ BLOGPOSTS /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */
 
 /** RECUPERA TUTTI I BlogPosts */
-export const GetAllBlogPosts = async (page, perPage) => {
+export const GetAllBlogPosts = async (page, perPage, title) => {
   try {
-    let res = null;
-    if (!perPage || !page) res = await fetch(FetchBlogPostsUrl);
-    else
-      res = await fetch(`${FetchBlogPostsUrl}?page=${page}&perPage=${perPage}`);
+    let FetchBlogPostsUrlParameterized = FetchBlogPostsUrl;
+    (page || perPage || title) && (FetchBlogPostsUrlParameterized += "?");
+    (page || perPage) &&
+      (FetchBlogPostsUrlParameterized += `page=${page}&perPage=${perPage}`);
+    page && perPage && title && (FetchBlogPostsUrlParameterized += "&");
+    title && (FetchBlogPostsUrlParameterized += `title=${title}`);
+    // let res = null;
+    // if (!perPage || !page) {
+    //   if (!title) res = await fetch(FetchBlogPostsUrl);
+    //   else res = await fetch(`${FetchBlogPostsUrl}?title=${title}`);
+    // } else
+    //   res = await fetch(`${FetchBlogPostsUrl}?page=${page}&perPage=${perPage}`);
+    const res = await fetch(FetchBlogPostsUrlParameterized);
     const data = await res.json();
     console.log("RES GetAllBlogPosts\n", res);
     console.log("DATA GetAllBlogPosts\n", data);
