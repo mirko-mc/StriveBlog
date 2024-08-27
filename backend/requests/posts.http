@@ -35,6 +35,9 @@ DELETE {{baseUrl}}/66ad1424543ffbc8f242bde0
 ### ritorna tutti commenti di uno specifico post
 GET {{baseUrl}}/66b3996b8a8dfd9ee108357d/comments
 
+### ritorna un commento specifico di un post specifico
+GET {{baseUrl}}/66b3996b8a8dfd9ee108357d/comments/66ce04ef05fff01ccb034cea
+
 ### aggiungi un nuovo commento ad un post specifico
 POST {{baseUrl}}/66b3996b8a8dfd9ee108357d
 Content-Type: application/json
@@ -42,3 +45,14 @@ Content-Type: application/json
 {
   "content":"commento di prova"
 }
+
+### cambia un commento di un post specifico
+PUT {{baseUrl}}/66b3996b8a8dfd9ee108357d/comment/66ce056705fff01ccb034cf0
+Content-Type: application/json
+
+{
+  "content":"commento di prova"
+}
+
+### elimina un commento specifico da un post specifico.
+DELETE {{baseUrl}}/66b3996b8a8dfd9ee108357d/comment/66ce05effad78a3ac688b335

@@ -121,7 +121,16 @@ export const GetBlogPostAllComments = async (req, res) => {
 /**
  * TODO GET /blogPosts/:blogPostId/comments/:commentId => ritorna un commento specifico di un post specifico
  */
-export const GetBlogPostComment = (req, res) => {};
+export const GetBlogPostComment = async (req, res) => {
+  try {
+    const BlogPost = await PostsSchema.findById(req.params.blogPostId);
+    const BlogPostComment = BlogPost.comments.id(req.params.commentId);
+    res.send(BlogPostComment);
+  } catch (err) {
+    console.log(err);
+    res.send({ message: "errore" });
+  }
+};
 
 /**
  * TODO POST /blogPosts/:blogPostId => aggiungi un nuovo commento ad un post specifico
@@ -141,9 +150,49 @@ export const PostBlogPostComment = async (req, res) => {
 /**
  * TODO PUT /blogPosts/:blogPostId/comment/:commentId => cambia un commento di un post specifico
  */
-export const PutBlogPostComment = (req, res) => {};
+export const PutBlogPostComment = async (req, res) => {
+  try {
+    const BlogPost = await PostsSchema.findById(req.params.blogPostId);
+    // .select("comments");
+    // BlogPost.updateOne(
+    //   { _id: req.params.commentId },
+    //   { content: req.body.content }
+    // );
+
+    // BlogPost.updateOne(
+    //   {
+    //     "comments._id": req.params.commentId,
+    //   },
+    //   { $set: { content: req.body.content } },
+    //   { arrayFilters: [{ _id: "req.params.commentId" }] }
+    // );
+    // BlogPost.save();
+
+    const BlogPostComment = BlogPost.comments.id(req.params.commentId);
+    BlogPostComment.content = req.body.content;
+    await BlogPost.save();
+    console.log(
+      BlogPost.comments.findIndex((Item) => Item.id === req.params.commentId)
+    );
+    res.send({ message: "Edited comment" });
+  } catch (err) {
+    console.log(err);
+    res.send({ message: "There is an error" });
+  }
+};
 
 /**
  * TODO DELETE /blogPosts/:blogPostId/comment/:commentId => elimina un commento specifico da un post specifico.
  */
-export const DeleteBlogPostComment = (req, res) => {};
+export const DeleteBlogPostComment = async (req, res) => {
+  try {
+    const BlogPost = await PostsSchema.findById(req.params.blogPostId);
+    const BlogPostComment = BlogPost.comments.id(req.params.commentId);
+    BlogPostComment.deleteOne();
+    await BlogPost.save();
+    res.send({ message: "Deleted comment" });
+  } catch (err) {
+    console.log(err);
+    res.send({ message: "There is an error" });
+  }
+};
