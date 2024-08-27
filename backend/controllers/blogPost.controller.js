@@ -101,3 +101,49 @@ export const PatchCoverBlogPost = async (req, res) => {
     console.log(err);
   }
 };
+
+/**
+ * TODO GET /blogPosts/:blogPostId/comments => ritorna tutti commenti di uno specifico post
+ * */
+export const GetBlogPostAllComments = async (req, res) => {
+  try {
+    // * recupera blogPost tramite id
+    const BlogPost = await PostsSchema.findById(req.params.blogPostId);
+
+    // * invia i commenti all'utente
+    res.send(BlogPost.comments);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ messaggio: "server error" });
+  }
+};
+
+/**
+ * TODO GET /blogPosts/:blogPostId/comments/:commentId => ritorna un commento specifico di un post specifico
+ */
+export const GetBlogPostComment = (req, res) => {};
+
+/**
+ * TODO POST /blogPosts/:blogPostId => aggiungi un nuovo commento ad un post specifico
+ */
+export const PostBlogPostComment = async (req, res) => {
+  try {
+    const BlogPost = await PostsSchema.findById(req.params.blogPostId);
+    BlogPost.comments.push(req.body);
+    await BlogPost.save();
+    res.send({ message: "Added Comment" });
+  } catch (err) {
+    console.error(err);
+    res.send({ message: "error" });
+  }
+};
+
+/**
+ * TODO PUT /blogPosts/:blogPostId/comment/:commentId => cambia un commento di un post specifico
+ */
+export const PutBlogPostComment = (req, res) => {};
+
+/**
+ * TODO DELETE /blogPosts/:blogPostId/comment/:commentId => elimina un commento specifico da un post specifico.
+ */
+export const DeleteBlogPostComment = (req, res) => {};

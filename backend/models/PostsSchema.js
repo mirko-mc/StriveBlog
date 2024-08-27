@@ -1,5 +1,19 @@
 import { model, Schema } from "mongoose";
 
+const commentsSchema = new Schema(
+  {
+    content: {
+      type: String,
+      min: 10,
+      max: 100,
+      trim: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const posts = new Schema(
   {
     // categoria del post,
@@ -33,6 +47,7 @@ const posts = new Schema(
       type: String,
       required: true,
     },
+    comments: [commentsSchema],
   },
   { collection: "posts" }
 );

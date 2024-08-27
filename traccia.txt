@@ -73,7 +73,7 @@ m6w1d4 - IL NOSTRO PRIMO API
       OK - Assicurati di avere la key di sendgrid nel tuo .env sotto la voce SENDGRID_API_KEY
 
   m6w2d4 - IL NOSTRO PRIMO API
-    Aggiungiamo al nostro backend la possibilità di aggiungere commenti agli articoli. Il modo migliore per unire i commenti ai post in questo caso e l'embedding.
+    Aggiungiamo al nostro backend la possibilità di aggiungere commenti agli articoli. Il modo migliore per unire i commenti ai post in questo caso è l'embedding.
     - Implementa i seguenti endpoints:
       - GET /blogPosts/:id/comments => ritorna tutti commenti di uno specifico post
       - GET /blogPosts/:id/comments/:commentId => ritorna un commento specifico di un post specifico

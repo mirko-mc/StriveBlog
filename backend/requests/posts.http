@@ -31,3 +31,14 @@ Content-Type: application/json
 }
 ### CANCELLA UN POSTBLOG CON ID ASSOCIATO
 DELETE {{baseUrl}}/66ad1424543ffbc8f242bde0
+
+### ritorna tutti commenti di uno specifico post
+GET {{baseUrl}}/66b3996b8a8dfd9ee108357d/comments
+
+### aggiungi un nuovo commento ad un post specifico
+POST {{baseUrl}}/66b3996b8a8dfd9ee108357d
+Content-Type: application/json
+
+{
+  "content":"commento di prova"
+}
