@@ -39,7 +39,8 @@ const posts = new Schema(
     },
     // id dell'autore del post,
     author: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "Author",
       // required: true,
     },
     // HTML dell'articolo

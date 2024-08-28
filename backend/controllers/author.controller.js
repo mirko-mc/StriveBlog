@@ -89,37 +89,36 @@ export const PostAuthor = async (req, res) => {
 
     /** salva i dati nel db prendendoli dall'istanza del modello */
     await NewAuthor.save();
+    PostSendMail(NewAuthor.email, NewAuthor.name).then((result) => {
+      if (!result) throw new Error("Email not sent");
+    });
     /** invia i dati salvati all'utente */
     res.status(201).send(NewAuthor);
   } catch (err) {
     console.log(err);
     res.status(400).send({ message: err.message });
   }
-
+};
+const PostSendMail = async (email, name) => {
   try {
-    const email = await EmailTransport.sendMail({
+    await EmailTransport.sendMail({
       /** chi manda la mail */
       from: "pelato@scoppiato.boom",
       /** chi riceve la mail */
-      to: req.body.email,
+      to: email,
       /** oggetto mail */
       subject: "Prova Scoppiata",
       /** testo mail */
-      text: `Buona scoppiatudine ${req.body.name}`,
+      text: `Buona scoppiatudine ${name}`,
       /** html mail */
-      html: `<b>Buona scoppiatudine ${req.body.name}</b>`,
+      html: `<b>Buona scoppiatudine ${name}</b>`,
     });
-    console.log(email);
-    return res.send({ success: true, message: "mail sended" });
+    return true;
   } catch (err) {
     console.error(err);
-    res.status(500).send({
-      success: false,
-      message: "mail not sendend",
-    });
+    return false;
   }
 };
-
 /** PUT /authors/123 => modifica l'autore con l'id associato */
 export const PutAuthor = async (req, res) => {
   try {

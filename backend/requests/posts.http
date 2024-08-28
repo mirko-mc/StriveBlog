@@ -3,9 +3,9 @@
 ### RITORNA LA LISTA DEI POSTSBLOG
 GET {{baseUrl}}
 ###
-GET {{baseUrl}}?page=5&perPage=5
+GET {{baseUrl}}?page=1&perPage=20
 ### RITORNA IL SINGOLO POSTBLOG
-GET {{baseUrl}}/66b3996b8a8dfd9ee108357d
+GET {{baseUrl}}/66cf68fe529613257f433d5b
 
 ### RITORNA IL PRIMO RISULTATO NELLA RICERCA DEL TITOLO
 GET {{baseUrl}}?title=dUe
@@ -19,7 +19,7 @@ Content-Type: application/json
     "title":"PostBlog di Giuseppe Esposito",
     "cover": "https://picsum.photos/1000/300",
     "readTime":500,
-    "author":"66ad2c47cdac3f5495b31304",
+    "author":"66cf699c529613257f433d6d",
     "content": "Il mio post"
 }
 ### MODIFICA UN POSTBLOG CON ID ASSOCIATO

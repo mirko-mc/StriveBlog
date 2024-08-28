@@ -20,7 +20,8 @@ export const GetBlogPosts = async (req, res) => {
     )
       // .sort({ name: 1 })
       .skip((PAGE - 1) * PERPAGE)
-      .limit(PERPAGE);
+      .limit(PERPAGE)
+      .populate("author");
     res.send({
       data: AllBlogPosts,
       totalResults,
