@@ -72,7 +72,7 @@ m6w1d4 - IL NOSTRO PRIMO API
       OK - Assicurati di importare "dotenv/config" per inizializzare dotenv (non è necessario installarlo)
       OK - Assicurati di avere la key di sendgrid nel tuo .env sotto la voce SENDGRID_API_KEY
 
-  m6w2d4 - IL NOSTRO PRIMO API
+  m6w3d1 - IL NOSTRO PRIMO API
     Aggiungiamo al nostro backend la possibilità di aggiungere commenti agli articoli. Il modo migliore per unire i commenti ai post in questo caso è l'embedding.
     - Implementa i seguenti endpoints:
       OK - GET /blogPosts/:id/comments => ritorna tutti commenti di uno specifico post
@@ -80,3 +80,16 @@ m6w1d4 - IL NOSTRO PRIMO API
       OK - POST /blogPosts/:id => aggiungi un nuovo commento ad un post specifico
       OK - PUT /blogPosts/:id/comment/:commentId => cambia un commento di un post specifico
       OK - DELETE /blogPosts/:id/comment/:commentId => elimina un commento specifico da un post specifico.
+
+  m6w3d4 - IL NOSTRO PRIMO API
+    Gestione degli accessi
+    - Aggiungi la Token Based Authentication al tuo progetto
+    - Tutti gli endpoint (tranne /login) devono essere accessibili solo tramite Token
+    - Collega il tuo API al frontend:
+      - Crea le pagine di registrazione&login per il progetto
+        - Dopo un login effettuato con successo, memorizza il token di accesso nel localStorage e redireziona l'utente alla homepage
+        - Usa il token ovunque sia necessario
+    - Inserisci gli endpoint che troverai nella prossima slide:
+      - POST /login => restituisce token di accesso
+      - GET /me => restituisce l'utente collegato al token di accesso
+      - modifica POST /authors => deve creare un nuovo utente con password criptata
