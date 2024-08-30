@@ -6,6 +6,7 @@ import "./styles.css";
 import { convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { PostNewBlogPost } from "../../data/fetch";
+
 const NewBlogPost = (props) => {
   const [text, setText] = useState("");
   const handleChange = useCallback((value) => {
@@ -23,16 +24,26 @@ const NewBlogPost = (props) => {
     content: "",
   };
   const [formValue, setFormValue] = useState(initialFormValue);
+  /** fD conterrà l'immagine da passare alla fetch */
+  const [fD, setFD] = useState(new FormData())
   const handleChangeFormValue = (e) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
   const handleSubmit = () => {
+Post
     PostNewBlogPost(formValue);
   };
-  console.log(formValue);
   return (
     <Container className="new-blog-container">
       <Form onSubmit={() => handleSubmit()} className="mt-5">
+
+
+        <Form.Group controlId="fileCover" className="mb-3">
+          <Form.Label>Cover</Form.Label>
+          <Form.Control type="file" />
+        </Form.Group>
+
+
         <Form.Group controlId="blog-form" className="mt-3">
           <Form.Label>Titolo</Form.Label>
           <Form.Control

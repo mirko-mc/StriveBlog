@@ -264,19 +264,19 @@ export const GetAuthorBlogPosts = async (id) => {
 /** RECUPERA TUTTI I BlogPosts */
 export const GetAllBlogPosts = async (page, perPage, title) => {
   try {
-    let FetchBlogPostsUrlParameterized = FetchBlogPostsUrl;
-    (page || perPage || title) && (FetchBlogPostsUrlParameterized += "?");
+    let NewFetchUrl = FetchBlogPostsUrl;
+    (page || perPage || title) && (NewFetchUrl += "?");
     (page || perPage) &&
-      (FetchBlogPostsUrlParameterized += `page=${page}&perPage=${perPage}`);
-    page && perPage && title && (FetchBlogPostsUrlParameterized += "&");
-    title && (FetchBlogPostsUrlParameterized += `title=${title}`);
+      (NewFetchUrl += `page=${page}&perPage=${perPage}`);
+    page && perPage && title && (NewFetchUrl += "&");
+    title && (NewFetchUrl += `title=${title}`);
     // let res = null;
     // if (!perPage || !page) {
     //   if (!title) res = await fetch(FetchBlogPostsUrl);
     //   else res = await fetch(`${FetchBlogPostsUrl}?title=${title}`);
     // } else
     //   res = await fetch(`${FetchBlogPostsUrl}?page=${page}&perPage=${perPage}`);
-    const res = await fetch(FetchBlogPostsUrlParameterized);
+    const res = await fetch(NewFetchUrl);
     const data = await res.json();
     console.log("RES GetAllBlogPosts\n", res);
     console.log("DATA GetAllBlogPosts\n", data);
@@ -369,3 +369,20 @@ export const DeleteBlogPost = async (id) => {
     console.log("ERR DeleteBlogPost\n", err);
   }
 };
+
+// TODO upload coverBlogPost/authorProPic
+export const PostPicture = async (type, id, fD) => {
+  try {
+    const NewFetchUrl = (type && type === 'cover') ? FetchBlogPostsUrl : FetchAuthorsUrl;
+    const res = await fetch(NewFetchUrl + id, {
+      method: "POST",
+      body: fD
+    })
+    console.log("RES PostPicture\n", res);
+    console.log("DATA PostPicture\n", data);
+    if (!res.ok) throw new Error(res);
+    return data;
+  } catch (err) {
+    console.log("ERR PostPicture\n", err);
+  }
+}
