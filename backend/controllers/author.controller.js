@@ -41,10 +41,10 @@ export const GetAuthors = async (req, res) => {
   }
 };
 
-/** GET /authors/123 => ritorna il singolo autore */
+/** GET /authors/:authorId => ritorna il singolo autore */
 export const GetAuthor = async (req, res) => {
   try {
-    const SingleAuthor = await AuthorsSchema.findById(req.params.id);
+    const SingleAuthor = await AuthorsSchema.findById(req.params.authorId);
     !SingleAuthor
       ? res.status(404).send({ code: 404, message: "Author not found" })
       : res.send(SingleAuthor);
@@ -119,7 +119,7 @@ const PostSendMail = async (email, name) => {
     return false;
   }
 };
-/** PUT /authors/123 => modifica l'autore con l'id associato */
+/** PUT /authors/:authorId => modifica l'autore con l'id associato */
 export const PutAuthor = async (req, res) => {
   try {
     if (
@@ -128,7 +128,7 @@ export const PutAuthor = async (req, res) => {
     )
       throw new Error("Email already exists");
     const EditAuthor = await AuthorsSchema.findByIdAndUpdate(
-      req.params.id,
+      req.params.authorId,
       req.body,
       { new: true }
     );
@@ -139,10 +139,10 @@ export const PutAuthor = async (req, res) => {
   }
 };
 
-/** DELETE /authors/123 => cancella l'autore con l'id associato */
+/** DELETE /authors/:authorId => cancella l'autore con l'id associato */
 export const DeleteAuthor = async (req, res) => {
   try {
-    await AuthorsSchema.findByIdAndDelete(req.params.id);
+    await AuthorsSchema.findByIdAndDelete(req.params.authorId);
     res.send({ message: "Author deleted" });
   } catch (err) {
     console.log(err);
@@ -150,14 +150,14 @@ export const DeleteAuthor = async (req, res) => {
   }
 };
 
-/** GET /authors/:id/blogPosts/ => ricevi tutti i blog post di uno specifico autore dal corrispondente ID */
+/** GET /authors/:authorId/blogPosts/ => ricevi tutti i blog post di uno specifico autore dal corrispondente ID */
 export const GetBlogPostsAuthor = async (req, res) => {
   try {
     const totalResults = await PostsSchema.countDocuments();
     const PAGE = req.query.page || 1;
     const PERPAGE = req.query.perPage || totalResults;
     const totalPages = Math.ceil(totalResults / PERPAGE);
-    const AuthorAllBlogPosts = await PostsSchema.find({ author: req.params.id })
+    const AuthorAllBlogPosts = await PostsSchema.find({ author: req.params.authorId })
       // .sort({ name: 1 })
       .skip((PAGE - 1) * PERPAGE)
       .limit(PERPAGE);
@@ -176,7 +176,7 @@ export const GetBlogPostsAuthor = async (req, res) => {
 /** PATCH /authors/:authorId/avatar, carica un'immagine per l'autore specificato e salva l'URL creata da Cloudinary nel database. */
 export const PatchAuthorAvatar = async (req, res) => {
   try {
-    await AuthorsSchema.findByIdAndUpdate(req.params.id, {
+    await AuthorsSchema.findByIdAndUpdate(req.params.authorId, {
       avatar: req.file.path,
     });
     res.send({ message: "avatar updated" });

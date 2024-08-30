@@ -35,10 +35,10 @@ export const GetBlogPosts = async (req, res) => {
   }
 };
 
-/** GET /blogPosts/123 => ritorna un singolo blog post */
+/** GET /blogPosts/:blogPostId => ritorna un singolo blog post */
 export const GetBlogPost = async (req, res) => {
   try {
-    const SingleBlogPost = await PostsSchema.findById(req.params.id);
+    const SingleBlogPost = await PostsSchema.findById(req.params.blogPostId);
     !SingleBlogPost
       ? res.status(404).send({ code: 404, message: "Post not found" })
       : res.send(SingleBlogPost);
@@ -65,11 +65,11 @@ export const PostBlogPost = async (req, res) => {
   }
 };
 
-/** PUT /blogPosts/123 => modifica il blog post con l'id associato */
+/** PUT /blogPosts/:blogPostId => modifica il blog post con l'id associato */
 export const PutBlogPost = async (req, res) => {
   try {
     const EditBlogPost = await PostsSchema.findByIdAndUpdate(
-      req.params.id,
+      req.params.blogPostId,
       req.body,
       { new: true }
     );
@@ -80,10 +80,10 @@ export const PutBlogPost = async (req, res) => {
   }
 };
 
-/** DELETE /blogPosts/123 => cancella il blog post con l'id associato */
+/** DELETE /blogPosts/:blogPostId => cancella il blog post con l'id associato */
 export const DeleteBlogPost = async (req, res) => {
   try {
-    await PostsSchema.findByIdAndDelete(req.params.id);
+    await PostsSchema.findByIdAndDelete(req.params.blogPostId);
     res.send({ message: "BlogPost deleted" });
   } catch (err) {
     console.log(err);
@@ -94,7 +94,7 @@ export const DeleteBlogPost = async (req, res) => {
 /** PATCH /blogPosts/:blogPostId/cover, carica un'immagine per il post specificato dall'id. Salva l'URL creato da Cloudinary nel post corrispondente. */
 export const PatchCoverBlogPost = async (req, res) => {
   try {
-    await PostsSchema.findByIdAndUpdate(req.params.id, {
+    await PostsSchema.findByIdAndUpdate(req.params.blogPostId, {
       cover: req.file.path,
     });
     res.send({ message: "cover updated" });

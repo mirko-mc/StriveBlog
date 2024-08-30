@@ -6,24 +6,24 @@ const Router = express.Router();
 /** GET /authors => ritorna la lista degli autori */
 Router.get("/", AuthorController.GetAuthors);
 
-/** GET /authors/123 => ritorna il singolo autore */
-Router.get("/:id", AuthorController.GetAuthor);
+/** GET /authors/:authorId => ritorna il singolo autore */
+Router.get("/:authorId", AuthorController.GetAuthor);
 
 /** POST /authors => crea un nuovo autore */
 Router.post("/", AuthorController.PostAuthor);
 
-/** PUT /authors/123 => modifica l'autore con l'id associato */
-Router.put("/:id", AuthorController.PutAuthor);
+/** PUT /authors/:authorId => modifica l'autore con l'id associato */
+Router.put("/:authorId", AuthorController.PutAuthor);
 
-/** DELETE /authors/123 => cancella l'autore con l'id associato */
-Router.delete("/:id", AuthorController.DeleteAuthor);
+/** DELETE /authors/:authorId => cancella l'autore con l'id associato */
+Router.delete("/:authorId", AuthorController.DeleteAuthor);
 
-/** GET /authors/:id/blogPosts/ => ricevi tutti i blog post di uno specifico autore dal corrispondente ID */
-Router.get("/:id/blogPosts/", AuthorController.GetBlogPostsAuthor);
+/** GET /authors/:authorId/blogPosts/ => ricevi tutti i blog post di uno specifico autore dal corrispondente ID */
+Router.get("/:authorId/blogPosts/", AuthorController.GetBlogPostsAuthor);
 
 /** PATCH /authors/:authorId/avatar, carica un'immagine per l'autore specificato e salva l'URL creata da Cloudinary nel database. */
 Router.patch(
-  "/:id/avatar",
+  "/:authorId/avatar",
   uploadCloudinary.single("avatar"),
   AuthorController.PatchAuthorAvatar
 );
