@@ -1,6 +1,7 @@
 import AuthorsSchema from "../models/AuthorsSchema.js";
 import PostsSchema from "../models/PostsSchema.js";
 import EmailTransport from "../services/email.service.js";
+import Bcrypt from "bcrypt"
 
 /** GET /authors => ritorna la lista degli autori */
 export const GetAuthors = async (req, res) => {
@@ -55,6 +56,7 @@ export const GetAuthor = async (req, res) => {
 };
 
 /** POST /authors => crea un nuovo autore */
+// TODO modifica POST /authors => deve creare un nuovo utente con password criptata
 export const PostAuthor = async (req, res) => {
   try {
     if (await AuthorsSchema.exists({ email: req.body.email }))
@@ -99,6 +101,7 @@ export const PostAuthor = async (req, res) => {
     res.status(400).send({ message: err.message });
   }
 };
+
 const PostSendMail = async (email, name) => {
   try {
     await EmailTransport.sendMail({
@@ -119,6 +122,7 @@ const PostSendMail = async (email, name) => {
     return false;
   }
 };
+
 /** PUT /authors/:authorId => modifica l'autore con l'id associato */
 export const PutAuthor = async (req, res) => {
   try {
@@ -184,3 +188,20 @@ export const PatchAuthorAvatar = async (req, res) => {
     console.log(err);
   }
 };
+
+// TODO POST /login => restituisce token di accesso
+export const LoginAuthor = async (req, res) => {
+  try {
+    // ! se la mail esiste recupero l'autore con la mail indicata
+    if (await AuthorsSchema.exists({ email: req.body.email })) {
+      const Author = await AuthorsSchema.findOne({ email: req.body.email })
+      // ! procedo al controllo password
+      if (Bcrypt.compare(req.body.password, Author.password)) { }
+    }
+    // ! se la mail non esiste reindirizzo alla schermata di registrazione
+
+  } catch (err) { res.send({ message: "Login error" }) }
+}
+
+// TODO GET /me => restituisce l'utente collegato al token di accesso
+export const InfoMe = async (req, res) => { }
