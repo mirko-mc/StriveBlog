@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import AuthorsRouter from "./routes/authors.router.js";
+import AuthRouter from "./routes/auth.routes.js";
 import mongoose from "mongoose";
 import "dotenv/config";
 import PostsRouter from "./routes/posts.router.js";
@@ -23,6 +24,7 @@ Server.use(express.json());
 /** uso le rotte */
 Server.use("/authors", AuthorsRouter);
 Server.use("/blogPosts", PostsRouter);
+Server.use("/", AuthRouter);
 /** connessione al database */
 await mongoose
   .connect(process.env.MONGO_CONNECTION_URI)

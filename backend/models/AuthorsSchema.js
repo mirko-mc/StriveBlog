@@ -18,6 +18,11 @@ const authors = new Schema(
       required: true,
       unique: true,
     },
+    password: {
+      type: String,
+      // required: true,
+      select: false,
+    },
     birthDate: {
       type: Date,
     },

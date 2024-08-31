@@ -103,9 +103,7 @@ export const PatchCoverBlogPost = async (req, res) => {
   }
 };
 
-/**
- * TODO GET /blogPosts/:blogPostId/comments => ritorna tutti commenti di uno specifico post
- * */
+// TODO GET /blogPosts/:blogPostId/comments => ritorna tutti commenti di uno specifico post
 export const GetBlogPostAllComments = async (req, res) => {
   try {
     // * recupera blogPost tramite id
@@ -119,9 +117,7 @@ export const GetBlogPostAllComments = async (req, res) => {
   }
 };
 
-/**
- * TODO GET /blogPosts/:blogPostId/comments/:commentId => ritorna un commento specifico di un post specifico
- */
+// TODO GET /blogPosts/:blogPostId/comments/:commentId => ritorna un commento specifico di un post specifico
 export const GetBlogPostComment = async (req, res) => {
   try {
     const BlogPost = await PostsSchema.findById(req.params.blogPostId);
@@ -133,9 +129,7 @@ export const GetBlogPostComment = async (req, res) => {
   }
 };
 
-/**
- * TODO POST /blogPosts/:blogPostId => aggiungi un nuovo commento ad un post specifico
- */
+// TODO POST /blogPosts/:blogPostId => aggiungi un nuovo commento ad un post specifico
 export const PostBlogPostComment = async (req, res) => {
   try {
     const BlogPost = await PostsSchema.findById(req.params.blogPostId);
@@ -148,9 +142,7 @@ export const PostBlogPostComment = async (req, res) => {
   }
 };
 
-/**
- * TODO PUT /blogPosts/:blogPostId/comment/:commentId => cambia un commento di un post specifico
- */
+// TODO PUT /blogPosts/:blogPostId/comment/:commentId => cambia un commento di un post specifico
 export const PutBlogPostComment = async (req, res) => {
   try {
     const BlogPost = await PostsSchema.findById(req.params.blogPostId);
@@ -182,9 +174,7 @@ export const PutBlogPostComment = async (req, res) => {
   }
 };
 
-/**
- * TODO DELETE /blogPosts/:blogPostId/comment/:commentId => elimina un commento specifico da un post specifico.
- */
+// TODO DELETE /blogPosts/:blogPostId/comment/:commentId => elimina un commento specifico da un post specifico.
 export const DeleteBlogPostComment = async (req, res) => {
   try {
     const BlogPost = await PostsSchema.findById(req.params.blogPostId);

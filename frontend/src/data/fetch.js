@@ -266,8 +266,7 @@ export const GetAllBlogPosts = async (page, perPage, title) => {
   try {
     let NewFetchUrl = FetchBlogPostsUrl;
     (page || perPage || title) && (NewFetchUrl += "?");
-    (page || perPage) &&
-      (NewFetchUrl += `page=${page}&perPage=${perPage}`);
+    (page || perPage) && (NewFetchUrl += `page=${page}&perPage=${perPage}`);
     page && perPage && title && (NewFetchUrl += "&");
     title && (NewFetchUrl += `title=${title}`);
     // let res = null;
@@ -370,19 +369,51 @@ export const DeleteBlogPost = async (id) => {
   }
 };
 
-// TODO upload coverBlogPost/authorProPic
-export const PostPicture = async (type, id, fD) => {
+// PATCH /blogPosts/:blogPostId/cover, carica un'immagine per il post specificato dall'id. Salva l'URL creato da Cloudinary nel post corrispondente.
+// upload coverBlogPost
+// TODO upload authorProPic
+export const PatchPicture = async (type, id, fD) => {
   try {
-    const NewFetchUrl = (type && type === 'cover') ? FetchBlogPostsUrl : FetchAuthorsUrl;
-    const res = await fetch(NewFetchUrl + id, {
-      method: "POST",
-      body: fD
-    })
-    console.log("RES PostPicture\n", res);
-    console.log("DATA PostPicture\n", data);
+    console.log(id);
+    const NewFetchUrl =
+      type && type === "cover"
+        ? `${FetchBlogPostsUrl}/${id}/${type}`
+        : FetchAuthorsUrl;
+    const res = await fetch(NewFetchUrl, {
+      method: "PATCH",
+      body: fD,
+    });
+    const data = res.json();
+    console.log("RES PatchPicture\n", res);
+    console.log("DATA PatchPicture\n", data);
     if (!res.ok) throw new Error(res);
     return data;
   } catch (err) {
-    console.log("ERR PostPicture\n", err);
+    console.log("ERR PatchPicture\n", err);
   }
-}
+};
+
+/** /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ AUTH /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */
+//??? LOGIN
+export const PostLogin = async (formValue) => {
+  const res = await fetch(FetchAuthorsUrl, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify(formValue),
+  });
+  const data = await res.json();
+  return data;
+};
+
+//??? ME
+export const GetMe = async () => {
+  const res = await fetch(FetchAuthorsUrl, {
+    headers: {
+      "Authorization":`Bearer ${localStorage.getItem("token")}`
+    },
+  });
+  const data = await res.json();
+  return data;
+};
