@@ -7,6 +7,7 @@ import {
   GetAllBlogPosts,
   setRandomBlogPosts,
   PostLogin,
+  PostNewAutor,
 } from "../../data/fetch";
 import { AuthorContext } from "../../context/AuthorContextProvider";
 
@@ -18,23 +19,55 @@ const Home = (props) => {
   const [AllBlogPosts, setAllBlogPosts] = useState({});
   const [BlogPostsToRender, setBlogPostsToRender] = useState([]);
   const { SearchBlogPost } = props;
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const [formValue, setFormValue] = useState({
+  const [ShowLogin, SetShowLogin] = useState(false);
+  const [ShowRegister, SetShowRegister] = useState(false);
+  /** per gestire uso un ternario nella funzione per stabilire quale dei due modali chiudere */
+  const handleClose = () => ShowLogin ? SetShowLogin(false) : SetShowRegister(false)
+  const [formValue, setFormValue] = useState();
+  const InitialFormValueLogin = {
     email: "",
     password: "",
-  });
+  }
+  const InitialFormValueRegister = {
+    name: "",
+    surname: "",
+    email: "",
+    password: "",
+    birthDate: "",
+    avatar: "",
+    // "https://njhalloffame.org/wp-content/uploads/2021/04/generic-avatar-300x300.png",
+  }
   const HandleChange = (e) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
+  useEffect(() => ShowLogin ? setFormValue(InitialFormValueLogin) : setFormValue(InitialFormValueRegister), [ShowLogin, ShowRegister])
   const handleLogin = async () => {
     const TokenObj = await PostLogin(formValue);
     localStorage.setItem("token", TokenObj.token);
     SetToken(TokenObj.token);
     handleClose();
   };
+  const handleRegisterSubmit = async () => {
+    // !!! attendo che l'autore venga salvato
+    const CreatedAuthor = await PostNewAutor(formValue);
+    console.log(CreatedAuthor);
+    // !!! aggiungo l'avatar al post
+    //* l'id è temporaneamente statico mentre non verrà implementato login e context dell'autore
+    fD.get("avatar") && (await PatchPicture("avatar", CreatedAuthor._id, fD));
+    // !!! restituisco il messaggio di autore salvato
+    alert("Autore salvato con successo");
+    // !!! ritorno alla home
+  };
+  const handlePicture = (e) => {
+    setFD((prev) => {
+      // svuoto il formData
+      prev.delete("avatar");
+      // inserisco l'immagine nel formData
+      prev.append("avatar", e.target.files[0]);
+      return prev;
+    });
+  };
+  const handleRegister = () => { }
   const HandleGetAllBlogPosts = async () => {
     /** ESEGUO LA FETCH PER RECUPERARE TUTTI I BLOGPOSTS E LI INSERISCO NELLO STATO */
     const Posts = await GetAllBlogPosts(null, null, SearchBlogPost);
@@ -77,11 +110,11 @@ const Home = (props) => {
       )}
       {Token && <BlogList />}
       <div>
-        <Button variant="primary" onClick={handleShow}>
+        <Button variant="primary" onClick={() => SetShowLogin(true)}>
           Login
         </Button>
 
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={ShowLogin} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>LOGIN</Modal.Title>
           </Modal.Header>
@@ -93,13 +126,13 @@ const Home = (props) => {
                   type="text"
                   // type="email"
                   name="email"
-                  onChange={(e) => HandleChange(e)}
+                  onChange={HandleChange}
                 ></Form.Control>
                 <Form.Label>password</Form.Label>
                 <Form.Control
                   type="password"
                   name="password"
-                  onChange={(e) => HandleChange(e)}
+                  onChange={HandleChange}
                 ></Form.Control>
               </Form.Group>
             </Form>
@@ -113,33 +146,49 @@ const Home = (props) => {
             </Button>
           </Modal.Footer>
         </Modal>
-      
 
-      
-        <Button variant="primary" onClick={handleShow}>
+
+
+        <Button variant="primary" onClick={() => SetShowRegister(true)}>
           Registrati
         </Button>
 
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={ShowRegister} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>LOGIN</Modal.Title>
+            <Modal.Title>REGISTRAZIONE</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
               <Form.Group>
-                <Form.Label>email</Form.Label>
+                <Form.Label>Nome</Form.Label>
+                <Form.Control type="text" name="name" onChange={HandleChange} required></Form.Control>
+                <Form.Label>Cognome</Form.Label>
+                <Form.Control type="text" name="surname" onChange={HandleChange} required></Form.Control>
+                <Form.Label>e-mail</Form.Label>
                 <Form.Control
                   type="text"
                   // type="email"
                   name="email"
-                  onChange={(e) => HandleChange(e)}
+                  onChange={HandleChange}
+                  required
                 ></Form.Control>
-                <Form.Label>password</Form.Label>
+                <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
                   name="password"
-                  onChange={(e) => HandleChange(e)}
+                  onChange={HandleChange}
+                  required
                 ></Form.Control>
+                <Form.Label>Data di nascita</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="birthDate"
+                  onChange={HandleChange}
+                ></Form.Control>
+                <Form.Group controlId="fileProPic" className="mb-3">
+                  <Form.Label>Immagine di profilo</Form.Label>
+                  <Form.Control type="file" onChange={handlePicture} />
+                </Form.Group>
               </Form.Group>
             </Form>
           </Modal.Body>
@@ -147,8 +196,8 @@ const Home = (props) => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleLogin}>
-              Login
+            <Button variant="primary" onClick={handleRegister}>
+              Registrati
             </Button>
           </Modal.Footer>
         </Modal>

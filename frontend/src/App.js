@@ -6,6 +6,7 @@ import Blog from "./views/blog/Blog";
 import NewBlogPost from "./views/new/New";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthorContextProvider } from "./context/AuthorContextProvider";
+import { Me } from "./views/Me";
 
 function App() {
   const [SearchBlogPost, setSearchBlogPost] = useState("");
@@ -21,6 +22,7 @@ function App() {
           />
           <Route path="/blog/:id" element={<Blog />} />
           <Route path="/new" element={<NewBlogPost />} />
+          <Route path="/me" element={<Me />}></Route>
         </Routes>
         <Footer />
       </Router>

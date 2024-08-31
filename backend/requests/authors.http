@@ -13,6 +13,7 @@ Content-Type: application/json
 {
   "name": "agffffag",
   "surname": "dfgdffffg",
+  "password": "asdf",
   "birthDate": "1999-12-08T00:00:00.000Z",
   "email": "sgdjjfffhgs@sgs.com",
   "avatar": "https://njhalloffame.org/wp-content/uploads/2021/04/generic-avatar-300x300.png"
