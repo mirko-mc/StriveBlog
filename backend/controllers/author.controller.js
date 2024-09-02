@@ -1,6 +1,7 @@
 import AuthorsSchema from "../models/AuthorsSchema.js";
 import PostsSchema from "../models/PostsSchema.js";
 import EmailTransport from "../services/email.service.js";
+import Bcrypt from "bcrypt";
 
 /** GET /authors => ritorna la lista degli autori */
 export const GetAuthors = async (req, res) => {
@@ -58,20 +59,24 @@ export const GetAuthor = async (req, res) => {
 // TODO modifica POST /authors => deve creare un nuovo utente con password criptata
 export const PostAuthor = async (req, res) => {
   try {
+    /** controllo che la mail non sia già presente nel database */
     if (await AuthorsSchema.exists({ email: req.body.email }))
       throw new Error("Email already exists");
-    // return res.status(400).send({ message: "Email already exists" });
-
+    /** controllo che i campi obbligatori siano stati valorizzati */
     if (!req.body.name) throw new Error("Name is required");
-    // return res.status(400).send({ message: "Name is required" });
-
     if (!req.body.surname) throw new Error("Surname is required");
-    // res.status(400).send({ message: "Surname is required" });
-
     if (!req.body.email) throw new Error("Email is required");
-    // && res.status(400).send({ message: "Email is required" });
-    /** crea nuova istanza del modello autore con i dati definiti nelle tonde (li prende dal body)*/
-    const NewAuthor = new AuthorsSchema(req.body);
+    if (!req.body.password) throw new Error("Password is required");
+    /** crea nuova istanza del modello autore con i dati definiti nel body o, meglio ancora, glieli passo manualmente uno ad uno per evitare che provengano dati indesiderati */
+    const NewAuthor = new AuthorsSchema({
+      name: req.body.name,
+      surname: req.body.surname,
+      email: req.body.email,
+      /** hasho la password  */
+      password: await Bcrypt.hash(req.body.password, 10),
+      birthDate: req.body.birthDate,
+      avatar: req.body.avatar,
+    });
     /** ci assicuriamo che l'utente abbia inserito un avatar altrimenti ne impostiamo uno di default */
     NewAuthor.avatar = NewAuthor.avatar
       ? NewAuthor.avatar
@@ -160,7 +165,9 @@ export const GetBlogPostsAuthor = async (req, res) => {
     const PAGE = req.query.page || 1;
     const PERPAGE = req.query.perPage || totalResults;
     const totalPages = Math.ceil(totalResults / PERPAGE);
-    const AuthorAllBlogPosts = await PostsSchema.find({ author: req.params.authorId })
+    const AuthorAllBlogPosts = await PostsSchema.find({
+      author: req.params.authorId,
+    })
       // .sort({ name: 1 })
       .skip((PAGE - 1) * PERPAGE)
       .limit(PERPAGE);

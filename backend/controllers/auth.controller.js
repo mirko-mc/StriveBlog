@@ -15,7 +15,8 @@ export const PostLogin = async (req, res) => {
     /** se la mail non esiste chiudo la funzione col return di un messaggio, se esiste vado avanti */
     if (!Author) return res.status(401).send("Wrong credential");
     /** se la mail esiste procedo al controllo password. se è errata chiudo la funzione col return di un messaggio, se è corretta vado avanti */
-    if (Bcrypt.compare(req.body.password, Author.password))
+    console.log("PostLogin Controller - password\n", req.body.password);
+    if (!Bcrypt.compare(req.body.password, Author.password))
       return res.status(401).send("Wrong credential");
     /** se è corretta procedo a generare il token e lo restituisco.
      * per generare il token ho bisogno di firmarlo passandogli....

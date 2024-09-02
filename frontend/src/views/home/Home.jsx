@@ -3,16 +3,17 @@ import { Button, Container, Form, Modal, Row } from "react-bootstrap";
 import BlogList from "../../components/blog/blog-list/BlogList";
 import "./styles.css";
 import {
-  setRandomAuthors,
   GetAllBlogPosts,
-  setRandomBlogPosts,
   PostLogin,
-  PostNewAutor,
+  PostNewAuthor,
+  PatchPicture,
 } from "../../data/fetch";
 import { AuthorContext } from "../../context/AuthorContextProvider";
 
 const Home = (props) => {
   const { Token, SetToken } = useContext(AuthorContext);
+  /** fD conterrà l'immagine da passare alla fetch */
+  const [fD, setFD] = useState(new FormData());
   /**
    * !!! refactorizzare dopo la modifica del frontend. la ricerca del blogPost era ben implementata nel backend ma la ripetevo nel frontend
    */
@@ -22,12 +23,13 @@ const Home = (props) => {
   const [ShowLogin, SetShowLogin] = useState(false);
   const [ShowRegister, SetShowRegister] = useState(false);
   /** per gestire uso un ternario nella funzione per stabilire quale dei due modali chiudere */
-  const handleClose = () => ShowLogin ? SetShowLogin(false) : SetShowRegister(false)
+  const handleClose = () =>
+    ShowLogin ? SetShowLogin(false) : SetShowRegister(false);
   const [formValue, setFormValue] = useState();
   const InitialFormValueLogin = {
     email: "",
     password: "",
-  }
+  };
   const InitialFormValueRegister = {
     name: "",
     surname: "",
@@ -36,20 +38,29 @@ const Home = (props) => {
     birthDate: "",
     avatar: "",
     // "https://njhalloffame.org/wp-content/uploads/2021/04/generic-avatar-300x300.png",
-  }
+  };
   const HandleChange = (e) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
-  useEffect(() => ShowLogin ? setFormValue(InitialFormValueLogin) : setFormValue(InitialFormValueRegister), [ShowLogin, ShowRegister])
-  const handleLogin = async () => {
+  useEffect(
+    () =>
+      ShowLogin
+        ? setFormValue(InitialFormValueLogin)
+        : setFormValue(InitialFormValueRegister),
+    [ShowLogin, ShowRegister]
+  );
+  const handleLoginSubmit = async () => {
+    console.log(formValue);
     const TokenObj = await PostLogin(formValue);
-    localStorage.setItem("token", TokenObj.token);
-    SetToken(TokenObj.token);
+    if (TokenObj?.token) {
+      localStorage.setItem("token", TokenObj.token);
+      SetToken(TokenObj.token);
+    }
     handleClose();
   };
   const handleRegisterSubmit = async () => {
     // !!! attendo che l'autore venga salvato
-    const CreatedAuthor = await PostNewAutor(formValue);
+    const CreatedAuthor = await PostNewAuthor(formValue);
     console.log(CreatedAuthor);
     // !!! aggiungo l'avatar al post
     //* l'id è temporaneamente statico mentre non verrà implementato login e context dell'autore
@@ -67,7 +78,6 @@ const Home = (props) => {
       return prev;
     });
   };
-  const handleRegister = () => { }
   const HandleGetAllBlogPosts = async () => {
     /** ESEGUO LA FETCH PER RECUPERARE TUTTI I BLOGPOSTS E LI INSERISCO NELLO STATO */
     const Posts = await GetAllBlogPosts(null, null, SearchBlogPost);
@@ -101,14 +111,12 @@ const Home = (props) => {
   return (
     <Container fluid="sm">
       <h1 className="blog-main-title mb-3">Benvenuto sullo Strive Blog!</h1>
-      <Row className="justify-content-evenly">
-        <Button onClick={setRandomAuthors}>Genera 20 autori casuali</Button>
-        <Button onClick={setRandomBlogPosts}>Genera 20 post casuali</Button>
-      </Row>
       {AllBlogPosts?.data && (
         <BlogList BlogPostsToRender={AllBlogPosts?.data} />
       )}
-      {Token && <BlogList />}
+      {AllBlogPosts?.data && Token && (
+        <BlogList BlogPostsToRender={AllBlogPosts?.data} />
+      )}
       <div>
         <Button variant="primary" onClick={() => SetShowLogin(true)}>
           Login
@@ -141,13 +149,11 @@ const Home = (props) => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleLogin}>
+            <Button variant="primary" onClick={handleLoginSubmit}>
               Login
             </Button>
           </Modal.Footer>
         </Modal>
-
-
 
         <Button variant="primary" onClick={() => SetShowRegister(true)}>
           Registrati
@@ -161,9 +167,19 @@ const Home = (props) => {
             <Form>
               <Form.Group>
                 <Form.Label>Nome</Form.Label>
-                <Form.Control type="text" name="name" onChange={HandleChange} required></Form.Control>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  onChange={HandleChange}
+                  required
+                ></Form.Control>
                 <Form.Label>Cognome</Form.Label>
-                <Form.Control type="text" name="surname" onChange={HandleChange} required></Form.Control>
+                <Form.Control
+                  type="text"
+                  name="surname"
+                  onChange={HandleChange}
+                  required
+                ></Form.Control>
                 <Form.Label>e-mail</Form.Label>
                 <Form.Control
                   type="text"
@@ -196,7 +212,7 @@ const Home = (props) => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleRegister}>
+            <Button variant="primary" onClick={handleRegisterSubmit}>
               Registrati
             </Button>
           </Modal.Footer>

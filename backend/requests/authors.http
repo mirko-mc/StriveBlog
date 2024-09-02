@@ -5,7 +5,7 @@ GET {{baseUrl}}
 ###
 GET {{baseUrl}}?page=1&perPage=5
 ### RITORNA IL SINGOLO AUTORE
-GET {{baseUrl}}/66cf6885b1ef6bfa0131e2e5
+GET {{baseUrl}}/66cf6bf45200335fe1932fb6
 ### CREA UN NUOVO AUTORE
 POST {{baseUrl}}
 Content-Type: application/json
@@ -15,7 +15,7 @@ Content-Type: application/json
   "surname": "dfgdffffg",
   "password": "asdf",
   "birthDate": "1999-12-08T00:00:00.000Z",
-  "email": "sgdjjfffhgs@sgs.com",
+  "email": "asdf@asdf.asdf",
   "avatar": "https://njhalloffame.org/wp-content/uploads/2021/04/generic-avatar-300x300.png"
 }
 ### MODIFICA UN AUTORE CON ID ASSOCIATO
@@ -33,3 +33,12 @@ DELETE {{baseUrl}}/66a939713c314f505d26f793
 GET {{baseUrl}}/66ad2855f9e65c7c2bc990cd/blogPosts
 ### RITORNA I POSTSBLOG DI UN AUTORE
 GET {{baseUrl}}/66ad2c47cdac3f5495b31304/blogPosts
+
+###
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "asdf@asdf.asdf",
+    "password": "asdf"
+}
