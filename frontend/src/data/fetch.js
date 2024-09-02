@@ -225,7 +225,7 @@ export const PatchPicture = async (type, id, fD) => {
     const NewFetchUrl =
       type && type === "cover"
         ? `${FetchBlogPostsUrl}/${id}/${type}`
-        : FetchAuthorsUrl;
+        : `${FetchAuthorsUrl}/${id}/${type}`;
     const res = await fetch(NewFetchUrl, {
       method: "PATCH",
       body: fD,
@@ -244,7 +244,7 @@ export const PatchPicture = async (type, id, fD) => {
 //??? LOGIN
 export const PostLogin = async (formValue) => {
   try {
-    console.log("data => fetch.js - PostLogin")
+    console.log("data => fetch.js - PostLogin");
     const res = await fetch("http://localhost:5000/login", {
       headers: {
         "Content-Type": "application/json",
@@ -264,7 +264,7 @@ export const PostLogin = async (formValue) => {
 
 //??? ME
 export const GetMe = async () => {
-  console.log("data => fetch.js - GetMe")
+  console.log("data => fetch.js - GetMe");
   const res = await fetch(FetchAuthorsUrl, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,

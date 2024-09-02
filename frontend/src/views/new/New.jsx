@@ -44,6 +44,8 @@ const NewBlogPost = (props) => {
     // !!! aggiungo la cover al post
     //* l'id è temporaneamente statico mentre non verrà implementato login e context dell'autore
     fD.get("cover") && (await PatchPicture("cover", CreatedBlogPost._id, fD));
+    console.log(fD);
+    console.log(fD.get("cover"));
     // !!! restituisco il messaggio di blogPost salvato
     alert("BlogPost salvato con successo");
     // !!! ritorno alla home

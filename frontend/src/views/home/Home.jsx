@@ -63,7 +63,6 @@ const Home = (props) => {
     const CreatedAuthor = await PostNewAuthor(formValue);
     console.log(CreatedAuthor);
     // !!! aggiungo l'avatar al post
-    //* l'id è temporaneamente statico mentre non verrà implementato login e context dell'autore
     fD.get("avatar") && (await PatchPicture("avatar", CreatedAuthor._id, fD));
     // !!! restituisco il messaggio di autore salvato
     alert("Autore salvato con successo");
@@ -111,9 +110,6 @@ const Home = (props) => {
   return (
     <Container fluid="sm">
       <h1 className="blog-main-title mb-3">Benvenuto sullo Strive Blog!</h1>
-      {AllBlogPosts?.data && (
-        <BlogList BlogPostsToRender={AllBlogPosts?.data} />
-      )}
       {AllBlogPosts?.data && Token && (
         <BlogList BlogPostsToRender={AllBlogPosts?.data} />
       )}

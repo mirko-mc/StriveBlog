@@ -18,10 +18,11 @@ export const GetBlogPosts = async (req, res) => {
     const AllBlogPosts = await PostsSchema.find(
       TITLE ? { title: { $regex: TITLE, $options: "i" } } : {}
     )
+      .populate("author")
       // .sort({ name: 1 })
       .skip((PAGE - 1) * PERPAGE)
-      .limit(PERPAGE)
-      .populate("author");
+      .limit(PERPAGE);
+      console.log(AllBlogPosts)
     res.send({
       data: AllBlogPosts,
       totalResults,
@@ -51,6 +52,7 @@ export const GetBlogPost = async (req, res) => {
 /** POST /blogPosts => crea un nuovo blog post */
 export const PostBlogPost = async (req, res) => {
   try {
+    console.log(req.body)
     !req.body.category &&
       res.status(400).send({ message: "Category is required" });
     !req.body.title && res.status(400).send({ message: "Title is required" });
