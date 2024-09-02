@@ -2,6 +2,7 @@ import Jwt from "jsonwebtoken";
 import AuthorsSchema from "../models/AuthorsSchema.js";
 
 export const Authorization = (req, res, next) => {
+  console.log("middlewares => authorization.js - Authorization")
   /** verifico che nell'headers sia presente l'authorization di tipo Bearer altrimenti chiudo la funzione */
   if (!req.headers.authorization) return res.status(401).send();
   /** splitto l'authorization in 2 */

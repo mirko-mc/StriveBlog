@@ -89,7 +89,7 @@ const Home = (props) => {
    * */
   useEffect(() => {
     /** UTILIZZO DELLE FUNZIONI ASYNC PER POPOLARE LO STATO COSI' DA NON TRIGGERARE LO USEFFECT PRIMA CHE LA FETCH SIA COMPLETATA */
-    HandleGetAllBlogPosts();
+    Token && HandleGetAllBlogPosts();
     // console.log("USE EFFECT => !AllBlogPosts?.data\n", !AllBlogPosts?.data);
     /** SE SIA ALLTHEBLOGPOSTS CHE SEARCHBLOGPOST SONO VALORIZZATI VUOL DIRE CHE L'UTENTE VUOLE EFFETTUARE UNA RICERCA... */
     // if (AllBlogPosts && SearchBlogPost) {
@@ -106,7 +106,7 @@ const Home = (props) => {
     // console.log("ELSE\n", BlogPostsToRender);
     // }
     /** AD USEEFFECT AGGANCIO SIA ALLBLOGPOSTS CHE SEARCHBLOGPOST AFFINCHE' LO STATO DEI BLOGPOSTS DA RENDERIZZARE SIA SEMPRE AGGIORNATO */
-  }, [SearchBlogPost]);
+  }, [Token, SearchBlogPost]);
 
   return (
     <Container fluid="sm">

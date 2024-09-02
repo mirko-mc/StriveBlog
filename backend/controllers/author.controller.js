@@ -59,6 +59,7 @@ export const GetAuthor = async (req, res) => {
 // TODO modifica POST /authors => deve creare un nuovo utente con password criptata
 export const PostAuthor = async (req, res) => {
   try {
+    console.log("controllers => author.controller.js - PostAuthor")
     /** controllo che la mail non sia già presente nel database */
     if (await AuthorsSchema.exists({ email: req.body.email }))
       throw new Error("Email already exists");
