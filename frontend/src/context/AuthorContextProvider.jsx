@@ -7,8 +7,16 @@ export const AuthorContextProvider = ({ children }) => {
   const [Token, SetToken] = useState(localStorage.getItem("token"));
 
   const GetMeData = async () => {
-    const Me = await GetMe();
-    SetAuthAuthor(Me);
+    try {
+      const Me = await GetMe();
+      SetAuthAuthor(Me);
+    } catch (err) {
+      console.log(err.message);
+      if (err.message === "401") {
+        SetToken(null);
+        localStorage.removeItem("token");
+      }
+    }
   };
 
   useEffect(() => {

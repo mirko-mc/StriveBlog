@@ -5,13 +5,16 @@ import { model, Schema } from "mongoose";
  */
 const authors = new Schema(
   {
+    googleId: {
+      type: String,
+    },
     name: {
       type: String,
       required: true,
     },
     surname: {
       type: String,
-      required: true,
+      // required: true,
     },
     email: {
       type: String,
@@ -20,7 +23,7 @@ const authors = new Schema(
     },
     password: {
       type: String,
-      required: true,
+      // required: true,
       select: false,
     },
     birthDate: {

@@ -9,7 +9,7 @@ import {
   PatchPicture,
 } from "../../data/fetch";
 import { AuthorContext } from "../../context/AuthorContextProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = (props) => {
   const { Token, SetToken } = useContext(AuthorContext);
@@ -23,6 +23,21 @@ const Home = (props) => {
   const { SearchBlogPost } = props;
   const [ShowLogin, SetShowLogin] = useState(false);
   const [ShowRegister, SetShowRegister] = useState(false);
+  // * blocco accesso google
+  const navigate = useNavigate();
+  useEffect(() => {
+    /** prendo il token dall'url */
+    const JwtToken = new URLSearchParams(window.location.search).get("token");
+    console.log(JwtToken)
+    /** se esiste salvo il token nel localStorage, nel context e ridireziono alla home */
+    if (JwtToken) {
+      localStorage.setItem("token", JwtToken);
+      SetToken(JwtToken);
+      // navigate("/");
+    }
+  }, [SetToken, navigate]);
+  // * fine blocco accesso google
+
   /** per gestire uso un ternario nella funzione per stabilire quale dei due modali chiudere */
   const handleClose = () =>
     ShowLogin ? SetShowLogin(false) : SetShowRegister(false);
@@ -129,6 +144,13 @@ const Home = (props) => {
           onClick={() => localStorage.removeItem("token")}
         >
           Logout
+        </Button>
+        <Button
+          as="a"
+          href="http://localhost:5000/login-google"
+          variant="primary"
+        >
+          Login Google
         </Button>
       </div>
 

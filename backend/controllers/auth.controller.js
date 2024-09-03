@@ -27,8 +27,8 @@ export const PostLogin = async (req, res) => {
       { author: Author._id },
       /** il mio segreto */
       process.env.JWT_SECRET,
-      /** la durata del token */
-      { expiresIn: "1w" },
+      /** la durata del token (solo numero sono secondi, stringa numero lettera sono tempi più lunghi (1h, 1m, 1M)*/
+      { expiresIn: 10 },
       (err, JwtToken) => {
         /** in caso di errore chiudo la funzione col return */
         if (err) return res.status(401).send();
@@ -72,4 +72,13 @@ export const PostLogout = async (req, res) => {
   } catch (err) {
     res.send("PostLogout error");
   }
+};
+
+// TODO - GET login Google
+export const GetLoginGoogle = async (req, res) => {};
+// TODO - GET callback Google
+export const GetCallbackGoogle = async (req, res) => {
+  console.log("controllers => auth.controller.js - GetCallbackGoogle");
+  /** qui facciamo il redirect al frontend passandogli nella query string il jwt creato in passport che l'ha aggiunto in req.author */
+  res.redirect(`http://localhost:3000?token=${req.user.JwtToken}`);
 };

@@ -271,13 +271,15 @@ export const GetMe = async () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
+    // if (res.status(401)) localStorage.removeItem("token");
+    if (!res.ok) throw new Error(res.status);
     console.log("RES GetMe\n", res);
     const data = await res.json();
     console.log("DATA GetMe\n", data);
-    if (!res.ok) throw new Error(res);
     return data;
   } catch (err) {
     console.log("ERR GetMe\n", err);
+    throw new Error(err.message);
   }
 };
 

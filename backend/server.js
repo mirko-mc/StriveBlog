@@ -8,11 +8,15 @@ import PostsRouter from "./routes/posts.router.js";
 import morgan from "morgan";
 import helmet from "helmet";
 import endpoints from "express-list-endpoints";
+import passport from "passport";
+import GoogleStrategy from "./config/passport.config.js";
 
 /** dichiaro la porta da usare */
 const Port = process.env.PORT || 5000;
 /** dichiaro il server */
 const Server = express();
+/** abilito l'uso della strategia google di passport */
+passport.use("google", GoogleStrategy);
 /** morgan mostra in console le info sulle chiamate CRUD al server */
 Server.use(morgan("dev"));
 /** aggiunge alcuni headers alle risposte e ne nasconde altri per migliorare la sicurezza dell'api */
