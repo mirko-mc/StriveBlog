@@ -2,13 +2,13 @@ import Jwt from "jsonwebtoken";
 import AuthorsSchema from "../models/AuthorsSchema.js";
 
 export const Authorization = (req, res, next) => {
-  console.log("middlewares => authorization.js - Authorization")
+  console.log("middlewares => authorization.js - Authorization");
   /** verifico che nell'headers sia presente l'authorization di tipo Bearer altrimenti chiudo la funzione */
   if (!req.headers.authorization) return res.status(401).send();
   /** splitto l'authorization in 2 */
   const AuthorizationParts = req.headers.authorization.split(" ");
   /** se le parti non sono 2 chiudo la funzione */
-  if (AuthorizationParts.lenght !== 2) return res.status(401).send();
+  if (AuthorizationParts.length !== 2) return res.status(401).send();
   /** se la prima parte non è Bearer chiudo la funzione */
   if (AuthorizationParts[0] !== "Bearer") return res.status(401).send();
   /** prelevo il token */

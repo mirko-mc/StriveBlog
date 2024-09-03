@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -6,9 +6,15 @@ import "./styles.css";
 import { convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { PostNewBlogPost, PatchPicture } from "../../data/fetch";
+import { AuthorContext } from "../../context/AuthorContextProvider";
+import { useNavigate } from "react-router-dom";
 
 const NewBlogPost = (props) => {
+  console.log("new => new.jsx - NewBlogPost");
   const [text, setText] = useState("");
+  const { AuthAuthor } = useContext(AuthorContext);
+  const Navigate = useNavigate();
+  console.log(AuthAuthor);
   const handleChange = useCallback((value) => {
     setText(draftToHtml(value));
     setFormValue({ ...formValue, content: draftToHtml(value) });
@@ -18,8 +24,7 @@ const NewBlogPost = (props) => {
     title: "",
     cover: "https://picsum.photos/1000/300",
     readTime: "",
-    //* l'id è temporaneamente statico mentre non verrà implementato login e context dell'autore
-    author: "66cf699c529613257f433d6d",
+    author: AuthAuthor._id,
     content: "",
   };
   const [formValue, setFormValue] = useState(initialFormValue);
@@ -38,17 +43,15 @@ const NewBlogPost = (props) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
   const handleSubmit = async () => {
-    // !!! attendo che il blogPost venga salvato
+    // attendo che il blogPost venga salvato
     const CreatedBlogPost = await PostNewBlogPost(formValue);
-    console.log(CreatedBlogPost);
-    // !!! aggiungo la cover al post
+    // aggiungo la cover al post
     //* l'id è temporaneamente statico mentre non verrà implementato login e context dell'autore
     fD.get("cover") && (await PatchPicture("cover", CreatedBlogPost._id, fD));
-    console.log(fD);
-    console.log(fD.get("cover"));
-    // !!! restituisco il messaggio di blogPost salvato
+    // restituisco il messaggio di blogPost salvato
     alert("BlogPost salvato con successo");
     // !!! ritorno alla home
+    Navigate("/");
   };
   return (
     <Container className="new-blog-container">

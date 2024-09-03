@@ -116,6 +116,7 @@ dist
 /build
 
 # misc
+.vscode
 /backend/uploads/
 traccia.txt
 .DS_Store

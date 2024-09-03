@@ -8,7 +8,7 @@ import Jwt from "jsonwebtoken";
 /** POST /login => restituisce token di accesso */
 export const PostLogin = async (req, res) => {
   try {
-    console.log("controllers => auth.controller.js - PostLogin")
+    console.log("controllers => auth.controller.js - PostLogin");
     /** cerco la mail nel database */
     const Author = await AuthorsSchema.findOne({
       email: req.body.email,
@@ -28,7 +28,7 @@ export const PostLogin = async (req, res) => {
       /** il mio segreto */
       process.env.JWT_SECRET,
       /** la durata del token */
-      { expiresIn: "1h" },
+      { expiresIn: "1w" },
       (err, JwtToken) => {
         /** in caso di errore chiudo la funzione col return */
         if (err) return res.status(401).send();
@@ -44,30 +44,31 @@ export const PostLogin = async (req, res) => {
 // TODO GET /me => restituisce l'utente collegato al token di accesso
 export const GetMe = async (req, res) => {
   try {
-    console.log("controllers => auth.controller.js - GetMe")
+    console.log("controllers => auth.controller.js - GetMe");
     /** prendo i dati dell'autore dall'headers */
-    const Author = req.headers.loggedAuthor
+    const Author = req.LoggedAuthor;
+    console.log(Author);
     /** se i dati non ci sono allora l'autore non è loggato */
-    if (!Author) return res.status(401).send("Please login, you aren't logged")
+    if (!Author) return res.status(401).send("Please login, you aren't logged");
     /** restituisco i dati dell'autore */
-    return res.send(Author)
+    return res.send(Author);
   } catch (err) {
     res.send("GetMe error");
-  };
-}
+  }
+};
 // TODO POST /register registrazione autore
 export const PostRegister = async (req, res) => {
   try {
-    console.log("controllers => auth.controller.js - PostRegister")
+    console.log("controllers => auth.controller.js - PostRegister");
     // ??? la traccia dice di modificare la post dell'author che si trova nel controlle author. la devo spostare completamente qui?
   } catch (err) {
     res.send("PostRegister error");
-  };
+  }
 };
 // TODO POST /logout logout autore (per JWT base non serve backend, basta togliere il token dal localStorage)
 export const PostLogout = async (req, res) => {
   try {
-    console.log("controllers => auth.controller.js - PostLogout")
+    console.log("controllers => auth.controller.js - PostLogout");
   } catch (err) {
     res.send("PostLogout error");
   }

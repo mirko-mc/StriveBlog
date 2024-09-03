@@ -12,6 +12,7 @@ Router.get("/me", Authorization, AuthController.GetMe);
 
 // TODO - POST
 Router.post("/register", AuthController.PostRegister);
+
 // TODO - POST
 Router.post("/logout", Authorization, AuthController.PostLogout);
 

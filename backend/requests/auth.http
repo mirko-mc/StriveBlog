@@ -1,0 +1,32 @@
+@baseUrl=http://localhost:5000
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3IiOiI2NmQ2MWY0N2FhMTA3ZTE4YzM4NWU2MmMiLCJpYXQiOjE3MjUzNzQ3ODcsImV4cCI6MTcyNTM3ODM4N30.dbZeCNSlwyyf1ffujCrGMxXdDGAUHMdE5PA6CuFQYyI
+
+### login
+
+### register
+
+### logout
+
+### me
+{{baseUrl}}/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+    "name": "234",
+    "surname":"234",
+    "email": "234@234.234",
+    "password": "234"
+}
+
+###
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "123@123.123",
+    "password": "123"
+}

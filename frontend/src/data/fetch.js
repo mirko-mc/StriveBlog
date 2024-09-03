@@ -264,14 +264,21 @@ export const PostLogin = async (formValue) => {
 
 //??? ME
 export const GetMe = async () => {
-  console.log("data => fetch.js - GetMe");
-  const res = await fetch(FetchAuthorsUrl, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-  const data = await res.json();
-  return data;
+  try {
+    console.log("data => fetch.js - GetMe");
+    const res = await fetch("http://localhost:5000/me", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    console.log("RES GetMe\n", res);
+    const data = await res.json();
+    console.log("DATA GetMe\n", data);
+    if (!res.ok) throw new Error(res);
+    return data;
+  } catch (err) {
+    console.log("ERR GetMe\n", err);
+  }
 };
 
 // /** /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ RANDOM DATA /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */

@@ -9,6 +9,7 @@ import {
   PatchPicture,
 } from "../../data/fetch";
 import { AuthorContext } from "../../context/AuthorContextProvider";
+import { Link } from "react-router-dom";
 
 const Home = (props) => {
   const { Token, SetToken } = useContext(AuthorContext);
@@ -117,103 +118,111 @@ const Home = (props) => {
         <Button variant="primary" onClick={() => SetShowLogin(true)}>
           Login
         </Button>
-
-        <Modal show={ShowLogin} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>LOGIN</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group>
-                <Form.Label>email</Form.Label>
-                <Form.Control
-                  type="text"
-                  // type="email"
-                  name="email"
-                  onChange={HandleChange}
-                ></Form.Control>
-                <Form.Label>password</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  onChange={HandleChange}
-                ></Form.Control>
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleLoginSubmit}>
-              Login
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
         <Button variant="primary" onClick={() => SetShowRegister(true)}>
           Registrati
         </Button>
-
-        <Modal show={ShowRegister} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>REGISTRAZIONE</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group>
-                <Form.Label>Nome</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="name"
-                  onChange={HandleChange}
-                  required
-                ></Form.Control>
-                <Form.Label>Cognome</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="surname"
-                  onChange={HandleChange}
-                  required
-                ></Form.Control>
-                <Form.Label>e-mail</Form.Label>
-                <Form.Control
-                  type="text"
-                  // type="email"
-                  name="email"
-                  onChange={HandleChange}
-                  required
-                ></Form.Control>
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  onChange={HandleChange}
-                  required
-                ></Form.Control>
-                <Form.Label>Data di nascita</Form.Label>
-                <Form.Control
-                  type="date"
-                  name="birthDate"
-                  onChange={HandleChange}
-                ></Form.Control>
-                <Form.Group controlId="fileProPic" className="mb-3">
-                  <Form.Label>Immagine di profilo</Form.Label>
-                  <Form.Control type="file" onChange={handlePicture} />
-                </Form.Group>
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleRegisterSubmit}>
-              Registrati
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <Button as={Link} to={"/me"} variant="primary">
+          /me
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => localStorage.removeItem("token")}
+        >
+          Logout
+        </Button>
       </div>
+
+      <Modal show={ShowLogin} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>LOGIN</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group>
+              <Form.Label>email</Form.Label>
+              <Form.Control
+                type="text"
+                // type="email"
+                name="email"
+                onChange={HandleChange}
+              ></Form.Control>
+              <Form.Label>password</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                onChange={HandleChange}
+              ></Form.Control>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleLoginSubmit}>
+            Login
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={ShowRegister} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>REGISTRAZIONE</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group>
+              <Form.Label>Nome</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                onChange={HandleChange}
+                required
+              ></Form.Control>
+              <Form.Label>Cognome</Form.Label>
+              <Form.Control
+                type="text"
+                name="surname"
+                onChange={HandleChange}
+                required
+              ></Form.Control>
+              <Form.Label>e-mail</Form.Label>
+              <Form.Control
+                type="text"
+                // type="email"
+                name="email"
+                onChange={HandleChange}
+                required
+              ></Form.Control>
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                onChange={HandleChange}
+                required
+              ></Form.Control>
+              <Form.Label>Data di nascita</Form.Label>
+              <Form.Control
+                type="date"
+                name="birthDate"
+                onChange={HandleChange}
+              ></Form.Control>
+              <Form.Group controlId="fileProPic" className="mb-3">
+                <Form.Label>Immagine di profilo</Form.Label>
+                <Form.Control type="file" onChange={handlePicture} />
+              </Form.Group>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleRegisterSubmit}>
+            Registrati
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };
