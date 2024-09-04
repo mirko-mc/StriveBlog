@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Container, Form, Modal, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import BlogList from "../../components/blog/blog-list/BlogList";
 import "./styles.css";
 import {
@@ -129,13 +129,53 @@ const Home = (props) => {
       {AllBlogPosts?.data && Token && (
         <BlogList BlogPostsToRender={AllBlogPosts?.data} />
       )}
+      <Row>
+        <Col md={6} className="d-flex flex-column align-items-center mb-3 border border-primary border-top-0 border-bottom-0 border-start-0">
+          <h4 className="my-3">Effettua il login tramite e-mail</h4>
+          <Form onSubmit={handleLoginSubmit}>
+            <Form.Group className="mb-3 justify-content-center">
+              <Form.Label>email</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                onChange={HandleChange}
+              ></Form.Control>
+              <Form.Label>password</Form.Label>
+              <Form.Control
+              // ??? nascondere la password nella barra degli indirizzi
+                type="password"
+                name="password"
+                onChange={HandleChange}
+              ></Form.Control>
+            </Form.Group>
+            <Button type="submit" variant="primary">
+              Login
+            </Button>
+          </Form>
+        </Col>
+
+
+        <Col md={6} className="d-flex flex-column align-items-center mb-3 border border-primary border-top-0 border-end-0 border-bottom-0">
+          <h4 className="mb-3">Effettua il login tramite Google</h4>
+          <Button
+            as="a"
+            href="http://localhost:5000/login-google"
+            variant="primary"
+            className="my-3"
+          >
+            Login Google
+          </Button>
+        </Col>
+
+
+        <Col md={12} className="d-flex flex-column align-items-center mb-3 border border-primary border-end-0 border-bottom-0 border-start-0">
+          <h4 className="my-3">Non sei registrato? Cosa aspetti, registrati</h4>
+          <Button variant="primary" className="mb-3" onClick={() => SetShowRegister(true)}>
+            Registrati
+          </Button>
+        </Col>
+      </Row>
       <div>
-        <Button variant="primary" onClick={() => SetShowLogin(true)}>
-          Login
-        </Button>
-        <Button variant="primary" onClick={() => SetShowRegister(true)}>
-          Registrati
-        </Button>
         <Button as={Link} to={"/me"} variant="primary">
           /me
         </Button>
@@ -145,47 +185,8 @@ const Home = (props) => {
         >
           Logout
         </Button>
-        <Button
-          as="a"
-          href="http://localhost:5000/login-google"
-          variant="primary"
-        >
-          Login Google
-        </Button>
       </div>
 
-      <Modal show={ShowLogin} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>LOGIN</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group>
-              <Form.Label>email</Form.Label>
-              <Form.Control
-                type="text"
-                // type="email"
-                name="email"
-                onChange={HandleChange}
-              ></Form.Control>
-              <Form.Label>password</Form.Label>
-              <Form.Control
-                type="password"
-                name="password"
-                onChange={HandleChange}
-              ></Form.Control>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleLoginSubmit}>
-            Login
-          </Button>
-        </Modal.Footer>
-      </Modal>
 
       <Modal show={ShowRegister} onHide={handleClose}>
         <Modal.Header closeButton>
