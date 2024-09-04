@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import { Form } from "react-bootstrap"
-import { AuthorContext } from "../context/AuthorContextProvider"
+import { AuthorContext } from "../../context/AuthorContextProvider"
+import "./styles.css";
 
 export const Me = () => {
     const AuthAuthor = useContext(AuthorContext)

@@ -6,7 +6,7 @@ import Blog from "./views/blog/Blog";
 import NewBlogPost from "./views/new/New";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthorContextProvider } from "./context/AuthorContextProvider";
-import { Me } from "./views/Me";
+import { Me } from "./views/me/Me";
 
 function App() {
   const [SearchBlogPost, setSearchBlogPost] = useState("");
