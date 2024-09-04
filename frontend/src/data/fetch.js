@@ -168,14 +168,15 @@ export const PostNewBlogPost = async (formValue) => {
     const res = await fetch(FetchBlogPostsUrl, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       method: "POST",
       body: JSON.stringify(formValue),
     });
+    if (!res.ok) throw new Error(res);
     const data = await res.json();
     console.log("RES PostNewBlogPost\n", res);
     console.log("DATA PostNewBlogPost\n", data);
-    if (!res.ok) throw new Error(res);
     return data;
   } catch (err) {
     console.log("ERR PostNewBlogPost\n", err);
@@ -271,7 +272,6 @@ export const GetMe = async () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    // if (res.status(401)) localStorage.removeItem("token");
     if (!res.ok) throw new Error(res.status);
     console.log("RES GetMe\n", res);
     const data = await res.json();

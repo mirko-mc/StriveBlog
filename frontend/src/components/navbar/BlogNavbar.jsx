@@ -43,8 +43,12 @@ const NavBar = (props) => {
               Nuovo Articolo
             </Button>
             <Button as={Link} to={"/me"} variant="primary">
-              <img src={AuthAuthor.avatar} alt="profile" roundedCircle />
-              {AuthAuthor.name} {AuthAuthor.surname}
+              {AuthAuthor && (
+                <>
+                  {/* <img src={AuthAuthor.avatar} alt="profile" roundedCircle /> */}
+                  {AuthAuthor.name} {AuthAuthor.surname}
+                </>
+              )}
             </Button>
           </>
         )}

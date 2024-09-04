@@ -8,13 +8,18 @@ import draftToHtml from "draftjs-to-html";
 import { PostNewBlogPost, PatchPicture } from "../../data/fetch";
 import { AuthorContext } from "../../context/AuthorContextProvider";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const NewBlogPost = (props) => {
   console.log("new => new.jsx - NewBlogPost");
   const [text, setText] = useState("");
-  const { AuthAuthor } = useContext(AuthorContext);
+  const { AuthAuthor, Token } = useContext(AuthorContext);
+  // *
+  const DecodedToken = jwtDecode(Token);
+  console.log("new => new.jsx - decidedToken",DecodedToken);
+  // *
   const Navigate = useNavigate();
-  console.log(AuthAuthor);
+  // console.log(AuthAuthor);
   const handleChange = useCallback((value) => {
     setText(draftToHtml(value));
     setFormValue({ ...formValue, content: draftToHtml(value) });
@@ -24,7 +29,7 @@ const NewBlogPost = (props) => {
     title: "",
     cover: "https://picsum.photos/1000/300",
     readTime: "",
-    author: AuthAuthor._id,
+    // author: DecodedToken.author,
     content: "",
   };
   const [formValue, setFormValue] = useState(initialFormValue);
@@ -55,7 +60,7 @@ const NewBlogPost = (props) => {
   };
   return (
     <Container className="new-blog-container">
-      <Form onSubmit={handleSubmit} className="mt-5">
+      <Form onSubmit={handleSubmit}>
         <Form.Group controlId="blog-form" className="mt-3 mb-3">
           <Form.Label>Titolo</Form.Label>
           <Form.Control

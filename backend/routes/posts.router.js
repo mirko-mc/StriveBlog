@@ -1,6 +1,7 @@
 import express from "express";
 import uploadCloudinary from "../middlewares/uploads.js";
 import * as BlogPostsController from "../controllers/blogPost.controller.js";
+import { Authorization } from "../middlewares/authorization.js";
 
 const Router = express.Router();
 
@@ -12,7 +13,7 @@ Router.get("/", BlogPostsController.GetBlogPosts);
 Router.get("/:blogPostId", BlogPostsController.GetBlogPost);
 
 /** POST /blogPosts => crea un nuovo blog post */
-Router.post("/", BlogPostsController.PostBlogPost);
+Router.post("/", Authorization, BlogPostsController.PostBlogPost);
 
 /** PUT /blogPosts/:blogPostId => modifica il blog post con l'id associato */
 Router.put("/:blogPostId", BlogPostsController.PutBlogPost);
@@ -35,7 +36,10 @@ Router.get("/:blogPostId/comments", BlogPostsController.GetBlogPostAllComments);
 /**
  * TODO GET /blogPosts/:blogPostId/comments/:commentId => ritorna un commento specifico di un post specifico
  */
-Router.get("/:blogPostId/comments/:commentId", BlogPostsController.GetBlogPostComment);
+Router.get(
+  "/:blogPostId/comments/:commentId",
+  BlogPostsController.GetBlogPostComment
+);
 
 /**
  * TODO POST /blogPosts/:blogPostId => aggiungi un nuovo commento ad un post specifico
@@ -45,11 +49,17 @@ Router.post("/:blogPostId", BlogPostsController.PostBlogPostComment);
 /**
  * TODO PUT /blogPosts/:blogPostId/comment/:commentId => cambia un commento di un post specifico
  */
-Router.put("/:blogPostId/comment/:commentId", BlogPostsController.PutBlogPostComment);
+Router.put(
+  "/:blogPostId/comment/:commentId",
+  BlogPostsController.PutBlogPostComment
+);
 
 /**
  * TODO DELETE /blogPosts/:blogPostId/comment/:commentId => elimina un commento specifico da un post specifico.
  */
-Router.delete("/:blogPostId/comment/:commentId",BlogPostsController.DeleteBlogPostComment);
+Router.delete(
+  "/:blogPostId/comment/:commentId",
+  BlogPostsController.DeleteBlogPostComment
+);
 
 export default Router;

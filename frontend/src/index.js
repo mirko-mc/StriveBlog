@@ -4,11 +4,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { AuthorContextProvider } from "./context/AuthorContextProvider";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  // <React.StrictMode>
+    <AuthorContextProvider>
+
     <App />
-  // </React.StrictMode>
+    </AuthorContextProvider>
+
 );
 
 // If you want to start measuring performance in your app, pass a function

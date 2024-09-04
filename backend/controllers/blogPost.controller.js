@@ -57,7 +57,12 @@ export const PostBlogPost = async (req, res) => {
     !req.body.title && res.status(400).send({ message: "Title is required" });
     !req.body.content &&
       res.status(400).send({ message: "Content is required" });
-    const NewBlogPost = new PostsSchema(req.body);
+    const NewBlogPost = new PostsSchema({
+      /** creiamo un nuovo oggetto con tutte le chiavi di req.body + la chiave loggedAuthor */
+      ...req.body,
+      /** non prendo l'autore dal frontend ma lo prendo dalla req che ho impostato */
+      author: req.LoggedAuthor._id
+    });
     const CreatedBlogPost = await NewBlogPost.save();
     res.status(201).send(CreatedBlogPost);
   } catch (err) {

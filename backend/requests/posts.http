@@ -3,7 +3,7 @@
 ### RITORNA LA LISTA DEI POSTSBLOG
 GET {{baseUrl}}
 ###
-GET {{baseUrl}}?page=1&perPage=20
+GET {{baseUrl}}?page=2&perPage=6
 ### RITORNA IL SINGOLO POSTBLOG
 GET {{baseUrl}}/66cf68fe529613257f433d5b
 

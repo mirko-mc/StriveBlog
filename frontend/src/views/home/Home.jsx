@@ -23,20 +23,20 @@ const Home = (props) => {
   const { SearchBlogPost } = props;
   const [ShowLogin, SetShowLogin] = useState(false);
   const [ShowRegister, SetShowRegister] = useState(false);
-  // * blocco accesso google
-  const navigate = useNavigate();
-  useEffect(() => {
-    /** prendo il token dall'url */
-    const JwtToken = new URLSearchParams(window.location.search).get("token");
-    console.log(JwtToken)
-    /** se esiste salvo il token nel localStorage, nel context e ridireziono alla home */
-    if (JwtToken) {
-      localStorage.setItem("token", JwtToken);
-      SetToken(JwtToken);
-      // navigate("/");
-    }
-  }, [SetToken, navigate]);
-  // * fine blocco accesso google
+  // // * blocco accesso google
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   /** prendo il token dall'url */
+  //   const JwtToken = new URLSearchParams(window.location.search).get("token");
+  //   console.log(JwtToken)
+  //   /** se esiste salvo il token nel localStorage, nel context e ridireziono alla home */
+  //   if (JwtToken) {
+  //     localStorage.setItem("token", JwtToken);
+  //     SetToken(JwtToken);
+  //     // navigate("/");
+  //   }
+  // }, [SetToken, navigate]);
+  // // * fine blocco accesso google
 
   /** per gestire uso un ternario nella funzione per stabilire quale dei due modali chiudere */
   const handleClose = () =>
@@ -65,7 +65,8 @@ const Home = (props) => {
         : setFormValue(InitialFormValueRegister),
     [ShowLogin, ShowRegister]
   );
-  const handleLoginSubmit = async () => {
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
     console.log(formValue);
     const TokenObj = await PostLogin(formValue);
     if (TokenObj?.token) {

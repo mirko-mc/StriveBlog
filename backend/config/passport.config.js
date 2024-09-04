@@ -45,7 +45,7 @@ const GoogleStrategy = new PassportGoogleStrategy(
       /** il mio segreto */
       process.env.JWT_SECRET,
       /** la durata del token (solo numero sono secondi, stringa numero lettera sono tempi più lunghi (1h, 1m, 1M) */
-      { expiresIn: 10 },
+      { expiresIn: "1h" },
       (err, JwtToken) => {
         /** in caso di errore chiudo la funzione col return */
         if (err) return res.status(401).send();
