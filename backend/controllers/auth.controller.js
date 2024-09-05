@@ -80,5 +80,5 @@ export const GetLoginGoogle = async (req, res) => {};
 export const GetCallbackGoogle = async (req, res) => {
   console.log("controllers => auth.controller.js - GetCallbackGoogle");
   /** qui facciamo il redirect al frontend passandogli nella query string il jwt creato in passport che l'ha aggiunto in req.author */
-  res.redirect(`http://localhost:3000?token=${req.user.JwtToken}`);
+  res.redirect(`${process.env.FRONTEND_URL}?token=${req.user.JwtToken}`);
 };

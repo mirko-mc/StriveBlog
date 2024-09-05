@@ -21,7 +21,7 @@ passport.use("google", GoogleStrategy);
 Server.use(morgan("dev"));
 /** aggiunge alcuni headers alle risposte e ne nasconde altri per migliorare la sicurezza dell'api */
 Server.use(helmet());
-/** cors permette la comunicaizone tra frontend e backend su porte differenti */
+/** cors permette la comunicazione tra frontend e backend su porte differenti */
 Server.use(cors());
 /** abilitazione all'utilizzo di json */
 Server.use(express.json());
