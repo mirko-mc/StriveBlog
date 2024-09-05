@@ -131,7 +131,10 @@ const Home = (props) => {
         <BlogList BlogPostsToRender={AllBlogPosts?.data} />
       )}
       <Row>
-        <Col md={6} className="d-flex flex-column align-items-center mb-3 border border-primary border-top-0 border-bottom-0 border-start-0">
+        <Col
+          md={6}
+          className="d-flex flex-column align-items-center mb-3 border border-primary border-top-0 border-bottom-0 border-start-0"
+        >
           <h4 className="my-3">Effettua il login tramite e-mail</h4>
           <Form onSubmit={handleLoginSubmit}>
             <Form.Group className="mb-3 justify-content-center">
@@ -143,7 +146,7 @@ const Home = (props) => {
               ></Form.Control>
               <Form.Label>password</Form.Label>
               <Form.Control
-              // ??? nascondere la password nella barra degli indirizzi
+                // ??? nascondere la password nella barra degli indirizzi
                 type="password"
                 name="password"
                 onChange={HandleChange}
@@ -155,12 +158,14 @@ const Home = (props) => {
           </Form>
         </Col>
 
-
-        <Col md={6} className="d-flex flex-column align-items-center mb-3 border border-primary border-top-0 border-end-0 border-bottom-0">
+        <Col
+          md={6}
+          className="d-flex flex-column align-items-center mb-3 border border-primary border-top-0 border-end-0 border-bottom-0"
+        >
           <h4 className="mb-3">Effettua il login tramite Google</h4>
           <Button
             as="a"
-            href="http://localhost:5000/login-google"
+            href={`${process.env.REACT_APP_API_URL}/login-google`}
             variant="primary"
             className="my-3"
           >
@@ -168,10 +173,16 @@ const Home = (props) => {
           </Button>
         </Col>
 
-
-        <Col md={12} className="d-flex flex-column align-items-center mb-3 border border-primary border-end-0 border-bottom-0 border-start-0">
+        <Col
+          md={12}
+          className="d-flex flex-column align-items-center mb-3 border border-primary border-end-0 border-bottom-0 border-start-0"
+        >
           <h4 className="my-3">Non sei registrato? Cosa aspetti, registrati</h4>
-          <Button variant="primary" className="mb-3" onClick={() => SetShowRegister(true)}>
+          <Button
+            variant="primary"
+            className="mb-3"
+            onClick={() => SetShowRegister(true)}
+          >
             Registrati
           </Button>
         </Col>
@@ -187,7 +198,6 @@ const Home = (props) => {
           Logout
         </Button>
       </div>
-
 
       <Modal show={ShowRegister} onHide={handleClose}>
         <Modal.Header closeButton>

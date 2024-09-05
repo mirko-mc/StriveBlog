@@ -1,5 +1,5 @@
-const FetchAuthorsUrl = "http://localhost:5000/authors";
-const FetchBlogPostsUrl = "http://localhost:5000/blogPosts";
+const FetchAuthorsUrl = `${process.env.REACT_APP_API_URL}/authors`;
+const FetchBlogPostsUrl = `${process.env.REACT_APP_API_URL}/blogPosts`;
 
 /** /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ AUTHORS /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */
 
@@ -246,7 +246,7 @@ export const PatchPicture = async (type, id, fD) => {
 export const PostLogin = async (formValue) => {
   try {
     console.log("data => fetch.js - PostLogin");
-    const res = await fetch("http://localhost:5000/login", {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -267,7 +267,7 @@ export const PostLogin = async (formValue) => {
 export const GetMe = async () => {
   try {
     console.log("data => fetch.js - GetMe");
-    const res = await fetch("http://localhost:5000/me", {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/me`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
