@@ -4,16 +4,8 @@ import Footer from "./components/footer/Footer";
 import Home from "./views/home/Home";
 import Blog from "./views/blog/Blog";
 import NewBlogPost from "./views/new/New";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from "react-router-dom";
-import {
-  AuthorContext,
-  AuthorContextProvider,
-} from "./context/AuthorContextProvider";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthorContext } from "./context/AuthorContextProvider";
 import { Me } from "./views/me/Me";
 
 function App() {

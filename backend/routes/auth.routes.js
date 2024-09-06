@@ -2,6 +2,7 @@ import express from "express";
 import * as AuthController from "../controllers/auth.controller.js";
 import { Authorization } from "../middlewares/authorization.js";
 import passport from "passport";
+import cors from "cors";
 
 const Router = express.Router();
 
@@ -20,8 +21,10 @@ Router.post("/logout", Authorization, AuthController.PostLogout);
 // TODO - GET login Google
 Router.get(
   "/login-google",
+  // [cors(),
   /** middleware di passport che ridireziona alla pagina google */
   passport.authenticate("google", { scope: ["profile", "email"] })
+  // ]
 );
 // TODO - GET callback Google
 Router.get(

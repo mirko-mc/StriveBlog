@@ -25,13 +25,16 @@ Server.use(helmet());
 // Server.use(cors());
 // * configurazione cors
 /** dichiaro gli indirizzi accettati in chiamata */
-const WhiteList = ["https://strive-blog-six.vercel.app", "http://localhost"];
+const WhiteList = [
+  "https://strive-blog-six.vercel.app",
+  "http://localhost:3000",
+];
 // ["frontend1", "frontend2"]
 /** dichiaro l'oggetto cors che validerà l'accesso all'API */
 const CorsOptions = {
   origin: function (origin, callback) {
     /** se l'indirizzo che chiama l'API è incluso nella lista degli indirizzi consentiti */
-    if (WhiteList.indexOf(origin) !== -1) {
+    if (WhiteList.indexOf(origin) !== -1 || !origin) {
       /** ritorno true, ha accesso all'API */
       callback(null, true);
     } else {

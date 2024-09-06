@@ -24,7 +24,7 @@ const Home = (props) => {
   const [ShowLogin, SetShowLogin] = useState(false);
   const [ShowRegister, SetShowRegister] = useState(false);
   // // * blocco accesso google
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // useEffect(() => {
   //   /** prendo il token dall'url */
   //   const JwtToken = new URLSearchParams(window.location.search).get("token");
@@ -37,6 +37,12 @@ const Home = (props) => {
   //   }
   // }, [SetToken, navigate]);
   // // * fine blocco accesso google
+
+  const HandleLogout = () => {
+    SetToken(null);
+    localStorage.removeItem("token");
+    navigate("/");
+  };
 
   /** per gestire uso un ternario nella funzione per stabilire quale dei due modali chiudere */
   const handleClose = () =>
@@ -75,7 +81,8 @@ const Home = (props) => {
     }
     handleClose();
   };
-  const handleRegisterSubmit = async () => {
+  const handleRegisterSubmit = async (event) => {
+    event.preventDefault();
     // !!! attendo che l'autore venga salvato
     const CreatedAuthor = await PostNewAuthor(formValue);
     console.log(CreatedAuthor);
@@ -128,7 +135,7 @@ const Home = (props) => {
     <Container fluid="sm">
       <h1 className="blog-main-title mb-3">Benvenuto sullo Strive Blog!</h1>
       {AllBlogPosts?.data && Token && (
-        <BlogList BlogPostsToRender={AllBlogPosts?.data} />
+        <BlogList BlogPostsToRender={AllBlogPosts} />
       )}
       <Row>
         <Col
@@ -143,13 +150,14 @@ const Home = (props) => {
                 type="email"
                 name="email"
                 onChange={HandleChange}
+                required
               ></Form.Control>
               <Form.Label>password</Form.Label>
               <Form.Control
-                // ??? nascondere la password nella barra degli indirizzi
                 type="password"
                 name="password"
                 onChange={HandleChange}
+                required
               ></Form.Control>
             </Form.Group>
             <Button type="submit" variant="primary">
@@ -191,20 +199,17 @@ const Home = (props) => {
         <Button as={Link} to={"/me"} variant="primary">
           /me
         </Button>
-        <Button
-          variant="primary"
-          onClick={() => localStorage.removeItem("token")}
-        >
+        <Button type="submit" variant="primary" onClick={HandleLogout}>
           Logout
         </Button>
       </div>
 
       <Modal show={ShowRegister} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>REGISTRAZIONE</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
+        <Form onSubmit={handleRegisterSubmit}>
+          <Modal.Header closeButton>
+            <Modal.Title>REGISTRAZIONE</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
             <Form.Group>
               <Form.Label>Nome</Form.Label>
               <Form.Control
@@ -218,12 +223,10 @@ const Home = (props) => {
                 type="text"
                 name="surname"
                 onChange={HandleChange}
-                required
               ></Form.Control>
               <Form.Label>e-mail</Form.Label>
               <Form.Control
-                type="text"
-                // type="email"
+                type="email"
                 name="email"
                 onChange={HandleChange}
                 required
@@ -246,16 +249,16 @@ const Home = (props) => {
                 <Form.Control type="file" onChange={handlePicture} />
               </Form.Group>
             </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleRegisterSubmit}>
-            Registrati
-          </Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button type="submit" variant="primary">
+              Registrati
+            </Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
     </Container>
   );

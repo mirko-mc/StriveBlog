@@ -16,7 +16,7 @@ const NewBlogPost = (props) => {
   const { AuthAuthor, Token } = useContext(AuthorContext);
   // *
   const DecodedToken = jwtDecode(Token);
-  console.log("new => new.jsx - decidedToken",DecodedToken);
+  console.log("new => new.jsx - decidedToken", DecodedToken);
   // *
   const Navigate = useNavigate();
   // console.log(AuthAuthor);
@@ -47,7 +47,9 @@ const NewBlogPost = (props) => {
   const handleChangeFormValue = (e) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    /** impedisco alla pagina di aggiornarsi */
+    event.preventDefault();
     // attendo che il blogPost venga salvato
     const CreatedBlogPost = await PostNewBlogPost(formValue);
     // aggiungo la cover al post
