@@ -25,22 +25,23 @@ Server.use(helmet());
 // Server.use(cors());
 // * configurazione cors
 /** dichiaro gli indirizzi accettati in chiamata */
-const WhiteList = ["frontend1", "frontend2"]
+const WhiteList = ["strive-blog-six.vercel.app", "localhost"];
+// ["frontend1", "frontend2"]
 /** dichiaro l'oggetto cors che validerà l'accesso all'API */
 const CorsOptions = {
   origin: function (origin, callback) {
     /** se l'indirizzo che chiama l'API è incluso nella lista degli indirizzi consentiti */
     if (WhiteList.indexOf(origin) !== -1) {
       /** ritorno true, ha accesso all'API */
-      callback(null, true)
+      callback(null, true);
     } else {
       /** altrimenti gli schiaffo un bell'errore che non gli è consentito l'utilizzo dell'API */
-      callback(new Error("Not allowed by CORS"))
+      callback(new Error("Not allowed by CORS"));
     }
-  }
-}
+  },
+};
 /** utilizzo CORS passandogli l'oggetto CorsOption per validare il chiamante */
-Server.use(cors(CorsOptions))
+Server.use(cors(CorsOptions));
 // fine configurazione cors
 /** abilitazione all'utilizzo di json */
 Server.use(express.json());
