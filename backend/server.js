@@ -25,7 +25,7 @@ Server.use(helmet());
 // Server.use(cors());
 // * configurazione cors
 /** dichiaro gli indirizzi accettati in chiamata */
-const WhiteList = ["strive-blog-six.vercel.app", "localhost"];
+const WhiteList = ["https://strive-blog-six.vercel.app", "http://localhost"];
 // ["frontend1", "frontend2"]
 /** dichiaro l'oggetto cors che validerà l'accesso all'API */
 const CorsOptions = {
