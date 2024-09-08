@@ -24,8 +24,8 @@ export const CommentList = () => {
     <>
       <AddComment />
       {AllBlogPostComments &&
-        AllBlogPostComments.map((comment) => (
-          <SingleComment key={comment._id} comment={comment} />
+        AllBlogPostComments.map((BlogPostComment) => (
+          <SingleComment key={BlogPostComment._id} BlogPostComment={BlogPostComment} />
         ))}
     </>
   );

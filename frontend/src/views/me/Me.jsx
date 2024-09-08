@@ -2,15 +2,28 @@ import { useContext } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { AuthorContext } from "../../context/AuthorContextProvider";
 import "./styles.css";
+import { useNavigate } from "react-router-dom";
+import { DeleteAuthor, PutEditAuthor } from "../../data/fetch";
 
 export const Me = () => {
   console.log("me => me.jsx");
   const { AuthAuthor } = useContext(AuthorContext);
-  const HandleChange = () => {};
+  const Navigate = useNavigate()
+  const HandlePutAuthor =async () => {
+    await PutEditAuthor(AuthAuthor._id, FormValue)
+  };
+  const HandleDeleteAuthor = async () => {
+    // TODO cancella autore
+    await DeleteAuthor(AuthAuthor.id)
+    // TODO logout
+    // TODO naviga alla home
+    Navigate("/")
+  };
+  const HandleChange = () => { };
   if (AuthAuthor)
     return (
       <Container fluid="sm" className="mt-3">
-        <Form>
+        <Form onSubmit={HandlePutAuthor}>
           {console.log(AuthAuthor)}
           <Form.Group>
             <Form.Label>Nome</Form.Label>
@@ -67,7 +80,8 @@ export const Me = () => {
             <Form.Label>Immagine di profilo</Form.Label>
             <img src={AuthAuthor.avatar} alt="Profile" />
           </Form.Group>
-          <Button variant="primary">Elimina account</Button>
+          <Button type="submit" variant="primary">Modifica dati</Button>
+          <Button variant="primary" onClick={HandleDeleteAuthor}>Elimina account</Button>
         </Form>
       </Container>
     );

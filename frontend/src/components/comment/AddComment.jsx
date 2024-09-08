@@ -5,9 +5,10 @@ import { useParams } from "react-router-dom";
 export const AddComment = () => {
   console.log("comment => AddComment.jsx - AddComment");
   const Params = useParams();
+  // ??? controllare esattezza formValue
   const initialNewComment = {
-    comment: "",
-    blogPostId: Params.BlogPostId
+    _id: Params.BlogPostId,
+    comment: ""
   }
   const [NewComment, SetNewComment] = useState(initialNewComment);
   const HandlePostComment = async () => {
