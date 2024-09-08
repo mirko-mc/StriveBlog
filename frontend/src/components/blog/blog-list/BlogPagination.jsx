@@ -1,34 +1,36 @@
 import React from "react";
 import { Pagination, Row } from "react-bootstrap";
+import { GetAllBlogPosts } from "../../../data/fetch";
 
 export const BlogPagination = (props) => {
-/** vai alla prima pagina */
-const HandleFirstPage=()=>{
+  const page = 10;
+  /** vai alla prima pagina */
+  const HandleFirstPage = async () => {
+    // TODO richiama la fetch caricamento post passando pagina da prendere
+  };
+  /** vai all'ultima pagina */
+  const HandleLastPage = () => {
+    // TODO richiama la fetch caricamento post passando pagina da prendere
+  };
+  /** vai alla pagina precedente */
+  const HandlePrevPage = () => {
+    // TODO richiama la fetch caricamento post passando pagina da prendere
+  };
+  /** vai alla pagina successiva */
+  const HandleNextPage = () => {};
   // TODO richiama la fetch caricamento post passando pagina da prendere
-}
-/** vai all'ultima pagina */
-const HandleLastPage=()=>{
-  // TODO richiama la fetch caricamento post passando pagina da prendere
-}
-/** vai alla pagina precedente */
-const HandlePrevPage=()=>{
-  // TODO richiama la fetch caricamento post passando pagina da prendere
-}
-/** vai alla pagina successiva */
-const HandleNextPage=()=>{}
-// TODO richiama la fetch caricamento post passando pagina da prendere
   return (
     <Row>
       <Pagination>
         <Pagination.First />
         <Pagination.Prev />
-        <Pagination.Item>{1}</Pagination.Item>
+        <Pagination.Item>{100}</Pagination.Item>
         <Pagination.Ellipsis />
 
         <Pagination.Item>{10}</Pagination.Item>
-        <Pagination.Item>{BlogPostsToRender.page - 1}</Pagination.Item>
-        <Pagination.Item active>{BlogPostsToRender.page}</Pagination.Item>
-        <Pagination.Item>{BlogPostsToRender.page + 1}</Pagination.Item>
+        <Pagination.Item>{page - 2}</Pagination.Item>
+        <Pagination.Item active>{page}</Pagination.Item>
+        <Pagination.Item>{page + 1}</Pagination.Item>
         <Pagination.Item disabled>{14}</Pagination.Item>
 
         <Pagination.Ellipsis />

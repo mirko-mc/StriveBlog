@@ -13,7 +13,7 @@ Router.get("/", BlogPostsController.GetBlogPosts);
 Router.get("/:blogPostId", BlogPostsController.GetBlogPost);
 
 /** POST /blogPosts => crea un nuovo blog post */
-Router.post("/", Authorization, BlogPostsController.PostBlogPost);
+Router.post("/", BlogPostsController.PostBlogPost);
 
 /** PUT /blogPosts/:blogPostId => modifica il blog post con l'id associato */
 Router.put("/:blogPostId", BlogPostsController.PutBlogPost);

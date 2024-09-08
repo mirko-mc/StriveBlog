@@ -10,6 +10,7 @@ import helmet from "helmet";
 import endpoints from "express-list-endpoints";
 import passport from "passport";
 import GoogleStrategy from "./config/passport.config.js";
+import { Authorization } from "./middlewares/authorization.js";
 
 /** dichiaro la porta da usare */
 const Port = process.env.PORT || 5000;
@@ -49,8 +50,8 @@ Server.use(cors(CorsOptions));
 /** abilitazione all'utilizzo di json */
 Server.use(express.json());
 /** uso le rotte */
-Server.use("/authors", AuthorsRouter);
-Server.use("/blogPosts", PostsRouter);
+Server.use("/authors",Authorization, AuthorsRouter);
+Server.use("/blogPosts",/** Authorization, */ PostsRouter);
 Server.use("/", AuthRouter);
 /** connessione al database */
 await mongoose

@@ -3,41 +3,42 @@ import { Container, Image } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import BlogAuthor from "../../components/blog/blog-author/BlogAuthor";
 import BlogLike from "../../components/likes/BlogLike";
-import posts from "../../data/posts.json";
 import "./styles.css";
-const Blog = props => {
-  const [blog, setBlog] = useState({});
-  const [loading, setLoading] = useState(true);
-  const params = useParams();
-  const navigate = useNavigate();
+import { GetSingleBlogPost } from "../../data/fetch";
+import { CommentArea } from "../../components/comment/CommentArea";
+import { CommentList } from "../../components/comment/CommentList";
+const Blog = (props) => {
+  console.log("blog => Blog.jsx - Blog");
+  const [Blog, SetBlog] = useState({});
+  const [Loading, SetLoading] = useState(true);
+  const Params = useParams();
+  const Navigate = useNavigate();
   useEffect(() => {
-    const { id } = params;
-    const blog = posts.find(post => post._id.toString() === id);
-
-    if (blog) {
-      setBlog(blog);
-      setLoading(false);
+    GetSingleBlogPost(Params.blogPostId).then((data) => SetBlog(data));
+    if (Blog) {
+      SetBlog(Blog);
+      SetLoading(false);
     } else {
-      navigate("/404");
+      Navigate("/404");
     }
   }, []);
 
-  if (loading) {
+  if (Loading) {
     return <div>loading</div>;
   } else {
     return (
       <div className="blog-details-root">
         <Container>
-          <Image className="blog-details-cover" src={blog.cover} fluid />
-          <h1 className="blog-details-title">{blog.title}</h1>
+          <Image className="blog-details-cover" src={Blog.cover} fluid />
+          <h1 className="blog-details-title">{Blog.title}</h1>
 
           <div className="blog-details-container">
             <div className="blog-details-author">
-              <BlogAuthor {...blog.author} />
+              <BlogAuthor AuthorId={Blog.author} />
             </div>
             <div className="blog-details-info">
-              <div>{blog.createdAt}</div>
-              <div>{`lettura da ${blog.readTime.value} ${blog.readTime.unit}`}</div>
+              <div>{Blog.createdAt}</div>
+              {/* <div>{`lettura da ${blog.readTime.value} ${blog.readTime.unit}`}</div> */}
               <div
                 style={{
                   marginTop: 20,
@@ -50,9 +51,11 @@ const Blog = props => {
 
           <div
             dangerouslySetInnerHTML={{
-              __html: blog.content,
+              __html: Blog.content,
             }}
           ></div>
+          {/* <CommentArea /> */}
+          <CommentList />
         </Container>
       </div>
     );

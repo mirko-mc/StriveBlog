@@ -1,12 +1,13 @@
 @baseUrl=http://localhost:5000/blogPosts
 
+
 ### RITORNA LA LISTA DEI POSTSBLOG
 GET {{baseUrl}}
 ###
 GET {{baseUrl}}?page=2&perPage=6
 ### RITORNA IL SINGOLO POSTBLOG
-GET {{baseUrl}}/66cf68fe529613257f433d5b
-
+GET {{baseUrl}}/66d89da6bd3012f17bbd3ff9
+Authorization: Bearer
 ### RITORNA IL PRIMO RISULTATO NELLA RICERCA DEL TITOLO
 GET {{baseUrl}}?title=dUe
 
@@ -33,17 +34,17 @@ Content-Type: application/json
 DELETE {{baseUrl}}/66ad1424543ffbc8f242bde0
 
 ### ritorna tutti commenti di uno specifico post
-GET {{baseUrl}}/66b3996b8a8dfd9ee108357d/comments
+GET {{baseUrl}}/66d89da6bd3012f17bbd3ff9/comments
 
 ### ritorna un commento specifico di un post specifico
-GET {{baseUrl}}/66b3996b8a8dfd9ee108357d/comments/66ce04ef05fff01ccb034cea
+GET {{baseUrl}}/66d89da6bd3012f17bbd3ff9/comments/66dd6df094760ff1e029f67e
 
 ### aggiungi un nuovo commento ad un post specifico
-POST {{baseUrl}}/66b3996b8a8dfd9ee108357d
+POST {{baseUrl}}/66d89da6bd3012f17bbd3ff9
 Content-Type: application/json
 
 {
-  "content":"commento di prova"
+  "content":"VSCode 2"
 }
 
 ### cambia un commento di un post specifico

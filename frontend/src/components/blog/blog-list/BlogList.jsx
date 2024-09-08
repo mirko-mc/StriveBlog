@@ -1,40 +1,38 @@
-import React from "react";
-import { Col, Pagination, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Col, Form, Row } from "react-bootstrap";
 import BlogItem from "../blog-item/BlogItem";
+import { GetAllBlogPosts } from "../../../data/fetch";
+import { BlogPagination } from "./BlogPagination";
 
 const BlogList = (props) => {
-  const { BlogPostsToRender } = props;
+  console.log("blog-list => BlogList.jsx - BlogList");
+  const [BlogPostsToRender, SetBlogPostsToRender] = useState([]);
+  const [Search, SetSearch] = useState("");
+  const HandleSearch = async (event) => {
+    SetSearch(!event.target.value ? "" : event.target.value);
+  };
+  useEffect(() => {
+    GetAllBlogPosts(null, null, Search).then((data) =>
+      SetBlogPostsToRender(data)
+    );
+  }, [Search]);
   return (
     <Row>
-      {BlogPostsToRender?.data.map((blogPost) => (
-        <Col
-          key={blogPost._id}
-          md={4}
-          style={{
-            marginBottom: 50,
-          }}
-        >
-          <BlogItem key={blogPost._id} {...blogPost} />
-        </Col>
-      ))}
-
-      <Pagination>
-        <Pagination.First />
-        <Pagination.Prev />
-        <Pagination.Item>{1}</Pagination.Item>
-        <Pagination.Ellipsis />
-
-        <Pagination.Item>{10}</Pagination.Item>
-        <Pagination.Item>{BlogPostsToRender.page - 1}</Pagination.Item>
-        <Pagination.Item active>{BlogPostsToRender.page}</Pagination.Item>
-        <Pagination.Item>{BlogPostsToRender.page + 1}</Pagination.Item>
-        <Pagination.Item disabled>{14}</Pagination.Item>
-
-        <Pagination.Ellipsis />
-        <Pagination.Item>{20}</Pagination.Item>
-        <Pagination.Next />
-        <Pagination.Last />
-      </Pagination>
+      <Form>
+        <Form.Control
+          type="text"
+          name="search"
+          onChange={HandleSearch}
+          placeholder="Cerca..."
+        />
+      </Form>
+      {BlogPostsToRender?.data &&
+        BlogPostsToRender?.data.map((blogPost) => (
+          <Col key={blogPost._id} md={4}>
+            <BlogItem key={blogPost._id} {...blogPost} />
+          </Col>
+        ))}
+      <BlogPagination />
     </Row>
   );
 };

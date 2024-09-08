@@ -11,7 +11,7 @@ import { Me } from "./views/me/Me";
 function App() {
   console.log("root => app.js");
   const { SetToken } = useContext(AuthorContext);
-  const [SearchBlogPost, setSearchBlogPost] = useState("");
+  
   // * blocco accesso google
   useEffect(() => {
     /** prendo il token dall'url */
@@ -25,14 +25,10 @@ function App() {
   // * fine blocco accesso google
   return (
     <Router>
-      <NavBar setSearchBlogPost={setSearchBlogPost} />
+      <NavBar />
       <Routes>
-        <Route
-          path="/"
-          exact
-          element={<Home SearchBlogPost={SearchBlogPost} />}
-        />
-        <Route path="/blog/:id" element={<Blog />} />
+        <Route path="/" exact element={<Home />} />
+        <Route path="/blogPosts/:blogPostId" element={<Blog />} />
         <Route path="/new" element={<NewBlogPost />} />
         <Route path="/me" element={<Me />}></Route>
       </Routes>

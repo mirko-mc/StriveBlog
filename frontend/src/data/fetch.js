@@ -1,19 +1,18 @@
 const FetchAuthorsUrl = `${process.env.REACT_APP_API_URL}/authors`;
 const FetchBlogPostsUrl = `${process.env.REACT_APP_API_URL}/blogPosts`;
 
-/** /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ AUTHORS /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */
+// * /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ AUTHORS /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ * \\
 
 /** RECUPERA TUTTI GLI AUTORI */
 export const GetAllAuthors = async (page, perPage) => {
   try {
+    console.log("data => fetch.js - GetAllAuthors");
     let res = null;
     if (!perPage || !page) res = await fetch(FetchBlogPostsUrl);
     else
       res = await fetch(`${FetchAuthorsUrl}?page=${page}&perPage=${perPage}`);
-    const data = await res.json();
-    console.log("RES GetAllAuthors\n", res);
-    console.log("DATA GetAllAuthors\n", data);
     if (!res.ok) throw new Error(res);
+    const data = await res.json();
     return data;
   } catch (err) {
     console.log("ERR GetAllAuthors\n", err);
@@ -23,11 +22,15 @@ export const GetAllAuthors = async (page, perPage) => {
 /** RECUPERA IL SINGOLO AUTORE CON L'ID ASSOCIATO */
 export const GetSingleAuthor = async (id) => {
   try {
-    const res = await fetch(`${FetchAuthorsUrl}/${id}`);
-    const data = await res.json();
-    console.log("RES GetSingleAuthor\n", res);
-    console.log("DATA GetSingleAuthor\n", data);
+    console.log("data => fetch.js - GetSingleAuthor");
+    const res = await fetch(`${FetchAuthorsUrl}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     if (!res.ok) throw new Error(res);
+    const data = await res.json();
+    return data;
   } catch (err) {
     console.log("ERR GetSingleAuthor\n", err);
   }
@@ -36,17 +39,17 @@ export const GetSingleAuthor = async (id) => {
 /** CREA UN NUOVO AUTORE */
 export const PostNewAuthor = async (formValue) => {
   try {
+    console.log("data => fetch.js - PostNewAutor");
     const res = await fetch(FetchAuthorsUrl, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       method: "POST",
       body: JSON.stringify(formValue),
     });
-    const data = await res.json();
-    console.log("RES PostNewAutor\n", res);
-    console.log("DATA PostNewAutor\n", data);
     if (!res.ok) throw new Error(res);
+    const data = await res.json();
     return data;
   } catch (err) {
     console.log("ERR PostNewAutor\n", err);
@@ -56,17 +59,17 @@ export const PostNewAuthor = async (formValue) => {
 /** MODIFICA UN AUTORE ESISTENTE CON L'ID ASSOCIATO */
 export const PutEditAuthor = async (id, formValue) => {
   try {
+    console.log("data => fetch.js - PutEditAuthor");
     const res = await fetch(`${FetchAuthorsUrl}/${id}`, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       method: "PUT",
       body: JSON.stringify(formValue),
     });
-    const data = await res.json();
-    console.log("RES PutEditAuthor\n", res);
-    console.log("DATA PutEditAuthor\n", data);
     if (!res.ok) throw new Error(res);
+    const data = await res.json();
     return data;
   } catch (err) {
     console.log("ERR PutEditAuthor\n", err);
@@ -76,16 +79,16 @@ export const PutEditAuthor = async (id, formValue) => {
 /** CANCELLA L'AUTORE CON L'ID ASSOCIATO */
 export const DeleteAuthor = async (id) => {
   try {
+    console.log("data => fetch.js - DeleteAuthor");
     const res = await fetch(`${FetchAuthorsUrl}/${id}`, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       method: "DELETE",
     });
-    const data = await res.json();
-    console.log("RES DeleteAuthor\n", res);
-    console.log("DATA DeleteAuthor\n", data);
     if (!res.ok) throw new Error(res);
+    const data = await res.json();
     return data;
   } catch (err) {
     console.log("ERR DeleteAuthor\n", err);
@@ -95,38 +98,34 @@ export const DeleteAuthor = async (id) => {
 /** RECUPERA I BLOGPOSTS DI UN AUTORE CON L'ID ASSOCIATO */
 export const GetAuthorBlogPosts = async (id) => {
   try {
+    console.log("data => fetch.js - GetAuthorBlogPosts");
     const res = await fetch(`${FetchAuthorsUrl}/${id}/blogPosts`);
-    const data = await res.json();
-    console.log("RES GetAuthorBlogPosts\n", res);
-    console.log("DATA GetAuthorBlogPosts\n", data);
     if (!res.ok) throw new Error(res);
+    const data = await res.json();
     return data;
   } catch (err) {
     console.log("ERR GetAuthorBlogPosts\n", err);
   }
 };
 
-/** /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ BLOGPOSTS /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */
+// * /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ BLOGPOSTS /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ * \\
 
 /** RECUPERA TUTTI I BlogPosts */
 export const GetAllBlogPosts = async (page, perPage, title) => {
   try {
+    console.log("data => fetch.js - GetAllBlogPosts");
     let NewFetchUrl = FetchBlogPostsUrl;
     (page || perPage || title) && (NewFetchUrl += "?");
     (page || perPage) && (NewFetchUrl += `page=${page}&perPage=${perPage}`);
     page && perPage && title && (NewFetchUrl += "&");
     title && (NewFetchUrl += `title=${title}`);
-    // let res = null;
-    // if (!perPage || !page) {
-    //   if (!title) res = await fetch(FetchBlogPostsUrl);
-    //   else res = await fetch(`${FetchBlogPostsUrl}?title=${title}`);
-    // } else
-    //   res = await fetch(`${FetchBlogPostsUrl}?page=${page}&perPage=${perPage}`);
-    const res = await fetch(NewFetchUrl);
-    const data = await res.json();
-    console.log("RES GetAllBlogPosts\n", res);
-    console.log("DATA GetAllBlogPosts\n", data);
+    const res = await fetch(NewFetchUrl, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     if (!res.ok) throw new Error(res);
+    const data = await res.json();
     return data;
   } catch (err) {
     console.log("ERR GetAllBlogPosts\n", err);
@@ -136,11 +135,14 @@ export const GetAllBlogPosts = async (page, perPage, title) => {
 /** RECUPERA IL SINGOLO BLOGPOST CON L'ID ASSOCIATO */
 export const GetSingleBlogPost = async (id) => {
   try {
-    const res = await fetch(`${FetchBlogPostsUrl}/${id}`);
-    const data = await res.json();
-    console.log("RES GetSingleBlogPost\n", res);
-    console.log("DATA GetSingleBlogPost\n", data);
+    console.log("data => fetch.js - GetSingleBlogPost");
+    const res = await fetch(`${FetchBlogPostsUrl}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     if (!res.ok) throw new Error(res);
+    const data = await res.json();
     return data;
   } catch (err) {
     console.log("ERR GetSingleBlogPost\n", err);
@@ -150,11 +152,14 @@ export const GetSingleBlogPost = async (id) => {
 /** FILTRA I BLOGPOSTS RESTITUENDONE L'UNICO CHE CORRISPONDA ALLA CONDIZIONE DI RICERCA */
 export const GetBlogPostsQueryTitle = async (title) => {
   try {
-    const res = await fetch(`${FetchBlogPostsUrl}?title=${title}`);
-    const data = await res.json();
-    console.log("RES GetBlogPostsQueryTitle\n", res);
-    console.log("DATA GetBlogPostsQueryTitle\n", data);
+    console.log("data => fetch.js - GetBlogPostsQueryTitle");
+    const res = await fetch(`${FetchBlogPostsUrl}?title=${title}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     if (!res.ok) throw new Error(res);
+    const data = await res.json();
     return data;
   } catch (err) {
     console.log("ERR GetBlogPostsQueryTitle\n", err);
@@ -164,7 +169,7 @@ export const GetBlogPostsQueryTitle = async (title) => {
 /** CREA UN NUOVO BLOGPOST */
 export const PostNewBlogPost = async (formValue) => {
   try {
-    console.log("PostNewBlogPost formValue\n", formValue);
+    console.log("data => fetch.js - PostNewBlogPost");
     const res = await fetch(FetchBlogPostsUrl, {
       headers: {
         "Content-Type": "application/json",
@@ -175,8 +180,6 @@ export const PostNewBlogPost = async (formValue) => {
     });
     if (!res.ok) throw new Error(res);
     const data = await res.json();
-    console.log("RES PostNewBlogPost\n", res);
-    console.log("DATA PostNewBlogPost\n", data);
     return data;
   } catch (err) {
     console.log("ERR PostNewBlogPost\n", err);
@@ -186,17 +189,17 @@ export const PostNewBlogPost = async (formValue) => {
 /** MODIFICA IL BLOGPOST CON L'ID ASSOCIATO */
 export const PutEditBlogPost = async (id, formValue) => {
   try {
+    console.log("data => fetch.js - PutEditBlogPost");
     const res = await fetch(`${FetchBlogPostsUrl}/${id}`, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       method: "PUT",
       body: JSON.stringify(formValue),
     });
-    const data = await res.json();
-    console.log("RES PutEditBlogPost\n", res);
-    console.log("DATA PutEditBlogPost\n", data);
     if (!res.ok) throw new Error(res);
+    const data = await res.json();
     return data;
   } catch (err) {
     console.log("ERR PutEditBlogPost\n", err);
@@ -206,11 +209,15 @@ export const PutEditBlogPost = async (id, formValue) => {
 /** ELIMINA IL BLOGPOST CON L'ID ASSOCIATO */
 export const DeleteBlogPost = async (id) => {
   try {
-    const res = await fetch(`${FetchBlogPostsUrl}/${id}`);
-    const data = await res.json();
-    console.log("RES DeleteBlogPost\n", res);
-    console.log("DATA DeleteBlogPost\n", data);
+    console.log("data => fetch.js - DeleteBlogPost");
+    const res = await fetch(`${FetchBlogPostsUrl}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      method: "DELETE",
+    });
     if (!res.ok) throw new Error(res);
+    const data = await res.json();
     return data;
   } catch (err) {
     console.log("ERR DeleteBlogPost\n", err);
@@ -218,31 +225,30 @@ export const DeleteBlogPost = async (id) => {
 };
 
 // PATCH /blogPosts/:blogPostId/cover, carica un'immagine per il post specificato dall'id. Salva l'URL creato da Cloudinary nel post corrispondente.
-// upload coverBlogPost
-// TODO upload authorProPic
 export const PatchPicture = async (type, id, fD) => {
   try {
-    console.log(id);
+    console.log("data => fetch.js - PatchPicture");
     const NewFetchUrl =
       type && type === "cover"
         ? `${FetchBlogPostsUrl}/${id}/${type}`
         : `${FetchAuthorsUrl}/${id}/${type}`;
     const res = await fetch(NewFetchUrl, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
       method: "PATCH",
       body: fD,
     });
-    const data = res.json();
-    console.log("RES PatchPicture\n", res);
-    console.log("DATA PatchPicture\n", data);
     if (!res.ok) throw new Error(res);
+    const data = res.json();
     return data;
   } catch (err) {
     console.log("ERR PatchPicture\n", err);
   }
 };
 
-/** /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ AUTH /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */
-//??? LOGIN
+// * /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ AUTH /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ * //
+/** /login */
 export const PostLogin = async (formValue) => {
   try {
     console.log("data => fetch.js - PostLogin");
@@ -253,17 +259,15 @@ export const PostLogin = async (formValue) => {
       method: "POST",
       body: JSON.stringify(formValue),
     });
-    console.log("RES PostLogin\n", res);
-    const data = await res.json();
-    console.log("DATA PostLogin\n", data);
     if (!res.ok) throw new Error(res);
+    const data = await res.json();
     return data;
   } catch (err) {
     console.log("ERR PostLogin\n", err);
   }
 };
 
-//??? ME
+/** /me */
 export const GetMe = async () => {
   try {
     console.log("data => fetch.js - GetMe");
@@ -273,15 +277,118 @@ export const GetMe = async () => {
       },
     });
     if (!res.ok) throw new Error(res.status);
-    console.log("RES GetMe\n", res);
     const data = await res.json();
-    console.log("DATA GetMe\n", data);
     return data;
   } catch (err) {
     console.log("ERR GetMe\n", err);
     throw new Error(err.message);
   }
 };
+
+// * /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ COMMENT /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ * //
+/** GET /blogPosts/:blogPostId/comments => ritorna tutti commenti di uno specifico post */
+export const GetAllComments = async (BlogPostId) => {
+  try {
+    console.log("data => fetch.js - GetAllComments");
+    const res = await fetch(`${FetchBlogPostsUrl}/${BlogPostId}/comments`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    if (!res.ok) throw new Error(res);
+    const data = await res.json();
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.log("ERR GetAllComments\n", err);
+  }
+};
+
+/** GET /blogPosts/:blogPostId/comments/:commentId => ritorna un commento specifico di un post specifico */
+export const GetSingleComment = async (BlogPostId, CommentId) => {
+  try {
+    console.log("data => fetch.js - GetSingleComment");
+    const res = await fetch(
+      `${FetchBlogPostsUrl}/${BlogPostId}/comments/${CommentId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    if (!res.ok) throw new Error(res);
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log("ERR GetSingleComment\n", err);
+  }
+};
+
+/** POST /blogPosts/:blogPostId => aggiungi un nuovo commento ad un post specifico */
+export const PostComment = async (BlogPostId, Comment) => {
+  try {
+    console.log("data => fetch.js - PostComment");
+    const res = await fetch(`${FetchBlogPostsUrl}/${BlogPostId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(Comment),
+    });
+    if (!res.ok) throw new Error(res);
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log("ERR PostComment\n", err);
+  }
+};
+
+/** PUT /blogPosts/:blogPostId/comment/:commentId => cambia un commento di un post specifico */
+export const PutComment = async (BlogPostId, CommentId, Comment) => {
+  try {
+    console.log("data => fetch.js - PutComment");
+    const res = await fetch(
+      `${FetchBlogPostsUrl}/${BlogPostId}/comment/${CommentId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        method: "PUT",
+        body: JSON.stringify(Comment),
+      }
+    );
+    if (!res.ok) throw new Error(res);
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log("ERR PutComment\n", err);
+  }
+};
+
+/** DELETE /blogPosts/:blogPostId/comment/:commentId => elimina un commento specifico da un post specifico. */
+export const DeleteComment = async (BlogPostId, CommentId) => {
+  try {
+    console.log("data => fetch.js - DeleteComment");
+    const res = await fetch(
+      `${FetchBlogPostsUrl}/${BlogPostId}/comment/${CommentId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        method: "DELETE",
+      }
+    );
+    if (!res.ok) throw new Error(res);
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log("ERR DeleteComment\n", err);
+  }
+};
+
+/** /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ FINE COMMENT /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */
 
 // /** /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ RANDOM DATA /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ */
 // const names = [
