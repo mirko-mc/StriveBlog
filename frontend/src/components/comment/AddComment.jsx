@@ -5,18 +5,21 @@ import { useParams } from "react-router-dom";
 export const AddComment = () => {
   console.log("comment => AddComment.jsx - AddComment");
   const Params = useParams();
-  // TODO far diventare un formvalue perchè la fetch nel body vuole l'oggetto
-  const [NewComment, SetNewComment] = useState("");
+  const initialNewComment = {
+    comment: "",
+    blogPostId: Params.BlogPostId
+  }
+  const [NewComment, SetNewComment] = useState(initialNewComment);
   const HandlePostComment = async () => {
-    await PostComment(Params.BlogPostId, NewComment);
-    SetNewComment("");
+    await PostComment(NewComment);
+    SetNewComment(initialNewComment);
   };
   const handleChange = (event) => {
-    SetNewComment(event.target.value);
+    SetNewComment({ ...NewComment, [event.target.name]: event.target.value });
     console.log(NewComment);
   };
   return (
-    <Form className="mb-3 d-flex flex-column align-items-center">
+    <Form onSubmit={HandlePostComment} className="mb-3 d-flex flex-column align-items-center">
       <Form.Group className="mb-3 w-100" controlId="ControlTextarea">
         <Form.Label>Commenti</Form.Label>
         <Form.Control
@@ -25,11 +28,11 @@ export const AddComment = () => {
           rows={3}
           name="comment"
           onChange={handleChange}
-          // value={comment}
+        // value={comment}
         />
       </Form.Group>
 
-      <Button className="w-25" variant="primary" onClick={HandlePostComment}>
+      <Button type="submit" className="w-25" variant="primary">
         Salva
       </Button>
     </Form>

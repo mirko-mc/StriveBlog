@@ -325,7 +325,7 @@ export const GetSingleComment = async (BlogPostId, CommentId) => {
 };
 
 /** POST /blogPosts/:blogPostId => aggiungi un nuovo commento ad un post specifico */
-export const PostComment = async (BlogPostId, Comment) => {
+export const PostComment = async (formValue) => {
   try {
     console.log("data => fetch.js - PostComment");
     const res = await fetch(`${FetchBlogPostsUrl}/${BlogPostId}`, {
@@ -334,7 +334,7 @@ export const PostComment = async (BlogPostId, Comment) => {
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify(Comment),
+      body: JSON.stringify(formValue),
     });
     if (!res.ok) throw new Error(res);
     const data = await res.json();
