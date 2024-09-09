@@ -8,7 +8,7 @@ const NavBar = (props) => {
   const { setSearchBlogPost } = props;
   const { AuthAuthor, Token } = useContext(AuthorContext);
   return (
-    <Navbar expand="lg" className="blog-navbar" fixed="top">
+    <Navbar expand="lg" className="blog-navbar" /*fixed="top"*/>
       <Container className="justify-content-between">
         <Navbar.Brand as={Link} to="/">
           <img className="blog-navbar-brand" alt="logo" src={logo} />
@@ -58,3 +58,4 @@ const NavBar = (props) => {
 };
 
 export default NavBar;
+
