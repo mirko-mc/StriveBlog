@@ -131,11 +131,7 @@ const PostSendMail = async (email, name) => {
 /** PUT /authors/:authorId => modifica l'autore con l'id associato */
 export const PutAuthor = async (req, res) => {
   try {
-    if (
-      req.body.email &&
-      (await AuthorsSchema.exists({ email: req.body.email }))
-    )
-      throw new Error("Email already exists");
+    /** modifica l'autore con l'id associato */
     const EditAuthor = await AuthorsSchema.findByIdAndUpdate(
       req.params.authorId,
       req.body,

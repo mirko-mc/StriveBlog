@@ -8,6 +8,10 @@ const commentsSchema = new Schema(
       max: 100,
       trim: true,
     },
+    authorId: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

@@ -12,11 +12,9 @@ export const CommentList = () => {
     GetAllComments(Params.blogPostId).then((data) =>
       SetAllBlogPostComments(data)
     );
-    console.log("------------------", AllBlogPostComments);
   };
   useEffect(() => {
     !AllBlogPostComments && HandleGetAllComments();
-    console.log("useEffect", AllBlogPostComments);
   }, [AllBlogPostComments]);
 
   if (!AllBlogPostComments) return <p>Non ci sono commenti</p>;
@@ -25,7 +23,10 @@ export const CommentList = () => {
       <AddComment />
       {AllBlogPostComments &&
         AllBlogPostComments.map((BlogPostComment) => (
-          <SingleComment key={BlogPostComment._id} BlogPostComment={BlogPostComment} />
+          <SingleComment
+            key={BlogPostComment._id}
+            BlogPostComment={BlogPostComment}
+          />
         ))}
     </>
   );

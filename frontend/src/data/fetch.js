@@ -56,11 +56,11 @@ export const PostNewAuthor = async (formValue) => {
   }
 };
 
-/** MODIFICA UN AUTORE ESISTENTE CON L'ID ASSOCIATO */
-export const PutEditAuthor = async (id, formValue) => {
+/** PUT /authors/:authorId => modifica l'autore con l'id associato */
+export const PutEditAuthor = async (authorId,formValue) => {
   try {
     console.log("data => fetch.js - PutEditAuthor");
-    const res = await fetch(`${FetchAuthorsUrl}/${id}`, {
+    const res = await fetch(`${FetchAuthorsUrl}/${authorId}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -326,9 +326,9 @@ export const GetSingleComment = async (BlogPostId, CommentId) => {
 
 /** POST /blogPosts/:blogPostId => aggiungi un nuovo commento ad un post specifico */
 export const PostComment = async (formValue) => {
+  console.log("data => fetch.js - PostComment");
   try {
-    console.log("data => fetch.js - PostComment");
-    const res = await fetch(`${FetchBlogPostsUrl}/${BlogPostId}`, {
+    const res = await fetch(`${FetchBlogPostsUrl}/${formValue.blogPostId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
@@ -345,18 +345,19 @@ export const PostComment = async (formValue) => {
 };
 
 /** PUT /blogPosts/:blogPostId/comment/:commentId => cambia un commento di un post specifico */
-export const PutComment = async (BlogPostId, CommentId, Comment) => {
+export const PutComment = async (FormValue) => {
+  console.log("data => fetch.js - PutComment");
   try {
-    console.log("data => fetch.js - PutComment");
+    console.log(FormValue);
     const res = await fetch(
-      `${FetchBlogPostsUrl}/${BlogPostId}/comment/${CommentId}`,
+      `${FetchBlogPostsUrl}/${FormValue.blogPostId}/comment/${FormValue.commentId}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "application/json",
         },
         method: "PUT",
-        body: JSON.stringify(Comment),
+        body: JSON.stringify(FormValue),
       }
     );
     if (!res.ok) throw new Error(res);

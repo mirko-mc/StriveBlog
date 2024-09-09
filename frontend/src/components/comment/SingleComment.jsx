@@ -1,36 +1,33 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { DeleteComment, PutComment } from "../../data/fetch.js";
+import { useParams } from "react-router-dom";
 
-export const SingleComment = ({ BlogPostComment, handleSetComments }) => {
+export const SingleComment = ({ BlogPostComment }) => {
   console.log("comment => SingleComment.jsx - SingleComment");
   console.log(BlogPostComment);
+  const Params = useParams();
+  const blogPostId = Params.blogPostId;
   const [showSave, setShowSave] = useState(true);
-  const [isFetching, setIsFetching] = useState({
-    put: false,
-    delete: false,
-  });
-  const [edit, setEdit] = useState({
-    comment: BlogPostComment.content,
-    id: BlogPostComment._id,
-  });
+  const InitialBlogPostCommentFormValue = {
+    blogPostId,
+    content: BlogPostComment.content,
+    commentId: BlogPostComment._id,
+  };
+  const [EditFormValue, SetEditFormValue] = useState(
+    InitialBlogPostCommentFormValue
+  );
   const handleChangeComment = (event) => {
     event.preventDefault();
-    setEdit({ ...edit, [event.target.name]: event.target.value });
-  };
-  const handleSavePutComment = async (BlogPostCommentId) => {
-    setIsFetching({ ...isFetching, put: true });
-    await PutComment(BlogPostCommentId, edit).then(() => {
-      setIsFetching({ ...isFetching, put: false });
-      setShowSave(true);
+    SetEditFormValue({
+      ...EditFormValue,
+      [event.target.name]: event.target.value,
     });
+    console.log(EditFormValue);
   };
-  const handleDeleteComment = async (BlogPostCommentId) => {
-    setIsFetching({ ...isFetching, delete: true });
-    await DeleteComment(BlogPostCommentId);
-
-    await handleSetComments(BlogPostCommentId);
-    setIsFetching({ ...isFetching, delete: false });
+  const HandlePutBlogPostComment = async () => {
+    await PutComment(EditFormValue);
+    setShowSave(true);
   };
   return (
     <Form>
@@ -39,21 +36,27 @@ export const SingleComment = ({ BlogPostComment, handleSetComments }) => {
         <Form.Control
           as="textarea"
           rows={3}
-          name="comment"
-          value={edit.comment}
+          name="content"
+          value={EditFormValue.content}
           onChange={handleChangeComment}
           disabled={showSave}
         />
       </Form.Group>
 
-      <Button hidden={!showSave} onClick={() => setShowSave(false)}></Button>
-      <Button
-        hidden={showSave}
-        onClick={() => handleSavePutComment(BlogPostComment._id)}
-      >
-        EDIT
+      <Button hidden={!showSave} onClick={() => setShowSave(false)}>
+        MODIFICA
       </Button>
-      <Button onClick={() => handleDeleteComment(BlogPostComment._id)}>DELETE</Button>
+      <Button hidden={showSave} onClick={HandlePutBlogPostComment}>
+        SALVA
+      </Button>
+      <Button
+        type="submit"
+        onClick={async () =>
+          await DeleteComment(blogPostId, BlogPostComment._id)
+        }
+      >
+        DELETE
+      </Button>
     </Form>
   );
 };

@@ -1,4 +1,5 @@
 import PostsSchema from "../models/PostsSchema.js";
+import crypto from "crypto";
 
 /** GET /blogPosts => ritorna una lista di blog post */
 export const GetBlogPosts = async (req, res) => {
@@ -61,7 +62,7 @@ export const PostBlogPost = async (req, res) => {
       /** creiamo un nuovo oggetto con tutte le chiavi di req.body + la chiave loggedAuthor */
       ...req.body,
       /** non prendo l'autore dal frontend ma lo prendo dalla req che ho impostato */
-      author: req.LoggedAuthor._id
+      author: req.LoggedAuthor._id,
     });
     const CreatedBlogPost = await NewBlogPost.save();
     res.status(201).send(CreatedBlogPost);
@@ -137,9 +138,12 @@ export const GetBlogPostComment = async (req, res) => {
 
 /** POST /blogPosts/:blogPostId => aggiungi un nuovo commento ad un post specifico */
 export const PostBlogPostComment = async (req, res) => {
+  console.log("CONTROLLLER => blogPost.controller.js - PostBlogPostComment");
   try {
     const BlogPost = await PostsSchema.findById(req.params.blogPostId);
-    BlogPost.comments.push(req.body);
+    const commentId = crypto.randomBytes(16).toString("hex");
+    console.log(commentId);
+    BlogPost.comments.push({ ...req.body, id: commentId });
     await BlogPost.save();
     res.send({ message: "Added Comment" });
   } catch (err) {

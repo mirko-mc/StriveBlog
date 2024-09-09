@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { PostComment } from "../../data/fetch.js";
 import { useParams } from "react-router-dom";
+import { AuthorContext } from "../../context/AuthorContextProvider.jsx";
 export const AddComment = () => {
   console.log("comment => AddComment.jsx - AddComment");
   const Params = useParams();
-  // ??? controllare esattezza formValue
+  const { AuthAuthor } = useContext(AuthorContext);
   const initialNewComment = {
-    _id: Params.BlogPostId,
-    comment: ""
-  }
+    blogPostId: Params.blogPostId,
+    authorId: AuthAuthor._id,
+    content: "",
+  };
   const [NewComment, SetNewComment] = useState(initialNewComment);
   const HandlePostComment = async () => {
     await PostComment(NewComment);
@@ -17,19 +19,21 @@ export const AddComment = () => {
   };
   const handleChange = (event) => {
     SetNewComment({ ...NewComment, [event.target.name]: event.target.value });
-    console.log(NewComment);
   };
   return (
-    <Form onSubmit={HandlePostComment} className="mb-3 d-flex flex-column align-items-center">
+    <Form
+      onSubmit={HandlePostComment}
+      className="mb-3 d-flex flex-column align-items-center"
+    >
       <Form.Group className="mb-3 w-100" controlId="ControlTextarea">
         <Form.Label>Commenti</Form.Label>
         <Form.Control
           as="textarea"
-          placeholder="Leave a comment here"
+          placeholder="Inserisci un commento"
           rows={3}
-          name="comment"
+          name="content"
           onChange={handleChange}
-        // value={comment}
+          // value={NewComment.content}
         />
       </Form.Group>
 

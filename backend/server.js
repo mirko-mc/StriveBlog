@@ -50,7 +50,7 @@ Server.use(cors(CorsOptions));
 /** abilitazione all'utilizzo di json */
 Server.use(express.json());
 /** uso le rotte */
-Server.use("/authors",Authorization, AuthorsRouter);
+Server.use("/authors",/** Authorization,*/ AuthorsRouter);
 Server.use("/blogPosts",/** Authorization, */ PostsRouter);
 Server.use("/", AuthRouter);
 /** connessione al database */

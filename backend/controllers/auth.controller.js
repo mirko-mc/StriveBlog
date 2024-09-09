@@ -47,7 +47,6 @@ export const GetMe = async (req, res) => {
     console.log("controllers => auth.controller.js - GetMe");
     /** prendo i dati dell'autore dall'headers */
     const Author = req.LoggedAuthor;
-    console.log(Author);
     /** se i dati non ci sono allora l'autore non è loggato */
     if (!Author) return res.status(401).send("Please login, you aren't logged");
     /** restituisco i dati dell'autore */

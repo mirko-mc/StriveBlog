@@ -5,7 +5,6 @@ import BlogAuthor from "../../components/blog/blog-author/BlogAuthor";
 import BlogLike from "../../components/likes/BlogLike";
 import "./styles.css";
 import { GetSingleBlogPost } from "../../data/fetch";
-import { CommentArea } from "../../components/comment/CommentArea";
 import { CommentList } from "../../components/comment/CommentList";
 const Blog = (props) => {
   console.log("blog => Blog.jsx - Blog");
@@ -54,7 +53,6 @@ const Blog = (props) => {
               __html: Blog.content,
             }}
           ></div>
-          {/* <CommentArea /> */}
           <CommentList />
         </Container>
       </div>
