@@ -53,7 +53,6 @@ const NewBlogPost = (props) => {
     // attendo che il blogPost venga salvato
     const CreatedBlogPost = await PostNewBlogPost(formValue);
     // aggiungo la cover al post
-    //* l'id è temporaneamente statico mentre non verrà implementato login e context dell'autore
     fD.get("cover") && (await PatchPicture("cover", CreatedBlogPost._id, fD));
     // restituisco il messaggio di blogPost salvato
     alert("BlogPost salvato con successo");

@@ -1,11 +1,13 @@
-import { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { useContext, useState } from "react";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import { DeleteComment, PutComment } from "../../data/fetch.js";
 import { useParams } from "react-router-dom";
+import { AuthorContext } from "../../context/AuthorContextProvider.jsx";
 
 export const SingleComment = ({ BlogPostComment }) => {
   console.log("comment => SingleComment.jsx - SingleComment");
   console.log(BlogPostComment);
+  const { AuthAuthor } = useContext(AuthorContext);
   const Params = useParams();
   const blogPostId = Params.blogPostId;
   const [showSave, setShowSave] = useState(true);
@@ -42,21 +44,28 @@ export const SingleComment = ({ BlogPostComment }) => {
           disabled={showSave}
         />
       </Form.Group>
-
-      <Button hidden={!showSave} onClick={() => setShowSave(false)}>
-        MODIFICA
-      </Button>
-      <Button hidden={showSave} onClick={HandlePutBlogPostComment}>
-        SALVA
-      </Button>
-      <Button
-        type="submit"
-        onClick={async () =>
-          await DeleteComment(blogPostId, BlogPostComment._id)
-        }
-      >
-        DELETE
-      </Button>
+      {BlogPostComment.authorId === AuthAuthor._id && (
+        <>
+          <Row>
+            <Col className="d-flex justify-content-around">
+              <Button hidden={!showSave} onClick={() => setShowSave(false)}>
+                MODIFICA COMMENTO
+              </Button>
+              <Button hidden={showSave} onClick={HandlePutBlogPostComment}>
+                SALVA
+              </Button>
+              <Button
+                type="submit"
+                onClick={async () =>
+                  await DeleteComment(blogPostId, BlogPostComment._id)
+                }
+              >
+                ELIMINA COMMENTO
+              </Button>
+            </Col>
+          </Row>
+        </>
+      )}
     </Form>
   );
 };

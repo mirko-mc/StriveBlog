@@ -170,6 +170,7 @@ export const GetBlogPostsQueryTitle = async (title) => {
 export const PostNewBlogPost = async (formValue) => {
   try {
     console.log("data => fetch.js - PostNewBlogPost");
+    console.log("formValue", formValue);
     const res = await fetch(FetchBlogPostsUrl, {
       headers: {
         "Content-Type": "application/json",
