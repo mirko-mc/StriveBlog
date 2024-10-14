@@ -8,7 +8,6 @@ import Jwt from "jsonwebtoken";
 /** POST /login => restituisce token di accesso */
 export const PostLogin = async (req, res) => {
   try {
-    console.log("controllers => auth.controller.js - PostLogin");
     /** cerco la mail nel database */
     const Author = await AuthorsSchema.findOne({
       email: req.body.email,
@@ -44,7 +43,6 @@ export const PostLogin = async (req, res) => {
 // TODO GET /me => restituisce l'utente collegato al token di accesso
 export const GetMe = async (req, res) => {
   try {
-    console.log("controllers => auth.controller.js - GetMe");
     /** prendo i dati dell'autore dall'headers */
     const Author = req.LoggedAuthor;
     /** se i dati non ci sono allora l'autore non è loggato */
@@ -58,7 +56,6 @@ export const GetMe = async (req, res) => {
 // TODO POST /register registrazione autore
 export const PostRegister = async (req, res) => {
   try {
-    console.log("controllers => auth.controller.js - PostRegister");
     // ??? la traccia dice di modificare la post dell'author che si trova nel controlle author. la devo spostare completamente qui?
   } catch (err) {
     res.send("PostRegister error");
@@ -67,7 +64,6 @@ export const PostRegister = async (req, res) => {
 // TODO POST /logout logout autore (per JWT base non serve backend, basta togliere il token dal localStorage)
 export const PostLogout = async (req, res) => {
   try {
-    console.log("controllers => auth.controller.js - PostLogout");
   } catch (err) {
     res.send("PostLogout error");
   }
@@ -77,7 +73,6 @@ export const PostLogout = async (req, res) => {
 export const GetLoginGoogle = async (req, res) => {};
 // TODO - GET callback Google
 export const GetCallbackGoogle = async (req, res) => {
-  console.log("controllers => auth.controller.js - GetCallbackGoogle");
   /** qui facciamo il redirect al frontend passandogli nella query string il jwt creato in passport che l'ha aggiunto in req.author */
   res.redirect(`${process.env.FRONTEND_URL}?token=${req.user.JwtToken}`);
 };
